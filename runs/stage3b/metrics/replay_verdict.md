@@ -33,4 +33,11 @@
 
 ## 与 amodal 声明的关系
 
-仅三视角深度 ≠ 完整物理占用 GT;door/object 区域由 **link 位姿 × mesh 点样本** 构建(几何真值,非 amodal 完整几何);完整 amodal 几何若需要,使用仿真 mesh 单独构建(后续工作,本批 NOT_RUN)。
+仅三视角深度 ≠ 完整物理占用 GT;door/object 区域由重放自身的 **actor 分割 + 几何分类**构建(静态具名 id / FK 机器人区域内 / 其余=炉体;door id = root 系质心随门角移动最大的炉体 id——资产变换链无法验证到毫米级已废弃,数据驱动路线替代);完整 amodal 几何若需要,使用仿真 mesh 单独构建(后续工作,本批 NOT_RUN)。
+
+## 附录:单目度量深度探针(用户建议 LingBot-Depth/MoGe 方向,2026-11-18)
+
+- 探针:`scripts/probe_monodepth.py`(MoGe-2 ViT-B 本地权重,已知 fov_x 输入,同 VGGT 评估协议)。
+- 结果(`monodepth_probe_moge2.json`):depth MAE 113–750mm(VGGT-1B oracle 对齐参考 75mm),**即插即用失败**——MoGe 输出内参与我们 K 差 357(内部分辨率/内参约定不同),且同集相邻帧无稳定尺度(疑似非 metric 变体或约定未适配)。
+- LingBot-Depth 权重本地不存在(需 hf-mirror 下载);其定位是"深度精补/补全"(需稀疏深度输入),与我们的 RGB-only 单目场景不同。
+- 结论:RGB-only 路线若重开,单目深度是比 VGGT 更有希望的候选,但需要专门的 API 适配工作(分辨率约定、metric 变体选择、LingBot-Depth 下载),本批不做(主线上 GT depth)。NOT_RUN: LingBot-Depth 适配。

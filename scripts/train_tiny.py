@@ -137,6 +137,8 @@ def main():
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--out", default=None)
     ap.add_argument("--stride-t", type=int, default=1)
+    ap.add_argument("--split-manifest", default=None,
+                    help="runs/stage3b/split_manifest.json; overrides hardcoded splits")
     args = ap.parse_args()
     if args.variant == "p0":
         print("P0 persistence needs no training."); return
@@ -146,10 +148,18 @@ def main():
     device = "cuda:0"
     cfg = yaml.safe_load(Path(args.config).read_text())
     root = Path(cfg["cache_dir"]) / "voxels_ep"
-    train_eps = ["demo_clean_balanced:10", "demo_clean_balanced:25",
-                 "demo_clean_balanced:40"]
-    val_eps = ["demo_randomized_balanced:0"]
-    overfit_eps = ["demo_clean_balanced:10"]
+    if args.split_manifest:
+        sm = json.loads(Path(args.split_manifest).read_text())
+        train_eps = sm["splits"]["clean_train"]
+        val_eps = sm["splits"]["clean_val"] + sm["splits"]["rand_val"]
+        overfit_eps = sm["splits"]["clean_train"][:1]
+        test_eps = sm["splits"]["clean_test"] + sm["splits"]["rand_test"]
+    else:
+        train_eps = ["demo_clean_balanced:10", "demo_clean_balanced:25",
+                     "demo_clean_balanced:40"]
+        val_eps = ["demo_randomized_balanced:0"]
+        overfit_eps = ["demo_clean_balanced:10"]
+        test_eps = []
     eps = overfit_eps if args.mode == "overfit" else train_eps
 
     w_state, counts = class_weights_from(root, eps)
@@ -217,7 +227,8 @@ def main():
                 best_val=best_val, wall_s=round(time.perf_counter() - t0, 1),
                 peak_gib=round(torch.cuda.max_memory_allocated() / 2**30, 3),
                 torch=torch.__version__, seed=args.seed,
-                train_eps=eps, val_eps=val_eps if args.mode == "split" else eps)
+                train_eps=eps, val_eps=val_eps if args.mode == "split" else eps,
+                test_eps=test_eps if args.split_manifest else [])
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2))
     print(json.dumps(meta))
 

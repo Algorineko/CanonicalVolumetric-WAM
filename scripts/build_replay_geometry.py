@@ -1,16 +1,15 @@
-"""Stage 3b: build the replay episode's own geometry + door/object GT regions.
+"""Stage 3b: replay episode geometry + door/object regions (data-driven).
 
-The replay (replay_episode_gt.py) is an independently regenerated episode
-(near-twin of the original; NOT fused with original data per the §2 verdict).
-This script:
-1. unprojects the replay's own 3-view depth into the base frame and voxelizes
-   (identical pipeline/conventions to cache_episode_voxels);
-2. builds door-region / object-region voxel masks from the microwave LINK
-   POSES x mesh point samples, with the asset->sim transform chain verified by
-   nearest-neighbor distance against the observed depth cloud (picks the chain
-   whose NN distance is minimal; reports all candidates);
-3. writes a DynamicsDataset-compatible pseudo-episode cache under
-   voxels_ep_replay/ so models can be evaluated on it.
+Regions derive ONLY from the replay's own captured data (no asset-frame
+archaeology; the asset->sim chain could not be validated to mm and was
+abandoned — see failures note):
+  - static named ids (ground/wall/table) via Scene.render_id_to_visual_name;
+  - robot pixels = points inside the original FK robot region dilated (the
+    replay arm is within ~2.1 cm of the original; documented approximation);
+  - remaining ids = microwave parts; the DOOR id is identified globally as
+    the microwave id whose point centroid, expressed in the microwave ROOT
+    frame, moves most with the door angle (root frame is per-frame captured).
+Voxels: identical pipeline to cache_episode_voxels (20mm, per-view rays).
 """
 
 import argparse
@@ -20,46 +19,27 @@ from pathlib import Path
 
 import numpy as np
 import yaml
-from scipy.spatial import cKDTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from cvwam import robotwin_adapter as rta  # noqa: E402
 from cvwam import voxel as vx  # noqa: E402
-from cvwam.geometry import T_base_world, depth_to_base, make_tf  # noqa: E402
+from cvwam.geometry import T_base_world, depth_to_base  # noqa: E402
 
-ASSETS = Path("/data/safi-wam/robottwin2-assets/objects/044_microwave")
-DOOR_LABELS = None  # resolved from the mobility URDF at runtime
-
-
-def load_door_labels(asset_dir: Path):
-    """Door point labels = numeric suffixes of link_0's visual mesh files."""
-    import xml.etree.ElementTree as ET
-    urdf = next(asset_dir.glob("mobility*.urdf"))
-    root = ET.parse(urdf).getroot()
-    door_link = None
-    for j in root.findall("joint"):
-        if j.get("name") == "joint_0" or (j.find("axis") is not None and
-                                          j.get("type") == "revolute"):
-            child = j.find("child").get("link")
-            if door_link is None:
-                door_link = child
-    labels = set()
-    for link in root.findall("link"):
-        if door_link and link.get("name") != door_link:
-            continue
-        for mesh in link.iter("mesh"):
-            m = re.findall(r"-(\d+)(?:\.stl|\.obj|\.dae)", mesh.get("filename", ""))
-            for x in m:
-                labels.add(int(x))
-    return door_link, sorted(labels)
+CAM_OF = {"head_camera": "head", "left_camera": "left", "right_camera": "right"}
 
 
-def load_points(asset_dir: Path):
-    lines = (asset_dir / "point_sample" / "sample-points-all-pts-label-10000.ply").read_text().splitlines()
-    hdr = [i for i, l in enumerate(lines) if l == "end_header"][0]
-    data = np.array([[float(x) for x in l.split()] for l in lines[hdr + 1:hdr + 10001]])
-    labels = np.loadtxt(asset_dir / "point_sample" / "label-10000.txt")
-    return data[:, :3], labels
+def geo_T(cam2world_gl):
+    from cvwam import geometry as geo
+    return geo.cam2world_gl_to_world_cam_cv(cam2world_gl)
+
+
+def mark_voxels(points, b_min, pitch, shape):
+    idx, inb = vx.points_to_voxel_idx(points, b_min, pitch, shape)
+    out = np.zeros(tuple(shape), dtype=bool)
+    if inb.any():
+        idx = idx[inb]
+        out[idx[:, 0], idx[:, 1], idx[:, 2]] = True
+    return out
 
 
 def main():
@@ -67,9 +47,9 @@ def main():
     ap.add_argument("--replay-dir", required=True)
     ap.add_argument("--variant", default="demo_clean_balanced")
     ap.add_argument("--episode", type=int, required=True)
-    ap.add_argument("--asset", default="base0")
     ap.add_argument("--config", default="configs/smoke.yaml")
     ap.add_argument("--pitch", type=float, default=0.02)
+    ap.add_argument("--id-probe-frames", type=int, default=24)
     args = ap.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
     bbox = {ax: np.asarray(v, dtype=np.float64)
@@ -77,97 +57,163 @@ def main():
     b_min = np.array([bbox["x"][0], bbox["y"][0], bbox["z"][0]])
     b_max = np.array([bbox["x"][1], bbox["y"][1], bbox["z"][1]])
     T_bw = T_base_world(rta.T_world_base_from_config(cfg))
-    asset_id = {"base0": "7167", "base1": "7310"}[args.asset]
-    asset_dir = ASSETS / asset_id
-    door_link, door_labels = load_door_labels(asset_dir)
-    pts_asset, labels = load_points(asset_dir)
-    # model_data.json: scale + transform (asset -> sim)
-    md = json.loads((asset_dir / "model_data.json").read_text())
-    scale = float(md.get("scale", 1.0))
-    Toff = np.asarray(md.get("transform_matrix", np.eye(4)), dtype=np.float64)
-    print(f"asset {asset_id}; door_link={door_link}; door_labels={door_labels}; "
-          f"scale={scale}")
-
     rows = json.loads((Path(args.replay_dir) / "replay_gt.json").read_text())
     img_dir = Path(args.replay_dir) / "rgbdepth"
+    seg_dir = Path(args.replay_dir) / "seg"
     out_dir = Path(cfg["cache_dir"]) / "voxels_ep_replay" / \
         f"{args.variant}_{args.episode}_replay" / "20mm"
     out_dir.mkdir(parents=True, exist_ok=True)
     _, _, shape = vx.grid_config(b_min, b_max, args.pitch)
 
+    # original robot region (dilated) as the robot-pixel classifier reference
+    rob_root = Path(cfg["cache_dir"]) / "voxels_ep" / "_robot_region" / \
+        args.variant / f"episode_{args.episode:07d}"
+    rob_dil = None
+
+    def robot_region(t):
+        nonlocal rob_dil
+        f = rob_root / f"frame_{t:07d}.npz"
+        if f.exists():
+            r = np.load(f)["robot"]
+        else:
+            r = np.zeros(tuple(shape), dtype=bool)
+        return r
+
+    # ---------- pass 1: classify seg ids (probe frames across episode) ----------
+    ts_all = [i for i, r in enumerate(rows)
+              if (seg_dir / f"frame_{r['frame']:07d}.npz").exists()]
+    probe = np.linspace(0, len(ts_all) - 1, min(args.id_probe_frames, len(ts_all))).astype(int)
+    id_stats = {}   # id -> list of (door_angle, centroid_in_root)
+    for i in probe:
+        r = rows[ts_all[i]]
+        t = r["frame"]
+        segf = seg_dir / f"frame_{t:07d}.npz"
+        imgf = img_dir / f"frame_{t:07d}.npz"
+        if not segf.exists() or not imgf.exists():
+            continue
+        sd = np.load(segf)
+        dd = np.load(imgf)
+        R_root = None
+        if "mic_q_wxyz" in r:
+            from cvwam import geometry as geo
+            R_root = geo.quat_wxyz_to_R(r["mic_q_wxyz"])
+            p_root = np.asarray(r["mic_p"], dtype=np.float64)
+        rob = robot_region(t)
+        for camkey in sd.files:
+            cam = camkey.replace("seg_actor_", "")
+            seg = sd[camkey]
+            K = np.asarray(r[f"K_{cam}"], dtype=np.float64)
+            T_bc = T_bw @ geo_T(np.asarray(r[f"T_world_cam_gl_{cam}"], dtype=np.float64))
+            dmm = dd[f"depth_mm_{CAM_OF[cam]}"].astype(np.float32)
+            valid = dmm > 0
+            dm2 = np.where(valid, dmm / 1000.0, 0.0)
+            p_pts, msk = depth_to_base(dm2, K, T_bc, valid=valid)
+            vv, uu = np.where(msk)
+            ids_at = seg[vv, uu]
+            for sid in np.unique(ids_at):
+                key = int(sid)
+                pts_id = p_pts[ids_at == key]
+                if len(pts_id) < 30:
+                    continue
+                inb = ((pts_id >= b_min) & (pts_id <= b_max)).all(1)
+                if inb.sum() < 30:
+                    continue
+                vc = np.clip(np.floor((pts_id[inb] - b_min) / args.pitch).astype(int),
+                             0, np.asarray(shape) - 1)
+                rob_frac = float(rob[vc[:, 0], vc[:, 1], vc[:, 2]].mean())
+                st = id_stats.setdefault(key, {"robot_frac": [], "cent_root": [],
+                                               "door": [], "n": 0})
+                st["n"] += 1
+                st["robot_frac"].append(rob_frac)
+                if R_root is not None:
+                    cen_root = (R_root.T @ (pts_id[inb].mean(0) - p_root))
+                    st["cent_root"].append(cen_root.tolist())
+                st["door"].append(float(r.get("door_angle", np.nan)))
+
+    # classify: robot-dominated, named static, microwave, door
+    STATIC_NAMES = {"ground", "wall", "table", "front_camera", "floor"}
+    id_role = {}
+    named_ids = {}
+    for r_p in rows:
+        sai = r_p.get("scene_actor_ids")
+        if sai:
+            named_ids.update({int(v): k for k, v in sai.items()})
+            break
+    door_candidate = None
+    door_motion_best = -1.0
+    for key, st in id_stats.items():
+        rf = np.mean(st["robot_frac"]) if st["robot_frac"] else 0.0
+        nm = named_ids.get(key, "")
+        if key in named_ids and any(nm == s for s in STATIC_NAMES):
+            id_role[key] = f"static:{nm}"
+            continue
+        if rf > 0.5:
+            id_role[key] = "robot"
+            continue
+        # microwave part: estimate root-frame centroid motion vs door angle
+        cent = np.asarray(st["cent_root"])
+        ang = np.asarray(st["door"])
+        if len(cent) >= 6 and np.nanstd(ang) > 0.05:
+            motion = float(np.linalg.norm(cent.max(0) - cent.min(0)))
+        else:
+            motion = 0.0
+        if motion > door_motion_best and motion > 0.03:   # >3cm in root frame
+            door_motion_best = motion
+            door_candidate = key
+    for key in id_stats:
+        if key not in id_role:
+            id_role[key] = "door" if key == door_candidate else "mic"
+    print("id roles:", {k: v for k, v in sorted(id_role.items())})
+    print(f"door id: {door_candidate} (root-frame centroid motion "
+          f"{door_motion_best*1000:.0f} mm)")
+
+    # ---------- pass 2: per-frame voxels + regions ----------
     manifest = []
-    door_nn_report = []
     for i, r in enumerate(rows):
         t = r["frame"]
+        segf = seg_dir / f"frame_{t:07d}.npz"
         imgf = img_dir / f"frame_{t:07d}.npz"
-        if not imgf.exists():
+        if not segf.exists() or not imgf.exists():
             continue
-        d = np.load(imgf)
+        sd = np.load(segf)
+        dd = np.load(imgf)
         centers, pts_list, valid_list = [], [], []
-        for cam, tag in (("head_camera", "head"), ("left_camera", "left"),
-                         ("right_camera", "right")):
+        for cam, tag in CAM_OF.items():
             K = np.asarray(r[f"K_{cam}"], dtype=np.float64)
-            Twc_gl = np.asarray(r[f"T_world_cam_gl_{cam}"], dtype=np.float64)
-            T_bc = T_bw @ geo_T(Twc_gl)
-            dmm = d[f"depth_mm_{tag}"].astype(np.float32)
+            T_bc = T_bw @ geo_T(np.asarray(r[f"T_world_cam_gl_{cam}"], dtype=np.float64))
+            dmm = dd[f"depth_mm_{tag}"].astype(np.float32)
             valid = dmm > 0
-            dm = np.where(valid, dmm / 1000.0, 0.0)
-            p, _ = depth_to_base(dm, K, T_bc, valid=valid)
+            dm2 = np.where(valid, dmm / 1000.0, 0.0)
+            p_pts, _ = depth_to_base(dm2, K, T_bc, valid=valid)
             centers.append(T_bc[:3, 3])
-            pts_list.append(p)
-            valid_list.append(np.ones(len(p), dtype=bool))
+            pts_list.append(p_pts)
+            valid_list.append(np.ones(len(p_pts), dtype=bool))
         g = vx.voxelize_rays(np.stack(centers), pts_list, valid_list,
                              b_min, b_max, args.pitch, shape)
-
-        # door/object point clouds under candidate chains (verified by NN)
-        R_root = quat_R(r["mic_q_wxyz"])
-        p_root = np.asarray(r["mic_p"], dtype=np.float64)
-        links = r.get("mic_link_poses", {})
-        door_pts_world = None
-        obj_pts_world = None
-        if links and door_link in links:
-            lp = links[door_link]
-            R_l = quat_R(lp["q_wxyz"])
-            p_l = np.asarray(lp["p"], dtype=np.float64)
-            dm = (labels[:, None] == np.asarray(door_labels)).any(1)
-            # candidate chains for asset->door-link-local points
-            cands = {
-                "scale_then_Toff": (pts_asset * scale) @ Toff[:3, :3].T + Toff[:3, 3],
-                "Toff_then_scale": ((pts_asset @ Toff[:3, :3].T + Toff[:3, 3]) * scale),
-                "scale_only": pts_asset * scale,
-            }
-            best = None
-            for cname, P in cands.items():
-                pw = P @ R_l.T + p_l
-                pw_base = pw @ T_bw[:3, :3].T + T_bw[:3, 3]
-                # NN against the observed head-view cloud
-                obs = pts_list[0]
-                if len(obs) > 20000:
-                    obs = obs[:: len(obs) // 20000]
-                nn = cKDTree(obs).query(pw_base[dm], k=1)[0]
-                md_dist = float(np.median(nn))
-                door_nn_report.append({"frame": t, "chain": cname,
-                                        "median_nn_m": round(md_dist, 4)})
-                if best is None or md_dist < best[0]:
-                    best = (md_dist, cname, pw_base, dm)
-            _, cname, door_pts_world, dm = best
-            obj_pts_world = None
-        # voxelize door/object regions (mark voxels containing GT points)
         door_region = np.zeros(tuple(shape), dtype=bool)
         obj_region = np.zeros(tuple(shape), dtype=bool)
-        if door_pts_world is not None:
-            idx, inb = vx.points_to_voxel_idx(door_pts_world[dm], b_min, args.pitch, shape)
-            door_region[idx[inb, 0], idx[inb, 1], idx[inb, 2]] = True
-        if obj_pts_world is not None:
-            idx, inb = vx.points_to_voxel_idx(obj_pts_world, b_min, args.pitch, shape)
-            obj_region[idx[inb, 0], idx[inb, 1], idx[inb, 2]] = True
-
+        rob = robot_region(t)
+        for camkey in sd.files:
+            cam = camkey.replace("seg_actor_", "")
+            seg = sd[camkey]
+            K = np.asarray(r[f"K_{cam}"], dtype=np.float64)
+            T_bc = T_bw @ geo_T(np.asarray(r[f"T_world_cam_gl_{cam}"], dtype=np.float64))
+            dmm = dd[f"depth_mm_{CAM_OF[cam]}"].astype(np.float32)
+            valid = dmm > 0
+            dm2 = np.where(valid, dmm / 1000.0, 0.0)
+            p_pts, msk = depth_to_base(dm2, K, T_bc, valid=valid)
+            vv, uu = np.where(msk)
+            ids_at = seg[vv, uu]
+            for key, role in id_role.items():
+                m = ids_at == key
+                if not m.any():
+                    continue
+                if role == "door":
+                    door_region |= mark_voxels(p_pts[m], b_min, args.pitch, shape)
+                    obj_region |= mark_voxels(p_pts[m], b_min, args.pitch, shape)
+                elif role == "mic":
+                    obj_region |= mark_voxels(p_pts[m], b_min, args.pitch, shape)
         qpos = np.asarray(r["robot_qpos_actual"], dtype=np.float32)[:14]
-        act_end = min(i + 16, len(rows))
-        # NOTE: replay rows use original action group alignment via t index;
-        # actions are read from the ORIGINAL hdf5 by cache_episode_voxels
-        # conventions -- here we store the replay's actual qpos only, actions
-        # are attached at eval time from the original episode manifest.
         npz = out_dir / f"frame_{t:07d}.npz"
         np.savez_compressed(
             npz, hit=g["hit"], free=g["free"], observed=g["observed"],
@@ -189,22 +235,20 @@ def main():
         "language": "replay episode (independently regenerated; NOT fused with original)",
         "b_min": b_min.tolist(), "b_max": b_max.tolist(),
         "table_z_base": 0.7401, "action_horizon": 16, "frames": manifest,
-        "door_nn_report": door_nn_report[:40],
+        "id_role": {str(k): v for k, v in id_role.items()},
+        "door_id": door_candidate,
+        "door_centroid_motion_m": round(door_motion_best, 4),
+        "region_note": "door/obj regions from replay's own actor segmentation; "
+                       "robot region approximated by original FK region (replay "
+                       "arm within ~2.1cm); NOT amodal-complete geometry",
     }, indent=1))
     print(f"-> {out_dir} ({len(manifest)} frames)")
 
 
-def geo_T(cam2world_gl):
-    from cvwam import geometry as geo
-    return geo.cam2world_gl_to_world_cam_cv(cam2world_gl)
+def rta_scene_name(row, sid):
+    """Static-scene name for a seg id via the captured mapping."""
+    return row.get("seg_id_names", {}).get(str(sid), "?")
 
-
-def quat_R(q_wxyz):
-    from cvwam import geometry as geo
-    return geo.quat_wxyz_to_R(q_wxyz)
-
-
-import re  # noqa: E402
 
 if __name__ == "__main__":
     main()

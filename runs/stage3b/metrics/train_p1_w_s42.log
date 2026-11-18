@@ -1,0 +1,15 @@
+state counts (sampled): [3456278, 28336547, 202207175], CE weights: [22.567628860473633, 2.752629041671753, 0.38574299216270447]
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_tiny.py", line 237, in <module>
+    main()
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_tiny.py", line 179, in main
+    val_ds = DynamicsDataset(root, val_eps) if args.mode == "split" else ds
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/dynamics_dataset.py", line 54, in __init__
+    edir, manifest = load_episode(self.root, variant, int(ep), pitch)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/dynamics_dataset.py", line 27, in load_episode
+    manifest = json.loads((edir / "manifest.json").read_text())
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/pathlib.py", line 1134, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+FileNotFoundError: [Errno 2] No such file or directory: '/data/canonical-volumetric-wam/cache/voxels_ep/demo_randomized_balanced/episode_0000002/20mm/manifest.json'
