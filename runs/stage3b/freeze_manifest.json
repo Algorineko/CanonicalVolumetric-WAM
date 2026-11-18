@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-18",
+  "git_commit": "56278acf70ac352dff88a413bf073595669b7750",
+  "checkpoints": {
+    "p1_split": "runs/stage3a/p1_split/best.pt",
+    "p1_v_split": "runs/stage3a/p1_v_split/best.pt",
+    "act_only_split": "runs/stage3a/act_only_split/best.pt",
+    "p1_r_split": "runs/stage3a/p1_r_split/best.pt"
+  },
+  "bug_version_preserved": "runs/stage3a/failures/poswbug_p1_v/",
+  "data_manifest": {
+    "voxels_ep": "/data/canonical-volumetric-wam/cache/voxels_ep (5 episodes, 20mm + 10mm ep10)",
+    "dropout": "/data/canonical-volumetric-wam/cache/voxels_ep_dropout (3 subsets x val+test)",
+    "frames": "/data/canonical-volumetric-wam/cache/frames"
+  },
+  "eval_results": [
+    "aggregated_table.csv",
+    "eval_act_only.csv",
+    "eval_p0.csv",
+    "eval_p0_drop_head_left.csv",
+    "eval_p0_drop_head_only.csv",
+    "eval_p0_drop_head_right.csv",
+    "eval_p1.csv",
+    "eval_p1_drop_head_left.csv",
+    "eval_p1_drop_head_only.csv",
+    "eval_p1_drop_head_right.csv",
+    "eval_p1_r.csv",
+    "eval_p1_shuffle.csv",
+    "eval_p1_v.csv",
+    "eval_p1_v_drop_head_left.csv",
+    "eval_p1_v_drop_head_only.csv",
+    "eval_p1_v_drop_head_right.csv",
+    "eval_p1_v_shuffle.csv",
+    "eval_smoke_p1.csv"
+  ],
+  "reports": [
+    "runs/smoke/report.md",
+    "runs/stage2c/report.md",
+    "runs/stage3a/report.md"
+  ],
+  "dev_set_note": "rand0/rand1 are DEVELOPMENT set from Stage 3b on; final test evidence must come from new episodes",
+  "manifest_sha256_12": "d7b84f0565e7"
+}

@@ -1,0 +1,9 @@
+[PASS] probability simplex
+[PASS] factorized(unweighted) == 3-class NLL — |Δ|=5.96e-08
+[PASS] per-voxel identity BCE_vis+mask*BCE_occ == -log p(state)
+[PASS] P1-V pos_weight = hit/free ratio (>>1, up-weights hit) — pos_w=8.30
+[PASS] P1-W weights transplant pos_weight ratio — (8.15, 1.0, 1.0)
+[PASS] p1_w shares state_ce head (3*n_offsets channels)
+[PASS] p1_f shares decoupled head (2*n_offsets channels)
+
+ALL STAGE3B TESTS PASSED

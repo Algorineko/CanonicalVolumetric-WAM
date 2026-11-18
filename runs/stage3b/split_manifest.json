@@ -1,0 +1,25 @@
+{
+  "created": "2026-11-18",
+  "rule": "episode-level split; rand0/rand1 are DEVELOPMENT (not final test evidence); all Stage 3b models share this manifest",
+  "pitch": "20mm",
+  "splits": {
+    "clean_train": ["demo_clean_balanced:10", "demo_clean_balanced:25", "demo_clean_balanced:40",
+                     "demo_clean_balanced:0", "demo_clean_balanced:5", "demo_clean_balanced:15",
+                     "demo_clean_balanced:20", "demo_clean_balanced:30", "demo_clean_balanced:35",
+                     "demo_clean_balanced:45"],
+    "clean_val": ["demo_clean_balanced:1", "demo_clean_balanced:2", "demo_clean_balanced:3"],
+    "clean_test": ["demo_clean_balanced:4", "demo_clean_balanced:6", "demo_clean_balanced:8",
+                    "demo_clean_balanced:12", "demo_clean_balanced:16"],
+    "rand_val": ["demo_randomized_balanced:0", "demo_randomized_balanced:2", "demo_randomized_balanced:3"],
+    "rand_test": ["demo_randomized_balanced:4", "demo_randomized_balanced:5", "demo_randomized_balanced:6",
+                   "demo_randomized_balanced:7", "demo_randomized_balanced:8"]
+  },
+  "development_set_note": "demo_randomized_balanced:0/1 were used for model selection and iteration in Stage 3a; rand0 stays in val as development; rand1 is EXCLUDED from all Stage 3b splits; final independent test evidence = clean_test + rand_test (new episodes only)",
+  "final_test_episodes": ["demo_clean_balanced:4", "demo_clean_balanced:6", "demo_clean_balanced:8",
+                           "demo_clean_balanced:12", "demo_clean_balanced:16",
+                           "demo_randomized_balanced:4", "demo_randomized_balanced:5",
+                           "demo_randomized_balanced:6", "demo_randomized_balanced:7",
+                           "demo_randomized_balanced:8"],
+  "action_horizon": 16,
+  "offsets": [4, 8, 12, 16]
+}

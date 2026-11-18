@@ -1,0 +1,27 @@
+{
+  "episode": "demo_clean_balanced:10",
+  "T_original": 424,
+  "replay_rows": 427,
+  "rgb_diff_mean": 1.748,
+  "rgb_diff_p99_max": 213.0,
+  "depth_exact_frac_min": 0.727878,
+  "depth_exact_frac_mean": 0.954435,
+  "rgb_frac_gt10_mean": 0.016456,
+  "rgb_frac_gt10_max": 0.117018,
+  "extr_max_abs_max": 0.0,
+  "n_checked": 424,
+  "n_mismatches": 239,
+  "mismatch_samples": [
+    "t=11: depth_exact=0.9900 extr_err=0.00e+00 rgb_mean=1.70",
+    "t=12: depth_exact=0.9896 extr_err=0.00e+00 rgb_mean=1.93",
+    "t=13: depth_exact=0.9890 extr_err=0.00e+00 rgb_mean=2.18",
+    "t=14: depth_exact=0.9881 extr_err=0.00e+00 rgb_mean=2.50",
+    "t=15: depth_exact=0.9868 extr_err=0.00e+00 rgb_mean=2.87",
+    "t=16: depth_exact=0.9849 extr_err=0.00e+00 rgb_mean=3.43",
+    "t=17: depth_exact=0.9815 extr_err=0.00e+00 rgb_mean=4.14",
+    "t=18: depth_exact=0.9765 extr_err=0.00e+00 rgb_mean=4.95",
+    "t=19: depth_exact=0.9762 extr_err=0.00e+00 rgb_mean=4.60",
+    "t=20: depth_exact=0.9814 extr_err=0.00e+00 rgb_mean=4.41"
+  ],
+  "verdict": "MISALIGNED"
+}

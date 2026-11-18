@@ -26,13 +26,27 @@ from cvwam.dynamics_dataset import DynamicsDataset, OFFSETS, class_weights_from 
 from cvwam.models_tiny import TinyDynamicsNet, split_outputs, count_params  # noqa: E402
 
 VARIANTS = {
-    "p1": "state_ce",
+    "p1": "state_ce",        # original inverse-frequency weighted 3-state CE
     "p1_r": "residual",
-    "p1_v": "decoupled",
-    "act_only": "state_ce",       # same as p1 but voxel input zeroed
+    "p1_v": "decoupled",     # factorized heads + pos_weight occupancy + vis BCE
+    "p1_w": "state_ce",      # 3-state CE with P1-V's class rebalancing [8.15,1,1]
+    "p1_f": "decoupled",     # factorized heads, EXACT unweighted 3-class NLL
+    "act_only": "state_ce",  # same as p1 but voxel input zeroed
 }
 MODEL_DIR = {"p1": "state_ce", "p1_r": "residual", "p1_v": "decoupled",
+             "p1_w": "state_ce", "p1_f": "decoupled",
              "act_only": "state_ce"}
+# Stage 3b matched-loss design (docs runs/stage3b plan §4):
+#   p1   : w = inverse-frequency [22.65, 2.73, 0.386] (train-set stats)
+#   p1_w : w = [8.15, 1, 1]  (P1-V's occupancy pos_weight transplanted into the
+#          3-class parameterization; unknown weighted 1 like the unweighted vis
+#          term)
+#   p1_f : factorized (p_obs, p_occ) heads with the EXACT unweighted 3-class
+#          NLL: L = (1/N_all) [sum_all BCE_vis + sum_observed BCE_occ]
+#          (mathematically identical to unweighted 3-class CE; unit-tested)
+#   p1_v : factorized heads, L = mean_all[BCE_vis] + pos_weight*mean_obs[BCE_occ]
+#          with pos_weight = free/hit ~ 8.15 (hit up-weighted)
+P1W_WEIGHTS = (8.15, 1.0, 1.0)
 
 
 def make_model(variant, base, cond_dim, device):
@@ -46,7 +60,7 @@ def offset_index(batch, device):
 
 
 def losses(batch, model, variant, w_state, pos_weight_occ, device):
-    """Returns dict of scalar losses + aux tensors for metrics."""
+    """Returns dict of scalar losses. Loss per docs runs/stage3b §4."""
     vox = batch["voxel"].to(device, non_blocking=True)
     if variant == "act_only":
         vox = torch.zeros_like(vox)
@@ -68,17 +82,30 @@ def losses(batch, model, variant, w_state, pos_weight_occ, device):
         if MODEL_DIR[variant] == "decoupled":
             occ_logit = blocks[k_idx]["occ_logit"][sel]
             vis_logit = blocks[k_idx]["vis_logit"][sel]
-            # occupancy BCE only on future-observed voxels (unknown excluded)
             occ_tgt = (tgt == 0).float()          # hit=1, free=0
-            occ_loss = F.binary_cross_entropy_with_logits(
-                occ_logit[m_obs], occ_tgt[m_obs],
-                pos_weight=pos_weight_occ)
             vis_tgt = m_obs.float()               # observed=1, unknown=0
-            vis_loss = F.binary_cross_entropy_with_logits(vis_logit, vis_tgt)
-            L[f"loss_k{k}"] = occ_loss + vis_loss
+            if variant == "p1_f":
+                # EXACT unweighted 3-class NLL in factorized form:
+                # sum_all BCE_vis + sum_observed BCE_occ, divided by N_all
+                n_all = vis_tgt.numel()
+                vis_sum = F.binary_cross_entropy_with_logits(
+                    vis_logit, vis_tgt, reduction="sum")
+                occ_sum = F.binary_cross_entropy_with_logits(
+                    occ_logit[m_obs], occ_tgt[m_obs], reduction="sum")
+                L[f"loss_k{k}"] = (vis_sum + occ_sum) / n_all
+            else:  # p1_v: per-domain means + pos_weight on occupancy
+                occ_loss = F.binary_cross_entropy_with_logits(
+                    occ_logit[m_obs], occ_tgt[m_obs],
+                    pos_weight=pos_weight_occ)
+                vis_loss = F.binary_cross_entropy_with_logits(vis_logit, vis_tgt)
+                L[f"loss_k{k}"] = occ_loss + vis_loss
         else:
             logits = blocks[k_idx]["state_logits"][sel]   # (B',3,X,Y,Z)
-            L[f"loss_k{k}"] = F.cross_entropy(logits, tgt, weight=w_state)
+            if variant == "p1_w":
+                w = torch.tensor(P1W_WEIGHTS, device=device, dtype=logits.dtype)
+            else:
+                w = w_state
+            L[f"loss_k{k}"] = F.cross_entropy(logits, tgt, weight=w)
     L["loss"] = torch.stack(list(L.values())).mean()
     return L
 
