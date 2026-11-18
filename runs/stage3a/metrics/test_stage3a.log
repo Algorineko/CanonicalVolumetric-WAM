@@ -1,0 +1,22 @@
+[PASS] episode-level split: no shared episodes — {'demo_clean_balanced:10'} vs {'demo_randomized_balanced:0'}
+[PASS] items reference their own episode dir
+[PASS] sample shapes
+[PASS] action_chunk == action[t:t+H] (not state)
+[PASS] qpos == state[t]
+[PASS] oracle: observed occupancy IoU == 1 — 1.0
+[PASS] oracle: surface F1(tol1) == 1
+[PASS] oracle: change F1 == 1 — 1.0
+[PASS] oracle: known-free false occ == 0
+[PASS] shift-1 pred: surface F1(tol1)==1 — 1.0
+[PASS] shift-1 pred: exact-metric penalized (occ IoU < 1)
+[PASS] P1-V: unknown-region GT corruption does not change occupancy loss — delta 0.00e+00
+[PASS] P1-V: observed-region corruption DOES change loss
+[PASS] forward state_ce: shape — (2, 12, 35, 65, 45)
+[PASS] forward state_ce: finite
+[PASS] forward residual: shape — (2, 12, 35, 65, 45)
+[PASS] forward residual: finite
+[PASS] forward decoupled: shape — (2, 8, 35, 65, 45)
+[PASS] forward decoupled: finite
+[PASS] params ~ a few M — 1.56M
+
+ALL STAGE3A TESTS PASSED

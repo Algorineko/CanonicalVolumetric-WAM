@@ -1,0 +1,16 @@
+[PASS] known point -> correct voxel index — [1 0 1]
+[PASS] point-only hit in cell
+[PASS] boundary point at bbox max excluded — inb=[ True False] idx=[[39, 20, 15], [40, 20, 15]]
+[PASS] wall: cells before wall free — free rows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+[PASS] wall: hit at wall cell — hit rows [16]
+[PASS] wall: nothing behind wall free — max free x-idx 15
+[PASS] wall: behind wall unknown
+[PASS] wall: free requires valid depth only
+[PASS] two views: box front+back hits present — hit cells near expected: [[15, 13, 3], [15, 13, 4], [15, 13, 5], [15, 13, 6], [15, 13, 7], [15, 17, 3]]
+[PASS] two views: interior of box NOT free (behind hits) — interior free=False
+[PASS] two views: free space in front of faces observed — free cells y3..11 at x15,z5: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+[PASS] missing view reduces coverage — 0 < 120
+[PASS] invalid depth -> no free space claimed
+[PASS] grid stats identity
+
+ALL VOXEL TESTS PASSED

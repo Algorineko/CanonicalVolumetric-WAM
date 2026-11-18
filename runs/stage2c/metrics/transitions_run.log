@@ -1,0 +1,29 @@
+/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/stage2c_transitions.py:111: RuntimeWarning: invalid value encountered in scalar divide
+  float((hf + fh) / tot), 5)
+/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/stage2c_transitions.py:113: RuntimeWarning: invalid value encountered in scalar divide
+  float((hu + uh + uf + fu) / tot), 5)
+/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/stage2c_transitions.py:115: RuntimeWarning: invalid value encountered in scalar divide
+  float((hu + uf) / tot), 5)
+/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/stage2c_transitions.py:117: RuntimeWarning: invalid value encountered in scalar divide
+  float((uh + uf) / tot), 5)
+{"episode": "demo_clean_balanced:10", "offset": 1, "pairs": 423, "all_physical_flip_rate": 8e-05, "all_vis_flip_rate": 0.00049}
+{"episode": "demo_clean_balanced:10", "offset": 4, "pairs": 420, "all_physical_flip_rate": 0.00024, "all_vis_flip_rate": 0.00183}
+{"episode": "demo_clean_balanced:10", "offset": 8, "pairs": 416, "all_physical_flip_rate": 0.00041, "all_vis_flip_rate": 0.00328}
+{"episode": "demo_clean_balanced:10", "offset": 16, "pairs": 408, "all_physical_flip_rate": 0.00073, "all_vis_flip_rate": 0.00531}
+{"episode": "demo_clean_balanced:25", "offset": 1, "pairs": 604, "all_physical_flip_rate": 6e-05, "all_vis_flip_rate": 0.00032}
+{"episode": "demo_clean_balanced:25", "offset": 4, "pairs": 601, "all_physical_flip_rate": 0.00017, "all_vis_flip_rate": 0.0012}
+{"episode": "demo_clean_balanced:25", "offset": 8, "pairs": 597, "all_physical_flip_rate": 0.0003, "all_vis_flip_rate": 0.00221}
+{"episode": "demo_clean_balanced:25", "offset": 16, "pairs": 589, "all_physical_flip_rate": 0.00054, "all_vis_flip_rate": 0.00375}
+{"episode": "demo_clean_balanced:40", "offset": 1, "pairs": 545, "all_physical_flip_rate": 8e-05, "all_vis_flip_rate": 0.00029}
+{"episode": "demo_clean_balanced:40", "offset": 4, "pairs": 542, "all_physical_flip_rate": 0.00022, "all_vis_flip_rate": 0.00104}
+{"episode": "demo_clean_balanced:40", "offset": 8, "pairs": 538, "all_physical_flip_rate": 0.00037, "all_vis_flip_rate": 0.00194}
+{"episode": "demo_clean_balanced:40", "offset": 16, "pairs": 530, "all_physical_flip_rate": 0.00063, "all_vis_flip_rate": 0.00343}
+{"episode": "demo_randomized_balanced:0", "offset": 1, "pairs": 569, "all_physical_flip_rate": 9e-05, "all_vis_flip_rate": 0.00037}
+{"episode": "demo_randomized_balanced:0", "offset": 4, "pairs": 566, "all_physical_flip_rate": 0.00026, "all_vis_flip_rate": 0.00129}
+{"episode": "demo_randomized_balanced:0", "offset": 8, "pairs": 562, "all_physical_flip_rate": 0.00042, "all_vis_flip_rate": 0.00235}
+{"episode": "demo_randomized_balanced:0", "offset": 16, "pairs": 554, "all_physical_flip_rate": 0.0007, "all_vis_flip_rate": 0.00399}
+{"episode": "demo_randomized_balanced:1", "offset": 1, "pairs": 819, "all_physical_flip_rate": 6e-05, "all_vis_flip_rate": 0.00023}
+{"episode": "demo_randomized_balanced:1", "offset": 4, "pairs": 816, "all_physical_flip_rate": 0.00017, "all_vis_flip_rate": 0.00082}
+{"episode": "demo_randomized_balanced:1", "offset": 8, "pairs": 812, "all_physical_flip_rate": 0.00028, "all_vis_flip_rate": 0.00152}
+{"episode": "demo_randomized_balanced:1", "offset": 16, "pairs": 804, "all_physical_flip_rate": 0.00047, "all_vis_flip_rate": 0.00262}
+-> runs/stage2c/metrics/transition_stats.json (20 rows)

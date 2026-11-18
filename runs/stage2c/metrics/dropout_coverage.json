@@ -1,0 +1,18 @@
+{
+ "head_only": {
+  "obs_frac_mean": 0.094,
+  "hit_frac_mean": 0.011
+ },
+ "head_left": {
+  "obs_frac_mean": 0.0996,
+  "hit_frac_mean": 0.0123
+ },
+ "head_right": {
+  "obs_frac_mean": 0.1276,
+  "hit_frac_mean": 0.0157
+ },
+ "all(head+both wrists)": {
+  "obs_frac_mean": 0.1743,
+  "hit_frac_mean": 0.0213
+ }
+}

@@ -1,0 +1,22 @@
+{
+  "variant": "p1_v",
+  "mode": "overfit",
+  "steps": 500,
+  "batch": 8,
+  "lr": 0.0003,
+  "base": 32,
+  "params": 1558536,
+  "train_pairs": 1628,
+  "val_pairs": 1628,
+  "best_val": 0.16866241892178854,
+  "wall_s": 30.9,
+  "peak_gib": 2.092,
+  "torch": "2.7.1+cu128",
+  "seed": 42,
+  "train_eps": [
+    "demo_clean_balanced:10"
+  ],
+  "val_eps": [
+    "demo_clean_balanced:10"
+  ]
+}

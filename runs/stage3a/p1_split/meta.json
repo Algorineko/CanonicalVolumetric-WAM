@@ -1,0 +1,24 @@
+{
+  "variant": "p1",
+  "mode": "split",
+  "steps": 3000,
+  "batch": 8,
+  "lr": 0.0003,
+  "base": 32,
+  "params": 1558668,
+  "train_pairs": 6096,
+  "val_pairs": 2212,
+  "best_val": 0.07897460460662842,
+  "wall_s": 177.6,
+  "peak_gib": 2.092,
+  "torch": "2.7.1+cu128",
+  "seed": 42,
+  "train_eps": [
+    "demo_clean_balanced:10",
+    "demo_clean_balanced:25",
+    "demo_clean_balanced:40"
+  ],
+  "val_eps": [
+    "demo_randomized_balanced:0"
+  ]
+}

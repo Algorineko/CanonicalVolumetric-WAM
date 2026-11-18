@@ -1,0 +1,178 @@
+[
+  {
+    "model": "vggt_official",
+    "view_config": "head",
+    "route": "depth_gt_calib(g3)",
+    "align_mode": "deployable",
+    "acc_median_mm": 37.15,
+    "acc_fscore_10mm": 0.169,
+    "compl_median_mm": 55.03,
+    "depth_head_mae_mm": 72.8,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_official",
+    "view_config": "head",
+    "route": "depth_unproject",
+    "align_mode": "oracle",
+    "acc_median_mm": 28.37,
+    "acc_fscore_10mm": 0.216,
+    "compl_median_mm": 37.1,
+    "depth_head_mae_mm": 76.3,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_official",
+    "view_config": "head",
+    "route": "world_points",
+    "align_mode": "deployable",
+    "acc_median_mm": 42.1,
+    "acc_fscore_10mm": 0.199,
+    "compl_median_mm": 49.02,
+    "depth_head_mae_mm": 77.9,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_official",
+    "view_config": "head",
+    "route": "world_points",
+    "align_mode": "oracle",
+    "acc_median_mm": 28.36,
+    "acc_fscore_10mm": 0.19,
+    "compl_median_mm": 39.54,
+    "depth_head_mae_mm": 75.0,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_official",
+    "view_config": "head+left_wrist+right_wrist",
+    "route": "depth_gt_calib(g3)",
+    "align_mode": "deployable",
+    "acc_median_mm": 90.99,
+    "acc_fscore_10mm": 0.047,
+    "compl_median_mm": 127.16,
+    "depth_head_mae_mm": 245.3,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_official",
+    "view_config": "head+left_wrist+right_wrist",
+    "route": "depth_unproject",
+    "align_mode": "oracle",
+    "acc_median_mm": 55.01,
+    "acc_fscore_10mm": 0.081,
+    "compl_median_mm": 18.78,
+    "depth_head_mae_mm": 151.1,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_official",
+    "view_config": "head+left_wrist+right_wrist",
+    "route": "world_points",
+    "align_mode": "deployable",
+    "acc_median_mm": 97.8,
+    "acc_fscore_10mm": 0.051,
+    "compl_median_mm": 290.62,
+    "depth_head_mae_mm": 112.5,
+    "n_frames": 3
+  },
+  {
+    "model": "vggt_official",
+    "view_config": "head+left_wrist+right_wrist",
+    "route": "world_points",
+    "align_mode": "oracle",
+    "acc_median_mm": 48.06,
+    "acc_fscore_10mm": 0.111,
+    "compl_median_mm": 27.13,
+    "depth_head_mae_mm": 131.7,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_omnivggt",
+    "view_config": "head",
+    "route": "depth_gt_calib(g3)",
+    "align_mode": "deployable",
+    "acc_median_mm": 43.25,
+    "acc_fscore_10mm": 0.284,
+    "compl_median_mm": 55.71,
+    "depth_head_mae_mm": 66.4,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_omnivggt",
+    "view_config": "head",
+    "route": "depth_unproject",
+    "align_mode": "oracle",
+    "acc_median_mm": 29.05,
+    "acc_fscore_10mm": 0.358,
+    "compl_median_mm": 28.05,
+    "depth_head_mae_mm": 43.2,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_omnivggt",
+    "view_config": "head",
+    "route": "world_points",
+    "align_mode": "deployable",
+    "acc_median_mm": 46.14,
+    "acc_fscore_10mm": 0.196,
+    "compl_median_mm": 54.94,
+    "depth_head_mae_mm": 67.7,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_omnivggt",
+    "view_config": "head",
+    "route": "world_points",
+    "align_mode": "oracle",
+    "acc_median_mm": 29.42,
+    "acc_fscore_10mm": 0.343,
+    "compl_median_mm": 28.63,
+    "depth_head_mae_mm": 48.3,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_omnivggt",
+    "view_config": "head+left_wrist+right_wrist",
+    "route": "depth_gt_calib(g3)",
+    "align_mode": "deployable",
+    "acc_median_mm": 75.68,
+    "acc_fscore_10mm": 0.065,
+    "compl_median_mm": 92.44,
+    "depth_head_mae_mm": 212.2,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_omnivggt",
+    "view_config": "head+left_wrist+right_wrist",
+    "route": "depth_unproject",
+    "align_mode": "oracle",
+    "acc_median_mm": 56.66,
+    "acc_fscore_10mm": 0.083,
+    "compl_median_mm": 27.46,
+    "depth_head_mae_mm": 154.2,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_omnivggt",
+    "view_config": "head+left_wrist+right_wrist",
+    "route": "world_points",
+    "align_mode": "deployable",
+    "acc_median_mm": 152.28,
+    "acc_fscore_10mm": 0.039,
+    "compl_median_mm": 209.83,
+    "depth_head_mae_mm": 101.6,
+    "n_frames": 4
+  },
+  {
+    "model": "vggt_omnivggt",
+    "view_config": "head+left_wrist+right_wrist",
+    "route": "world_points",
+    "align_mode": "oracle",
+    "acc_median_mm": 37.99,
+    "acc_fscore_10mm": 0.161,
+    "compl_median_mm": 23.55,
+    "depth_head_mae_mm": 131.9,
+    "n_frames": 4
+  }
+]

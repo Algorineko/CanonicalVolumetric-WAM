@@ -1,0 +1,18 @@
+{
+  "cam_head/scene_change": {
+    "newly_hit_total": 915,
+    "pairs": 40
+  },
+  "cam_left_wrist/camera_motion": {
+    "newly_hit_total": 1460,
+    "pairs": 11
+  },
+  "cam_left_wrist/scene_change": {
+    "newly_hit_total": 227,
+    "pairs": 29
+  },
+  "cam_right_wrist/scene_change": {
+    "newly_hit_total": 0,
+    "pairs": 40
+  }
+}

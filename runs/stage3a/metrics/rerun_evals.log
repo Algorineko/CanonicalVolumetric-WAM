@@ -1,0 +1,13 @@
+eval p0: 2712 rows, latency 13 ms/batch, peak 0.04 GiB -> runs/stage3a/metrics/eval_p0.csv
+eval p1: 2712 rows, latency 23 ms/batch, peak 1.24 GiB -> runs/stage3a/metrics/eval_p1.csv
+eval p1_v: 2712 rows, latency 23 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v.csv
+eval p0_drop_head_only: 344 rows, latency 16 ms/batch, peak 0.04 GiB -> runs/stage3a/metrics/eval_p0_drop_head_only.csv
+eval p1_drop_head_only: 344 rows, latency 27 ms/batch, peak 1.24 GiB -> runs/stage3a/metrics/eval_p1_drop_head_only.csv
+eval p1_v_drop_head_only: 344 rows, latency 27 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v_drop_head_only.csv
+eval p0_drop_head_left: 344 rows, latency 16 ms/batch, peak 0.04 GiB -> runs/stage3a/metrics/eval_p0_drop_head_left.csv
+eval p1_drop_head_left: 344 rows, latency 27 ms/batch, peak 1.24 GiB -> runs/stage3a/metrics/eval_p1_drop_head_left.csv
+eval p1_v_drop_head_left: 344 rows, latency 27 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v_drop_head_left.csv
+eval p0_drop_head_right: 344 rows, latency 16 ms/batch, peak 0.04 GiB -> runs/stage3a/metrics/eval_p0_drop_head_right.csv
+eval p1_drop_head_right: 344 rows, latency 27 ms/batch, peak 1.24 GiB -> runs/stage3a/metrics/eval_p1_drop_head_right.csv
+eval p1_v_drop_head_right: 344 rows, latency 27 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v_drop_head_right.csv
+REEVALS_DONE

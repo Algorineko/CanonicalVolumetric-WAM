@@ -1,0 +1,10 @@
+eval p0: 344 rows, latency 17 ms/batch, peak 0.04 GiB -> runs/stage3a/metrics/eval_p0.csv
+eval p1: 344 rows, latency 27 ms/batch, peak 1.24 GiB -> runs/stage3a/metrics/eval_p1.csv
+eval p1_v: 344 rows, latency 27 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v.csv
+eval p0: 344 rows, latency 17 ms/batch, peak 0.04 GiB -> runs/stage3a/metrics/eval_p0.csv
+eval p1: 344 rows, latency 27 ms/batch, peak 1.24 GiB -> runs/stage3a/metrics/eval_p1.csv
+eval p1_v: 344 rows, latency 27 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v.csv
+eval p0: 344 rows, latency 16 ms/batch, peak 0.04 GiB -> runs/stage3a/metrics/eval_p0.csv
+eval p1: 344 rows, latency 27 ms/batch, peak 1.24 GiB -> runs/stage3a/metrics/eval_p1.csv
+eval p1_v: 344 rows, latency 27 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v.csv
+DROPOUT_EVALS_DONE

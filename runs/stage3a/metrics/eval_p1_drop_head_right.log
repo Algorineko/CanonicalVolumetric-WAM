@@ -1,0 +1,1 @@
+eval p1: 344 rows, latency 27 ms/batch, peak 1.24 GiB -> runs/stage3a/metrics/eval_p1.csv

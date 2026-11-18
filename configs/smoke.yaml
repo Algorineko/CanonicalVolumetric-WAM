@@ -1,0 +1,58 @@
+# CV-WAM smoke test config (Stage 1/2/2b) — 2026-11-18
+# All paths are absolute; heavy artifacts live on /data (root partition nearly full).
+
+task: open_microwave          # plan.md §5.1 prefers stack_blocks_two/pick_dual_bottles,
+                              # but no GT-depth data exists for them locally; user confirmed
+                              # reusing existing open_microwave data (zero new collection).
+data_root: /data/openmw_balanced_work
+variants:
+  - demo_clean_balanced
+  - demo_randomized_balanced
+episodes:
+  demo_clean_balanced: [10, 25, 40]
+  demo_randomized_balanced: [0, 1]
+timestep_mode: uniform5       # t in {0, T//4, T//2, 3T//4, T-2}
+
+camera:
+  name_map: {cam_head: head, cam_left_wrist: left_wrist, cam_right_wrist: right_wrist}
+  extrinsics_key: extrinsics_matrix      # cam2world_gl (cam->world, OpenGL axes)
+  intrinsics_key: intrinsic_matrix       # (3,3) OpenCV K at 320x240
+  depth_codec: ffv1                      # gray16le uint16 millimeters, z-depth, 0 = invalid
+  image_shape: [240, 320, 3]
+
+robot_base:
+  # RoboTwin aloha-agilex robot_pose: [x,y,z, qw,qx,qy,qz] (envs/robot/robot.py:63-64)
+  # world <- base: pos [0,-0.65,0], quat wxyz [0.707,0,0,0.707] => Rz(90deg)
+  # Sanity anchor: head camera center in base frame must equal [0.2, 0.032, 1.35]
+  pos_m: [0.0, -0.65, 0.0]
+  quat_wxyz: [0.7071067811865476, 0.0, 0.0, 0.7071067811865476]
+  head_cam_base_anchor_m: [0.2, 0.032, 1.35]
+  anchor_tol_m: 0.001
+
+workspace_bbox_base:          # Stage 2c revision: randomized episodes have LOWER tables
+  x: [0.30, 1.10]             # (0.727-0.730 base) and scene extends to x~1.05; measured via
+  y: [-0.65, 0.65]            # stage2c_workspace_check.py. Per-episode table height is
+  z: [0.71, 1.60]             # stored in each episode manifest (clean ~0.7401).
+table_z_base: 0.7401          # world table height == base-frame z (Rz only rotates xy)
+
+voxel:
+  pitches_m: [0.02, 0.01]
+  local_fine_pitch_m: 0.005   # optional, small region only
+
+vggt:
+  official_repo: /data/canonical-volumetric-wam/third_party/vggt
+  weights: /data/canonical-volumetric-wam/weights/VGGT-1B/model.pt
+  hub_id: facebook/VGGT-1B
+  mirror: https://hf-mirror.com
+  device: cuda:0
+omnivggt:
+  code: /home/zhangjialiang/code/OmniVGGT-code-upstream
+  weights: /data/physadapt_models/omnivggt/OmniVGGT.safetensors
+  env_python: /home/zhangjialiang/code/PhysAdaptWAM/.venv-wam/bin/python
+  recipe_ref: /home/zhangjialiang/code/PhysAdaptWAM/archive/20261113/scripts/audit_spatial_teacher.py
+
+envs:
+  main_python: /home/zhangjialiang/miniconda3/envs/openwam/bin/python   # h5py+av+cv2+torch
+  viz_python: /home/zhangjialiang/code/PhysAdaptWAM/.venv-wam/bin/python # matplotlib
+heavy_root: /data/canonical-volumetric-wam
+cache_dir: /data/canonical-volumetric-wam/cache

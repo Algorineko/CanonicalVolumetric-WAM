@@ -1,0 +1,17 @@
+[PASS] [head cam pose] unproject count — 76800/76800
+[PASS] [head cam pose] project(unproject(p)) == (u,v) — max px err 1.78e-13
+[PASS] [head cam pose] z-depth roundtrip < 1e-5 m — 2.22e-16 m
+[PASS] [nontrivial R] unproject count — 76800/76800
+[PASS] [nontrivial R] project(unproject(p)) == (u,v) — max px err 1.71e-13
+[PASS] [nontrivial R] z-depth roundtrip < 1e-5 m — 4.44e-16 m
+[PASS] cam2world_gl from config vectors == HDF5-verified matrix — 0.00e+00
+[PASS] T_base_world @ T_world_base == I
+[PASS] head cam base-frame anchor [0.2,0.032,1.35] — err 4.16e-17 m
+[PASS] head optical axis points forward/down — opt dir [ 0.   0.6 -0.8]
+[PASS] table point base coords — [6.50000000e-01 1.44328993e-16 7.40100000e-01]
+[PASS] table point in camera frustum — z_cam 0.758
+[PASS] gl/cv axis-flip consistency
+[PASS] ply header ok
+[PASS] ply body ok
+
+ALL TESTS PASSED

@@ -1,0 +1,358 @@
+[
+ {
+  "episode": "demo_clean_balanced:10",
+  "offset": 1,
+  "pairs": 423,
+  "tm_all": [
+   [
+    3333861,
+    10339,
+    12669
+   ],
+   [
+    10201,
+    43752404,
+    103928
+   ],
+   [
+    9745,
+    66716,
+    344228937
+   ]
+  ],
+  "all_physical_flip_rate": 5e-05,
+  "all_vis_flip_rate": 0.00049,
+  "all_hit_free_to_unknown": 0.0002,
+  "all_unknown_to_observed": 0.0002,
+  "tm_table": [
+   [
+    1734813,
+    565,
+    2434
+   ],
+   [
+    484,
+    3460941,
+    5843
+   ],
+   [
+    1134,
+    2997,
+    7988389
+   ]
+  ],
+  "table_physical_flip_rate": 8e-05,
+  "table_vis_flip_rate": 0.00094,
+  "table_hit_free_to_unknown": 0.00041,
+  "table_unknown_to_observed": 0.00031,
+  "tm_robot": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "robot_physical_flip_rate": NaN,
+  "robot_vis_flip_rate": NaN,
+  "robot_hit_free_to_unknown": NaN,
+  "robot_unknown_to_observed": NaN,
+  "tm_object": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "object_physical_flip_rate": NaN,
+  "object_vis_flip_rate": NaN,
+  "object_hit_free_to_unknown": NaN,
+  "object_unknown_to_observed": NaN
+ },
+ {
+  "episode": "demo_clean_balanced:10",
+  "offset": 4,
+  "pairs": 420,
+  "tm_all": [
+   [
+    3258769,
+    28437,
+    45365
+   ],
+   [
+    27705,
+    43134663,
+    385364
+   ],
+   [
+    33851,
+    236834,
+    341601012
+   ]
+  ],
+  "all_physical_flip_rate": 0.00014,
+  "all_vis_flip_rate": 0.0018,
+  "all_hit_free_to_unknown": 0.00073,
+  "all_unknown_to_observed": 0.0007,
+  "tm_table": [
+   [
+    1714981,
+    1100,
+    9410
+   ],
+   [
+    636,
+    3420034,
+    21930
+   ],
+   [
+    4336,
+    10423,
+    7921150
+   ]
+  ],
+  "table_physical_flip_rate": 0.00013,
+  "table_vis_flip_rate": 0.00352,
+  "table_hit_free_to_unknown": 0.00151,
+  "table_unknown_to_observed": 0.00113,
+  "tm_robot": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "robot_physical_flip_rate": NaN,
+  "robot_vis_flip_rate": NaN,
+  "robot_hit_free_to_unknown": NaN,
+  "robot_unknown_to_observed": NaN,
+  "tm_object": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "object_physical_flip_rate": NaN,
+  "object_vis_flip_rate": NaN,
+  "object_hit_free_to_unknown": NaN,
+  "object_unknown_to_observed": NaN
+ },
+ {
+  "episode": "demo_clean_balanced:10",
+  "offset": 8,
+  "pairs": 416,
+  "tm_all": [
+   [
+    3172503,
+    46956,
+    80696
+   ],
+   [
+    45999,
+    42382381,
+    694284
+   ],
+   [
+    59267,
+    408346,
+    338159168
+   ]
+  ],
+  "all_physical_flip_rate": 0.00024,
+  "all_vis_flip_rate": 0.00323,
+  "all_hit_free_to_unknown": 0.00127,
+  "all_unknown_to_observed": 0.00121,
+  "tm_table": [
+   [
+    1689371,
+    1557,
+    18133
+   ],
+   [
+    752,
+    3367400,
+    41548
+   ],
+   [
+    8082,
+    18443,
+    7833914
+   ]
+  ],
+  "table_physical_flip_rate": 0.00018,
+  "table_vis_flip_rate": 0.00664,
+  "table_hit_free_to_unknown": 0.00282,
+  "table_unknown_to_observed": 0.00204,
+  "tm_robot": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "robot_physical_flip_rate": NaN,
+  "robot_vis_flip_rate": NaN,
+  "robot_hit_free_to_unknown": NaN,
+  "robot_unknown_to_observed": NaN,
+  "tm_object": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "object_physical_flip_rate": NaN,
+  "object_vis_flip_rate": NaN,
+  "object_hit_free_to_unknown": NaN,
+  "object_unknown_to_observed": NaN
+ },
+ {
+  "episode": "demo_clean_balanced:10",
+  "offset": 16,
+  "pairs": 408,
+  "tm_all": [
+   [
+    3028668,
+    74189,
+    132564
+   ],
+   [
+    78331,
+    41077543,
+    1116803
+   ],
+   [
+    95258,
+    620190,
+    331421254
+   ]
+  ],
+  "all_physical_flip_rate": 0.0004,
+  "all_vis_flip_rate": 0.0052,
+  "all_hit_free_to_unknown": 0.00199,
+  "all_unknown_to_observed": 0.00189,
+  "tm_table": [
+   [
+    1641295,
+    1548,
+    33366
+   ],
+   [
+    803,
+    3268252,
+    74822
+   ],
+   [
+    14573,
+    31858,
+    7663083
+   ]
+  ],
+  "table_physical_flip_rate": 0.00018,
+  "table_vis_flip_rate": 0.01215,
+  "table_hit_free_to_unknown": 0.00512,
+  "table_unknown_to_observed": 0.00365,
+  "tm_robot": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "robot_physical_flip_rate": NaN,
+  "robot_vis_flip_rate": NaN,
+  "robot_hit_free_to_unknown": NaN,
+  "robot_unknown_to_observed": NaN,
+  "tm_object": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "object_physical_flip_rate": NaN,
+  "object_vis_flip_rate": NaN,
+  "object_hit_free_to_unknown": NaN,
+  "object_unknown_to_observed": NaN
+ }
+]

@@ -1,0 +1,6 @@
+align,drift_mean_mm,drift_median_mm,drift_p95_mm,episode,n_table_pts,t
+head_anchor,3.57,1.9,10.62,demo_clean_balanced/episode_0000010,116161,213
+head_anchor,10.62,5.89,41.86,demo_clean_balanced/episode_0000010,195590,214
+head_anchor,3.08,2.37,8.23,demo_clean_balanced/episode_0000010,136768,215
+head_anchor,1.46,1.15,3.35,demo_clean_balanced/episode_0000010,133340,216
+head_anchor,1.26,1.09,2.71,demo_clean_balanced/episode_0000010,157166,217

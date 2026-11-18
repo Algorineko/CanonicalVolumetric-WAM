@@ -1,0 +1,1 @@
+eval act_only: 2712 rows, latency 22 ms/batch, peak 1.26 GiB -> runs/stage3a/metrics/eval_act_only.csv

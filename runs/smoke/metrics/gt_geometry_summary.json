@@ -1,0 +1,86 @@
+{
+  "head->left": {
+    "cluster_median_mm": {
+      "mean": 1.622,
+      "max": 4.451,
+      "n_valid": 30
+    },
+    "frac_lt_2mm": {
+      "mean": 0.043,
+      "min": 0.0
+    },
+    "frac_lt_10mm": {
+      "mean": 0.061
+    }
+  },
+  "head->righ": {
+    "cluster_median_mm": {
+      "mean": 0.893,
+      "max": 0.971,
+      "n_valid": 31
+    },
+    "frac_lt_2mm": {
+      "mean": 0.142,
+      "min": 0.12
+    },
+    "frac_lt_10mm": {
+      "mean": 0.156
+    }
+  },
+  "left->head": {
+    "cluster_median_mm": {
+      "mean": 1.781,
+      "max": 5.421,
+      "n_valid": 30
+    },
+    "frac_lt_2mm": {
+      "mean": 0.291,
+      "min": 0.0
+    },
+    "frac_lt_10mm": {
+      "mean": 0.42
+    }
+  },
+  "left->righ": {
+    "cluster_median_mm": {
+      "mean": 5.938,
+      "max": 6.282,
+      "n_valid": 7
+    },
+    "frac_lt_2mm": {
+      "mean": 0.0,
+      "min": 0.0
+    },
+    "frac_lt_10mm": {
+      "mean": 0.0
+    }
+  },
+  "righ->head": {
+    "cluster_median_mm": {
+      "mean": 1.273,
+      "max": 1.473,
+      "n_valid": 31
+    },
+    "frac_lt_2mm": {
+      "mean": 0.541,
+      "min": 0.39
+    },
+    "frac_lt_10mm": {
+      "mean": 0.619
+    }
+  },
+  "righ->left": {
+    "cluster_median_mm": {
+      "mean": 6.602,
+      "max": 6.633,
+      "n_valid": 7
+    },
+    "frac_lt_2mm": {
+      "mean": 0.0,
+      "min": 0.0
+    },
+    "frac_lt_10mm": {
+      "mean": 0.001
+    }
+  }
+}

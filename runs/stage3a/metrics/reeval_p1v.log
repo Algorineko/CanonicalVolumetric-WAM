@@ -1,0 +1,14 @@
+eval p1_v_drop_head_only: 344 rows, latency 26 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v_drop_head_only.csv
+eval p1_v_drop_head_left: 344 rows, latency 26 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v_drop_head_left.csv
+eval p1_v_drop_head_right: 344 rows, latency 26 ms/batch, peak 1.25 GiB -> runs/stage3a/metrics/eval_p1_v_drop_head_right.csv
+p1_v best_thr: {'4': 4.0, '8': 4.0, '12': 4.0, '16': 4.0}
+  k=4 occIoU@cal=0.867 falseOcc=0.0069 dynIoU=0.041
+  k=8 occIoU@cal=0.818 falseOcc=0.0076 dynIoU=0.040
+  k=12 occIoU@cal=0.813 falseOcc=0.0115 dynIoU=0.077
+  k=16 occIoU@cal=0.765 falseOcc=0.0118 dynIoU=0.074
+p1 best_thr: {'4': 2.0, '8': 2.0, '12': 1.5, '16': 1.5}
+  k=4 occIoU@cal=0.823 falseOcc=0.0027 dynIoU=0.107
+  k=8 occIoU@cal=0.794 falseOcc=0.0037 dynIoU=0.136
+  k=12 occIoU@cal=0.800 falseOcc=0.0047 dynIoU=0.188
+  k=16 occIoU@cal=0.769 falseOcc=0.0050 dynIoU=0.236
+P1V_REEVALS_DONE

@@ -1,0 +1,56 @@
+[demo_clean_balanced ep0000010] T=424 freq=15Hz timesteps=[0, 106, 212, 318, 422]
+  ffv1 frame counts == T: {'cam_head': 424, 'cam_left_wrist': 424, 'cam_right_wrist': 424}
+  t=  0 saved frame_0000000.npz depth_valid=[1.0, 1.0, 1.0]
+  t=106 saved frame_0000106.npz depth_valid=[1.0, 1.0, 1.0]
+  t=212 saved frame_0000212.npz depth_valid=[1.0, 1.0, 1.0]
+  t=318 saved frame_0000318.npz depth_valid=[1.0, 1.0, 1.0]
+  t=422 saved frame_0000422.npz depth_valid=[1.0, 1.0, 1.0]
+  codec cross-check cam_head t=212: identical (1.000000)
+  codec cross-check cam_left_wrist t=212: identical (1.000000)
+  codec cross-check cam_right_wrist t=212: identical (1.000000)
+  episode done in 1.1s
+[demo_clean_balanced ep0000025] T=605 freq=15Hz timesteps=[0, 151, 302, 453, 603]
+  ffv1 frame counts == T: {'cam_head': 605, 'cam_left_wrist': 605, 'cam_right_wrist': 605}
+  t=  0 saved frame_0000000.npz depth_valid=[1.0, 1.0, 1.0]
+  t=151 saved frame_0000151.npz depth_valid=[1.0, 1.0, 1.0]
+  t=302 saved frame_0000302.npz depth_valid=[1.0, 1.0, 1.0]
+  t=453 saved frame_0000453.npz depth_valid=[1.0, 1.0, 1.0]
+  t=603 saved frame_0000603.npz depth_valid=[1.0, 1.0, 1.0]
+  codec cross-check cam_head t=302: identical (1.000000)
+  codec cross-check cam_left_wrist t=302: identical (1.000000)
+  codec cross-check cam_right_wrist t=302: identical (1.000000)
+  episode done in 1.6s
+[demo_clean_balanced ep0000040] T=546 freq=15Hz timesteps=[0, 136, 273, 409, 544]
+  ffv1 frame counts == T: {'cam_head': 546, 'cam_left_wrist': 546, 'cam_right_wrist': 546}
+  t=  0 saved frame_0000000.npz depth_valid=[1.0, 1.0, 1.0]
+  t=136 saved frame_0000136.npz depth_valid=[1.0, 1.0, 1.0]
+  t=273 saved frame_0000273.npz depth_valid=[1.0, 1.0, 1.0]
+  t=409 saved frame_0000409.npz depth_valid=[1.0, 1.0, 1.0]
+  t=544 saved frame_0000544.npz depth_valid=[1.0, 1.0, 1.0]
+  codec cross-check cam_head t=273: identical (1.000000)
+  codec cross-check cam_left_wrist t=273: identical (1.000000)
+  codec cross-check cam_right_wrist t=273: identical (1.000000)
+  episode done in 1.5s
+[demo_randomized_balanced ep0000000] T=570 freq=15Hz timesteps=[0, 142, 285, 427, 568]
+  ffv1 frame counts == T: {'cam_head': 570, 'cam_left_wrist': 570, 'cam_right_wrist': 570}
+  t=  0 saved frame_0000000.npz depth_valid=[1.0, 1.0, 1.0]
+  t=142 saved frame_0000142.npz depth_valid=[1.0, 1.0, 1.0]
+  t=285 saved frame_0000285.npz depth_valid=[1.0, 1.0, 1.0]
+  t=427 saved frame_0000427.npz depth_valid=[1.0, 1.0, 1.0]
+  t=568 saved frame_0000568.npz depth_valid=[1.0, 1.0, 1.0]
+  codec cross-check cam_head t=285: identical (1.000000)
+  codec cross-check cam_left_wrist t=285: identical (1.000000)
+  codec cross-check cam_right_wrist t=285: identical (1.000000)
+  episode done in 1.7s
+[demo_randomized_balanced ep0000001] T=820 freq=15Hz timesteps=[0, 205, 410, 615, 818]
+  ffv1 frame counts == T: {'cam_head': 820, 'cam_left_wrist': 820, 'cam_right_wrist': 820}
+  t=  0 saved frame_0000000.npz depth_valid=[1.0, 1.0, 1.0]
+  t=205 saved frame_0000205.npz depth_valid=[1.0, 1.0, 1.0]
+  t=410 saved frame_0000410.npz depth_valid=[1.0, 1.0, 1.0]
+  t=615 saved frame_0000615.npz depth_valid=[1.0, 1.0, 1.0]
+  t=818 saved frame_0000818.npz depth_valid=[1.0, 1.0, 1.0]
+  codec cross-check cam_head t=410: identical (1.000000)
+  codec cross-check cam_left_wrist t=410: identical (1.000000)
+  codec cross-check cam_right_wrist t=410: identical (1.000000)
+  episode done in 2.1s
+manifest -> /data/canonical-volumetric-wam/cache/frames/manifest.jsonl (25 samples)
