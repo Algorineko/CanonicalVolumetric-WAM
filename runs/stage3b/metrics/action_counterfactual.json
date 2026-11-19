@@ -1,0 +1,16 @@
+{
+  "p1": {
+    "changed_cells_per_sample": 0.0,
+    "changed_at_gt_flip": 0.0351,
+    "mean_abs_dlogit_gt_flip": 0.5724,
+    "mean_abs_dlogit_all": 0.0264,
+    "note": "changed_at_gt_flip = fraction of GT-flip cells whose binary prediction depends on the action; dlogit = |occ_real-occ_hold| mean over cells (threshold-free conditioning strength)"
+  },
+  "p1_v": {
+    "changed_cells_per_sample": 0.0,
+    "changed_at_gt_flip": 0.022,
+    "mean_abs_dlogit_gt_flip": 0.4021,
+    "mean_abs_dlogit_all": 0.4616,
+    "note": "changed_at_gt_flip = fraction of GT-flip cells whose binary prediction depends on the action; dlogit = |occ_real-occ_hold| mean over cells (threshold-free conditioning strength)"
+  }
+}
