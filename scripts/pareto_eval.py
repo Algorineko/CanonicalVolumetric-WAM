@@ -163,18 +163,30 @@ def calibrate(val_loader, model, variant, device):
         seg = np.concatenate([np.full(int(c.sum()), i, dtype=np.int32)
                               for i, c in enumerate(free_counts[k])])
         nf = np.concatenate(free_counts[k]).astype(np.float64)
-        qs = np.quantile(lg, np.linspace(0, 1, 41))
+        # dense grid: 201 quantiles + midpoints between consecutive distinct
+        # values (v1's 41-quantile grid skipped the budget-crossing interval
+        # and degenerated to fo=0 operating points — archived in
+        # failures/pareto_v2_sparse_grid/)
+        qs = np.quantile(lg, np.linspace(0, 1, 201))
+        qs = np.unique(qs)
+        mids = (qs[1:] + qs[:-1]) / 2
+        grid = np.unique(np.concatenate([qs, mids, [0.0]]))
+        fos = []
+        for thr in grid:
+            cnt = np.bincount(seg, weights=(lg > thr).astype(np.float64),
+                              minlength=len(nf))
+            fos.append(np.mean(cnt / np.maximum(nf, 1)))
+        fos = np.asarray(fos)
         for b in BUDGETS:
-            best_thr, best_err = float(qs[0]), 1e9
-            for thr in qs:
-                cnt = np.bincount(seg, weights=(lg > thr).astype(np.float64),
-                                  minlength=len(nf))
-                fo = np.mean(cnt / np.maximum(nf, 1))
-                if abs(fo - b) < best_err:
-                    best_err, best_thr = abs(fo - b), float(thr)
-            thr_tables[b][k] = best_thr
-            print(f"  [thr] k={k} budget={b} thr={best_thr:.3f} "
-                  f"(err {best_err:.4f})", flush=True)
+            feasible = np.nonzero(fos <= b)[0]
+            if len(feasible):
+                # recall-max under budget: largest fo still <= b
+                i = feasible[np.argmax(fos[feasible])]
+            else:  # nothing meets the budget -> most conservative (min fo)
+                i = int(np.argmin(fos))
+            thr_tables[b][k] = float(grid[i])
+            print(f"  [thr] k={k} budget={b} thr={grid[i]:.3f} "
+                  f"(fo={fos[i]:.4f})", flush=True)
         free_logits[k] = None
     return thr_tables
 

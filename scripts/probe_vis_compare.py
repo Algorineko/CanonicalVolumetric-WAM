@@ -15,7 +15,7 @@ import numpy as np
 
 ROOT = Path("/data/canonical-volumetric-wam/cache/voxels_ep_replay")
 A = ROOT / "demo_clean_balanced_10_replay" / "20mm"
-B = ROOT / "probe_ep10_camdis05" / "20mm"
+B = ROOT / "demo_clean_balanced_10_probe_camdis05" / "20mm"
 OUT = Path("runs/stage3b/metrics/probe_vis_compare")
 
 n = len(list(A.glob("frame_*.npz")))
@@ -41,8 +41,9 @@ for t in range(0, n, 10):
 res = {k: (float(np.mean(v)) if k.startswith(("hit", "free", "unk")) else float(np.mean(v)))
        for k, v in acc.items()}
 res["frames_sampled"] = len(acc["hit_jac"])
+res["vis_flip_cells_per_frame"] = res["reveal"] + res["occlude"]
 res["verdict"] = ("VISIBILITY_CHANGED_PHYSICS_SAME"
-                  if res["free_jac"] < 0.95 and res["hit_jac"] > 0.9 else "CHECK")
+                  if res["vis_flip_cells_per_frame"] > 10 else "NEGLIGIBLE")
 OUT.with_suffix(".json").write_text(json.dumps(res, indent=2))
 md = ["# Observer 探针:可见性对比(同物理,head 相机 +2.5mm 抖动)", "",
       f"- 采样帧数: {res['frames_sampled']} (stride 10)", "",

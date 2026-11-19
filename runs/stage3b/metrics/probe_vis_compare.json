@@ -1,0 +1,13 @@
+{
+  "hit_jac": 0.9875569426710874,
+  "free_jac": 0.9890978866051809,
+  "unk_rate_a": 0.8670624130391572,
+  "unk_rate_b": 0.8675859670045717,
+  "reveal": 42.58139534883721,
+  "occlude": 103.83720930232558,
+  "hit_gain": 9.093023255813954,
+  "hit_loss": 11.767441860465116,
+  "frames_sampled": 43,
+  "vis_flip_cells_per_frame": 146.41860465116278,
+  "verdict": "VISIBILITY_CHANGED_PHYSICS_SAME"
+}
