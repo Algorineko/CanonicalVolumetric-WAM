@@ -41,3 +41,8 @@
 **裁决规则(审查方 §1.2)@budget=0.01: P1-V 无稳定优势 → 因式分解作为训练技巧;范式裁决交给 Stage 3c 表示对照**
 
 _门区/物体级旁证(door_eval,固定阈值): P1/P1-V new_recall 0.58–0.87 prec 1.0 vs P0 0.0;P1-W 更差、P1-F 显著更差(dyn 0.09 vs 0.42)——见 runs/stage3b/metrics/door/door_summary.csv_
+## 协议噪声注记(2026-11-20,阈值扫描后补)
+
+test 侧固定阈值扫描(runs/stage3c/metrics/thr_sweep.csv,同批验证 IoU 与本协议一致)显示:在 test 实测匹配 falseOcc 点上 P1-V − P1 ≈ **+0.04–0.06**(clean thr 0: 0.379 vs 0.329;thr -1: 0.439 vs 0.412)。而 VAL 校准协议下为 −0.014 @0.01。差异来源:P1-V 的 val→test 阈值迁移噪声(±0.03 量级)。
+
+**结论保持**:匹配预算下 P1-V 无稳健优势(协议依赖,±0.05 内)——不足以支撑机制主张;factorization 降级维持。但"解耦监督严格有害"也不成立,准确表述是:**该差异小于协议噪声,不构成论文级主张**。

@@ -59,7 +59,7 @@ qpos 映射勘误:replay npz 的 qpos 曾错误截取 robot_qpos_actual[:14](实
 ## 7. 五项明确决策
 
 1. Factorization 是否保留?**否——降级为训练技巧**(匹配预算全表 ≤0,P1-W 可复现,P1-F 反而最差;详见 §1)
-2. Voxel/Point/View 正式表示?**倾向:实际操作区点+free(P2E)与体素持平或略优,极严格预算体素独活;体素额外保留 unknown/visibility 语义**——待 P2E 2 seeds + 阈值扫描(校准迁移疑点)后定稿
+2. Voxel/Point/View 正式表示?**体素(canonical voxel)**——阈值扫描定稿(stage3c/report.md):域内点表示前沿更优(clean +0.05–0.13)但随机化下 falseOcc 膨胀 8×、匹配 fo 处体素反超(0.474 vs 0.348);体素另承载 unknown/visibility 语义接口。域内无随机化场景点表示是合理替代。
 3. 对象动力学是否真实可预测?**是**(door_new_recall 0.58–0.87 vs persistence 0.0,prec 1.0)——该结果不依赖 factorization
 4. Observer-Factorized 架构实现条件?**具备**(L4 探针:同物理 2.5mm 相机偏移 → 146 cells/帧可见性翻转、物理 0 变化;多相机配置数据构造已管线化 `--head-cam-dis`)
 5. 是否进入 Tiny Joint WAM?**有条件进入**:先 Observation Model tiny prototype(visibility 跨相机迁移验证,<1h GPU,见 research/next_model_design.md);Geometry-Action 闭环对照超出本批预算,列为下一阶段提案
