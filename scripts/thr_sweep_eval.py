@@ -82,8 +82,8 @@ def main():
                 for j in idx.tolist():
                     for t in THRS:
                         pred = occ[j] > t
-                        inter = (pred & dyn[j] & obs[j]).sum().item()
-                        uni = ((pred & obs[j]) | (gt_hit[j] & dyn[j])).sum().item()
+                        inter = (pred & dyn[j]).sum().item()
+                        uni = ((pred & dyn[j]) | (gt_hit[j] & dyn[j])).sum().item()
                         fo_n = (pred & gt_free[j]).sum().item()
                         fo_d = max(int(gt_free[j].sum()), 1)
                         acc[t]["dyn_i"].append(inter)
