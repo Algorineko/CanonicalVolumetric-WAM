@@ -1,0 +1,326 @@
+[data] val 19456 pairs, test 11968 pairs
+[start] p0
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=-1000000.000 (fo=0.0007)
+  [thr] k=4 budget=0.005 thr=-1000000.000 (fo=0.0007)
+  [thr] k=4 budget=0.01 thr=-1000000.000 (fo=0.0007)
+  [thr] k=4 budget=0.02 thr=-1000000.000 (fo=0.0007)
+  [thr] k=8 budget=0.002 thr=-1000000.000 (fo=0.0012)
+  [thr] k=8 budget=0.005 thr=-1000000.000 (fo=0.0012)
+  [thr] k=8 budget=0.01 thr=-1000000.000 (fo=0.0012)
+  [thr] k=8 budget=0.02 thr=-1000000.000 (fo=0.0012)
+  [thr] k=12 budget=0.002 thr=-1000000.000 (fo=0.0017)
+  [thr] k=12 budget=0.005 thr=-1000000.000 (fo=0.0017)
+  [thr] k=12 budget=0.01 thr=-1000000.000 (fo=0.0017)
+  [thr] k=12 budget=0.02 thr=-1000000.000 (fo=0.0017)
+  [thr] k=16 budget=0.002 thr=1000000.000 (fo=0.0000)
+  [thr] k=16 budget=0.005 thr=-1000000.000 (fo=0.0020)
+  [thr] k=16 budget=0.01 thr=-1000000.000 (fo=0.0020)
+  [thr] k=16 budget=0.02 thr=-1000000.000 (fo=0.0020)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p0: 320 rows -> runs/stage3b/metrics/pareto/pareto_p0.csv
+[start] p1_s42
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=6.613 (fo=0.0001)
+  [thr] k=4 budget=0.005 thr=-0.590 (fo=0.0049)
+  [thr] k=4 budget=0.01 thr=-1.982 (fo=0.0098)
+  [thr] k=4 budget=0.02 thr=-3.887 (fo=0.0195)
+  [thr] k=8 budget=0.002 thr=6.534 (fo=0.0001)
+  [thr] k=8 budget=0.005 thr=-0.235 (fo=0.0049)
+  [thr] k=8 budget=0.01 thr=-1.582 (fo=0.0098)
+  [thr] k=8 budget=0.02 thr=-3.457 (fo=0.0195)
+  [thr] k=12 budget=0.002 thr=6.848 (fo=0.0001)
+  [thr] k=12 budget=0.005 thr=0.462 (fo=0.0049)
+  [thr] k=12 budget=0.01 thr=-0.907 (fo=0.0098)
+  [thr] k=12 budget=0.02 thr=-2.871 (fo=0.0196)
+  [thr] k=16 budget=0.002 thr=6.785 (fo=0.0001)
+  [thr] k=16 budget=0.005 thr=0.624 (fo=0.0049)
+  [thr] k=16 budget=0.01 thr=-0.777 (fo=0.0098)
+  [thr] k=16 budget=0.02 thr=-2.794 (fo=0.0196)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p1_s42: 320 rows -> runs/stage3b/metrics/pareto/pareto_p1_s42.csv
+[start] p1_s43
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=6.462 (fo=0.0001)
+  [thr] k=4 budget=0.005 thr=0.117 (fo=0.0049)
+  [thr] k=4 budget=0.01 thr=-1.355 (fo=0.0098)
+  [thr] k=4 budget=0.02 thr=-3.420 (fo=0.0195)
+  [thr] k=8 budget=0.002 thr=6.547 (fo=0.0001)
+  [thr] k=8 budget=0.005 thr=0.618 (fo=0.0049)
+  [thr] k=8 budget=0.01 thr=-0.721 (fo=0.0098)
+  [thr] k=8 budget=0.02 thr=-2.656 (fo=0.0195)
+  [thr] k=12 budget=0.002 thr=6.483 (fo=0.0000)
+  [thr] k=12 budget=0.005 thr=0.994 (fo=0.0049)
+  [thr] k=12 budget=0.01 thr=-0.315 (fo=0.0098)
+  [thr] k=12 budget=0.02 thr=-2.209 (fo=0.0195)
+  [thr] k=16 budget=0.002 thr=6.258 (fo=0.0000)
+  [thr] k=16 budget=0.005 thr=1.159 (fo=0.0049)
+  [thr] k=16 budget=0.01 thr=-0.135 (fo=0.0098)
+  [thr] k=16 budget=0.02 thr=-2.044 (fo=0.0196)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p1_s43: 320 rows -> runs/stage3b/metrics/pareto/pareto_p1_s43.csv
+[start] p1_s44
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=6.189 (fo=0.0001)
+  [thr] k=4 budget=0.005 thr=-0.269 (fo=0.0049)
+  [thr] k=4 budget=0.01 thr=-1.803 (fo=0.0098)
+  [thr] k=4 budget=0.02 thr=-3.744 (fo=0.0195)
+  [thr] k=8 budget=0.002 thr=6.388 (fo=0.0001)
+  [thr] k=8 budget=0.005 thr=0.595 (fo=0.0049)
+  [thr] k=8 budget=0.01 thr=-0.785 (fo=0.0098)
+  [thr] k=8 budget=0.02 thr=-2.729 (fo=0.0195)
+  [thr] k=12 budget=0.002 thr=5.933 (fo=0.0001)
+  [thr] k=12 budget=0.005 thr=0.783 (fo=0.0049)
+  [thr] k=12 budget=0.01 thr=-0.468 (fo=0.0098)
+  [thr] k=12 budget=0.02 thr=-2.298 (fo=0.0196)
+  [thr] k=16 budget=0.002 thr=6.003 (fo=0.0001)
+  [thr] k=16 budget=0.005 thr=1.163 (fo=0.0049)
+  [thr] k=16 budget=0.01 thr=-0.047 (fo=0.0098)
+  [thr] k=16 budget=0.02 thr=-1.886 (fo=0.0196)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p1_s44: 320 rows -> runs/stage3b/metrics/pareto/pareto_p1_s44.csv
+[start] p1_v_s42
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=10.753 (fo=0.0001)
+  [thr] k=4 budget=0.005 thr=-0.065 (fo=0.0049)
+  [thr] k=4 budget=0.01 thr=-1.474 (fo=0.0098)
+  [thr] k=4 budget=0.02 thr=-3.521 (fo=0.0195)
+  [thr] k=8 budget=0.002 thr=11.834 (fo=0.0001)
+  [thr] k=8 budget=0.005 thr=0.984 (fo=0.0049)
+  [thr] k=8 budget=0.01 thr=-0.277 (fo=0.0098)
+  [thr] k=8 budget=0.02 thr=-2.157 (fo=0.0195)
+  [thr] k=12 budget=0.002 thr=13.088 (fo=0.0001)
+  [thr] k=12 budget=0.005 thr=1.304 (fo=0.0049)
+  [thr] k=12 budget=0.01 thr=-0.043 (fo=0.0098)
+  [thr] k=12 budget=0.02 thr=-2.120 (fo=0.0196)
+  [thr] k=16 budget=0.002 thr=12.789 (fo=0.0001)
+  [thr] k=16 budget=0.005 thr=1.571 (fo=0.0049)
+  [thr] k=16 budget=0.01 thr=0.218 (fo=0.0098)
+  [thr] k=16 budget=0.02 thr=-1.814 (fo=0.0196)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p1_v_s42: 320 rows -> runs/stage3b/metrics/pareto/pareto_p1_v_s42.csv
+[start] p1_v_s43
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=12.520 (fo=0.0000)
+  [thr] k=4 budget=0.005 thr=-0.432 (fo=0.0049)
+  [thr] k=4 budget=0.01 thr=-2.100 (fo=0.0098)
+  [thr] k=4 budget=0.02 thr=-4.374 (fo=0.0195)
+  [thr] k=8 budget=0.002 thr=13.524 (fo=0.0001)
+  [thr] k=8 budget=0.005 thr=0.573 (fo=0.0049)
+  [thr] k=8 budget=0.01 thr=-1.041 (fo=0.0098)
+  [thr] k=8 budget=0.02 thr=-3.186 (fo=0.0195)
+  [thr] k=12 budget=0.002 thr=13.960 (fo=0.0001)
+  [thr] k=12 budget=0.005 thr=1.499 (fo=0.0049)
+  [thr] k=12 budget=0.01 thr=-0.124 (fo=0.0098)
+  [thr] k=12 budget=0.02 thr=-2.293 (fo=0.0195)
+  [thr] k=16 budget=0.002 thr=13.964 (fo=0.0001)
+  [thr] k=16 budget=0.005 thr=1.668 (fo=0.0049)
+  [thr] k=16 budget=0.01 thr=0.051 (fo=0.0098)
+  [thr] k=16 budget=0.02 thr=-1.942 (fo=0.0196)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p1_v_s43: 320 rows -> runs/stage3b/metrics/pareto/pareto_p1_v_s43.csv
+[start] p1_v_s44
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=14.179 (fo=0.0000)
+  [thr] k=4 budget=0.005 thr=-0.300 (fo=0.0049)
+  [thr] k=4 budget=0.01 thr=-1.701 (fo=0.0098)
+  [thr] k=4 budget=0.02 thr=-3.672 (fo=0.0195)
+  [thr] k=8 budget=0.002 thr=13.616 (fo=0.0000)
+  [thr] k=8 budget=0.005 thr=0.131 (fo=0.0049)
+  [thr] k=8 budget=0.01 thr=-1.341 (fo=0.0098)
+  [thr] k=8 budget=0.02 thr=-3.572 (fo=0.0195)
+  [thr] k=12 budget=0.002 thr=13.696 (fo=0.0000)
+  [thr] k=12 budget=0.005 thr=0.556 (fo=0.0049)
+  [thr] k=12 budget=0.01 thr=-1.047 (fo=0.0098)
+  [thr] k=12 budget=0.02 thr=-3.474 (fo=0.0196)
+  [thr] k=16 budget=0.002 thr=12.893 (fo=0.0000)
+  [thr] k=16 budget=0.005 thr=1.164 (fo=0.0049)
+  [thr] k=16 budget=0.01 thr=-0.317 (fo=0.0098)
+  [thr] k=16 budget=0.02 thr=-2.613 (fo=0.0196)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p1_v_s44: 320 rows -> runs/stage3b/metrics/pareto/pareto_p1_v_s44.csv
+[start] p1_w_s42
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=6.708 (fo=0.0001)
+  [thr] k=4 budget=0.005 thr=-0.400 (fo=0.0049)
+  [thr] k=4 budget=0.01 thr=-1.809 (fo=0.0098)
+  [thr] k=4 budget=0.02 thr=-3.619 (fo=0.0195)
+  [thr] k=8 budget=0.002 thr=6.819 (fo=0.0001)
+  [thr] k=8 budget=0.005 thr=-0.178 (fo=0.0049)
+  [thr] k=8 budget=0.01 thr=-1.598 (fo=0.0098)
+  [thr] k=8 budget=0.02 thr=-3.455 (fo=0.0195)
+  [thr] k=12 budget=0.002 thr=7.068 (fo=0.0001)
+  [thr] k=12 budget=0.005 thr=0.320 (fo=0.0049)
+  [thr] k=12 budget=0.01 thr=-1.031 (fo=0.0098)
+  [thr] k=12 budget=0.02 thr=-2.776 (fo=0.0195)
+  [thr] k=16 budget=0.002 thr=7.224 (fo=0.0001)
+  [thr] k=16 budget=0.005 thr=0.632 (fo=0.0049)
+  [thr] k=16 budget=0.01 thr=-0.730 (fo=0.0098)
+  [thr] k=16 budget=0.02 thr=-2.456 (fo=0.0196)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p1_w_s42: 320 rows -> runs/stage3b/metrics/pareto/pareto_p1_w_s42.csv
+[start] p1_f_s42
+  [cal 0/304]
+  [cal 50/304]
+  [cal 100/304]
+  [cal 150/304]
+  [cal 200/304]
+  [cal 250/304]
+  [cal 300/304]
+  [thr] k=4 budget=0.002 thr=0.000 (fo=0.0014)
+  [thr] k=4 budget=0.005 thr=-2.314 (fo=0.0049)
+  [thr] k=4 budget=0.01 thr=-3.546 (fo=0.0098)
+  [thr] k=4 budget=0.02 thr=-4.952 (fo=0.0195)
+  [thr] k=8 budget=0.002 thr=0.000 (fo=0.0020)
+  [thr] k=8 budget=0.005 thr=-1.610 (fo=0.0049)
+  [thr] k=8 budget=0.01 thr=-2.737 (fo=0.0098)
+  [thr] k=8 budget=0.02 thr=-3.979 (fo=0.0195)
+  [thr] k=12 budget=0.002 thr=6.700 (fo=0.0001)
+  [thr] k=12 budget=0.005 thr=-1.314 (fo=0.0049)
+  [thr] k=12 budget=0.01 thr=-2.488 (fo=0.0098)
+  [thr] k=12 budget=0.02 thr=-3.767 (fo=0.0196)
+  [thr] k=16 budget=0.002 thr=5.966 (fo=0.0001)
+  [thr] k=16 budget=0.005 thr=-1.227 (fo=0.0049)
+  [thr] k=16 budget=0.01 thr=-2.318 (fo=0.0098)
+  [thr] k=16 budget=0.02 thr=-3.493 (fo=0.0196)
+  [val 0/304]
+  [val 50/304]
+  [val 100/304]
+  [val 150/304]
+  [val 200/304]
+  [val 250/304]
+  [val 300/304]
+  [test 0/187]
+  [test 50/187]
+  [test 100/187]
+  [test 150/187]
+[done] p1_f_s42: 320 rows -> runs/stage3b/metrics/pareto/pareto_p1_f_s42.csv
+[all done]
