@@ -50,6 +50,8 @@ def main():
     ap.add_argument("--config", default="configs/smoke.yaml")
     ap.add_argument("--pitch", type=float, default=0.02)
     ap.add_argument("--id-probe-frames", type=int, default=24)
+    ap.add_argument("--tag", default="replay",
+                    help="output dir suffix: {variant}_{episode}_{tag}")
     args = ap.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
     bbox = {ax: np.asarray(v, dtype=np.float64)
@@ -61,7 +63,7 @@ def main():
     img_dir = Path(args.replay_dir) / "rgbdepth"
     seg_dir = Path(args.replay_dir) / "seg"
     out_dir = Path(cfg["cache_dir"]) / "voxels_ep_replay" / \
-        f"{args.variant}_{args.episode}_replay" / "20mm"
+        f"{args.variant}_{args.episode}_{args.tag}" / "20mm"
     out_dir.mkdir(parents=True, exist_ok=True)
     _, _, shape = vx.grid_config(b_min, b_max, args.pitch)
 

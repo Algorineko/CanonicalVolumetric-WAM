@@ -1,0 +1,11 @@
+{
+  "frames_compared": 427,
+  "qpos_max_diff": 0.0,
+  "qpos_mean_diff": 0.0,
+  "door_angle_max_diff": 0.0,
+  "mic_pos_max_diff_m": 0.0,
+  "head_cam_center_diff_mean_m": 0.0025424270373792905,
+  "head_cam_center_diff_min_m": 0.00254242703737929,
+  "verdict_physics": "IDENTICAL",
+  "verdict_camera": "UNCHANGED"
+}

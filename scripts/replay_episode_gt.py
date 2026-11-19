@@ -38,11 +38,18 @@ def main():
     ap.add_argument("--episode", type=int, required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--max-frames", type=int, default=0, help="0 = all")
+    ap.add_argument("--head-cam-dis", type=float, default=0.0,
+                    help="observer probe: override domain_randomization."
+                         "random_head_camera_dis (camera jitter; RNG draw count "
+                         "is dis-independent so physics stays identical)")
     args_cli = ap.parse_args()
 
     os.chdir(ROBOTWIN)
     sys.path.insert(0, str(ROBOTWIN))
     config = yaml.safe_load((ROBOTWIN / "env_cfg/task_config/demo_clean_balanced.yml").read_text())
+    if args_cli.head_cam_dis != 0.0:
+        config.setdefault("domain_randomization", {})["random_head_camera_dis"] = \
+            args_cli.head_cam_dis
     robot = ROBOTWIN / "assets/embodiments/aloha-agilex"
     embodiment = yaml.safe_load((robot / "config.yml").read_text())
     out = Path(args_cli.out)
