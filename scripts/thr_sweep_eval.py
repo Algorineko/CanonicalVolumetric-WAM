@@ -96,10 +96,12 @@ def main():
                 gi = [i for i, g in enumerate(acc[t]["grp"]) if g == grp]
                 if not gi:
                     continue
-                inter = sum(acc[t]["dyn_i"][i] for i in gi)
-                uni = sum(acc[t]["dyn_u"][i] for i in gi)
-                fo = sum(acc[t]["fo_n"][i] for i in gi) / sum(acc[t]["fo_d"][i] for i in gi)
-                diou = inter / uni if uni else float("nan")
+                # per-sample IoU then mean (matches pareto protocol)
+                ious = [acc[t]["dyn_i"][i] / acc[t]["dyn_u"][i]
+                        for i in gi if acc[t]["dyn_u"][i] > 0]
+                fos = [acc[t]["fo_n"][i] / acc[t]["fo_d"][i] for i in gi]
+                diou = float(np.mean(ious)) if ious else float("nan")
+                fo = float(np.mean(fos))
                 rows.append(dict(model=name, thr=t, group=grp + "_test",
                                  false_occ=round(fo, 5), dyn_iou=round(diou, 5)))
         print(f"[done] {name}", flush=True)
