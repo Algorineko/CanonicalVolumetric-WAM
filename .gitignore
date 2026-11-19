@@ -2,3 +2,6 @@ runs/**/best.pt
 runs/**/last.pt
 __pycache__/
 *.pyc
+
+# local
+docs-local/

@@ -1,0 +1,48 @@
+{
+  "variant": "p1_v",
+  "mode": "split",
+  "steps": 3000,
+  "batch": 8,
+  "lr": 0.0003,
+  "base": 32,
+  "params": 1558536,
+  "train_pairs": 26840,
+  "val_pairs": 19456,
+  "best_val": 0.05178431545694669,
+  "wall_s": 197.8,
+  "peak_gib": 2.092,
+  "torch": "2.7.1+cu128",
+  "seed": 42,
+  "train_eps": [
+    "demo_clean_balanced:10",
+    "demo_clean_balanced:25",
+    "demo_clean_balanced:40",
+    "demo_clean_balanced:0",
+    "demo_clean_balanced:5",
+    "demo_clean_balanced:15",
+    "demo_clean_balanced:20",
+    "demo_clean_balanced:30",
+    "demo_clean_balanced:35",
+    "demo_clean_balanced:45"
+  ],
+  "val_eps": [
+    "demo_clean_balanced:1",
+    "demo_clean_balanced:2",
+    "demo_clean_balanced:3",
+    "demo_randomized_balanced:0",
+    "demo_randomized_balanced:2",
+    "demo_randomized_balanced:3"
+  ],
+  "test_eps": [
+    "demo_clean_balanced:4",
+    "demo_clean_balanced:6",
+    "demo_clean_balanced:8",
+    "demo_clean_balanced:12",
+    "demo_clean_balanced:16",
+    "demo_randomized_balanced:4",
+    "demo_randomized_balanced:5",
+    "demo_randomized_balanced:6",
+    "demo_randomized_balanced:7",
+    "demo_randomized_balanced:8"
+  ]
+}

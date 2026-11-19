@@ -1,15 +1,76 @@
 state counts (sampled): [3456278, 28336547, 202207175], CE weights: [22.567628860473633, 2.752629041671753, 0.38574299216270447]
-Traceback (most recent call last):
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_tiny.py", line 237, in <module>
-    main()
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_tiny.py", line 179, in main
-    val_ds = DynamicsDataset(root, val_eps) if args.mode == "split" else ds
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/dynamics_dataset.py", line 54, in __init__
-    edir, manifest = load_episode(self.root, variant, int(ep), pitch)
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/dynamics_dataset.py", line 27, in load_episode
-    manifest = json.loads((edir / "manifest.json").read_text())
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/pathlib.py", line 1134, in read_text
-    with self.open(mode='r', encoding=encoding, errors=errors) as f:
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/pathlib.py", line 1119, in open
-    return self._accessor.open(self, mode, buffering, encoding, errors,
-FileNotFoundError: [Errno 2] No such file or directory: '/data/canonical-volumetric-wam/cache/voxels_ep/demo_randomized_balanced/episode_0000002/20mm/manifest.json'
+variant=p1 mode=split params=1.56M train_pairs=26840 val_pairs=19456
+step 1 loss 1.0986 (1s, peak 2.07GiB)
+step 50 loss 0.3207 (3s, peak 2.09GiB)
+step 100 loss 0.1677 (6s, peak 2.09GiB)
+step 150 loss 0.0764 (9s, peak 2.09GiB)
+step 200 loss 0.0624 (12s, peak 2.09GiB)
+step 250 loss 0.0507 (15s, peak 2.09GiB)
+step 250 val_loss 0.2156
+step 300 loss 0.0372 (18s, peak 2.09GiB)
+step 350 loss 0.0361 (21s, peak 2.09GiB)
+step 400 loss 0.0239 (24s, peak 2.09GiB)
+step 450 loss 0.0250 (27s, peak 2.09GiB)
+step 500 loss 0.0216 (30s, peak 2.09GiB)
+step 500 val_loss 0.1369
+step 550 loss 0.0175 (33s, peak 2.09GiB)
+step 600 loss 0.0323 (36s, peak 2.09GiB)
+step 650 loss 0.0253 (39s, peak 2.09GiB)
+step 700 loss 0.0168 (42s, peak 2.09GiB)
+step 750 loss 0.0174 (45s, peak 2.09GiB)
+step 750 val_loss 0.0993
+step 800 loss 0.0272 (48s, peak 2.09GiB)
+step 850 loss 0.0286 (51s, peak 2.09GiB)
+step 900 loss 0.0195 (54s, peak 2.09GiB)
+step 950 loss 0.0174 (57s, peak 2.09GiB)
+step 1000 loss 0.0135 (59s, peak 2.09GiB)
+step 1000 val_loss 0.0955
+step 1050 loss 0.0167 (63s, peak 2.09GiB)
+step 1100 loss 0.0178 (66s, peak 2.09GiB)
+step 1150 loss 0.0347 (69s, peak 2.09GiB)
+step 1200 loss 0.0138 (72s, peak 2.09GiB)
+step 1250 loss 0.0156 (74s, peak 2.09GiB)
+step 1250 val_loss 0.0903
+step 1300 loss 0.0143 (78s, peak 2.09GiB)
+step 1350 loss 0.0363 (80s, peak 2.09GiB)
+step 1400 loss 0.0262 (83s, peak 2.09GiB)
+step 1450 loss 0.0097 (86s, peak 2.09GiB)
+step 1500 loss 0.0124 (89s, peak 2.09GiB)
+step 1500 val_loss 0.0959
+step 1550 loss 0.0147 (93s, peak 2.09GiB)
+step 1600 loss 0.0138 (95s, peak 2.09GiB)
+step 1650 loss 0.0215 (98s, peak 2.09GiB)
+step 1700 loss 0.0179 (101s, peak 2.09GiB)
+step 1750 loss 0.0139 (104s, peak 2.09GiB)
+step 1750 val_loss 0.0826
+step 1800 loss 0.0116 (107s, peak 2.09GiB)
+step 1850 loss 0.0092 (110s, peak 2.09GiB)
+step 1900 loss 0.0148 (113s, peak 2.09GiB)
+step 1950 loss 0.0131 (116s, peak 2.09GiB)
+step 2000 loss 0.0137 (119s, peak 2.09GiB)
+step 2000 val_loss 0.0868
+step 2050 loss 0.0131 (122s, peak 2.09GiB)
+step 2100 loss 0.0248 (125s, peak 2.09GiB)
+step 2150 loss 0.0112 (128s, peak 2.09GiB)
+step 2200 loss 0.0242 (130s, peak 2.09GiB)
+step 2250 loss 0.0151 (133s, peak 2.09GiB)
+step 2250 val_loss 0.0757
+step 2300 loss 0.0146 (136s, peak 2.09GiB)
+step 2350 loss 0.0118 (139s, peak 2.09GiB)
+step 2400 loss 0.0121 (142s, peak 2.09GiB)
+step 2450 loss 0.0102 (145s, peak 2.09GiB)
+step 2500 loss 0.0461 (148s, peak 2.09GiB)
+step 2500 val_loss 0.0919
+step 2550 loss 0.0086 (151s, peak 2.09GiB)
+step 2600 loss 0.0338 (154s, peak 2.09GiB)
+step 2650 loss 0.0285 (157s, peak 2.09GiB)
+step 2700 loss 0.0168 (159s, peak 2.09GiB)
+step 2750 loss 0.0087 (162s, peak 2.09GiB)
+step 2750 val_loss 0.0484
+step 2800 loss 0.0101 (166s, peak 2.09GiB)
+step 2850 loss 0.0113 (169s, peak 2.09GiB)
+step 2900 loss 0.0270 (171s, peak 2.09GiB)
+step 2950 loss 0.0139 (175s, peak 2.09GiB)
+step 3000 loss 0.0106 (178s, peak 2.09GiB)
+step 3000 val_loss 0.0858
+{"variant": "p1", "mode": "split", "steps": 3000, "batch": 8, "lr": 0.0003, "base": 32, "params": 1558668, "train_pairs": 26840, "val_pairs": 19456, "best_val": 0.04839346123238405, "wall_s": 178.4, "peak_gib": 2.092, "torch": "2.7.1+cu128", "seed": 42, "train_eps": ["demo_clean_balanced:10", "demo_clean_balanced:25", "demo_clean_balanced:40", "demo_clean_balanced:0", "demo_clean_balanced:5", "demo_clean_balanced:15", "demo_clean_balanced:20", "demo_clean_balanced:30", "demo_clean_balanced:35", "demo_clean_balanced:45"], "val_eps": ["demo_clean_balanced:1", "demo_clean_balanced:2", "demo_clean_balanced:3", "demo_randomized_balanced:0", "demo_randomized_balanced:2", "demo_randomized_balanced:3"], "test_eps": ["demo_clean_balanced:4", "demo_clean_balanced:6", "demo_clean_balanced:8", "demo_clean_balanced:12", "demo_clean_balanced:16", "demo_randomized_balanced:4", "demo_randomized_balanced:5", "demo_randomized_balanced:6", "demo_randomized_balanced:7", "demo_randomized_balanced:8"]}
