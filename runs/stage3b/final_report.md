@@ -31,7 +31,7 @@ qpos 映射勘误:replay npz 的 qpos 曾错误截取 robot_qpos_actual[:14](实
 ## 3. Observer 干预探针(审查方 §4)→ 支撑决策 4
 
 - `--head-cam-dis 0.05` 重放 ep10:**物理逐位一致**(qpos/门角/mic pose max diff = 0.0,427 帧,`metrics/probe_verification.json`),head 相机渲染已变(Δdepth 均值 5–7mm,边缘 ~700mm),left/right 相机逐位不变。
-- 可见性对比(L4 规律): `metrics/probe_vis_compare.md` — PENDING(几何构建中)
+- **可见性对比(L4 规律实测)** `metrics/probe_vis_compare.md`:2.5mm 相机偏移 → 每帧 **occlude 103.8 + reveal 42.6 ≈ 146 个可见性翻转细胞**、hit ±~10,而物理零变化 → **观测过程变化速率远超物理变化速率**,与 Stage 2c 的 4.6–6.3× 定量同向。这就是 Observation Model 必须独立于 Geometry Dynamics 的直接证据(同几何 + 不同相机 = 不同 visibility,而 occupancy 目标不变)。
 - hold-action / retreat 分支:NOT_RUN(时间盒)
 
 ## 4. Stage 3c 表示对照(审查方 §3)→ 决策 2: Voxel/Point/View
