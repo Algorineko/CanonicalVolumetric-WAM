@@ -1,29 +1,76 @@
 grid=(40, 65, 45) pos_weight=8.20
 variant=p2e params=1.44M train=26840 val=9736
-Traceback (most recent call last):
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_repr.py", line 189, in <module>
-    main()
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_repr.py", line 150, in main
-    for batch in dl:
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 733, in __next__
-    data = self._next_data()
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1515, in _next_data
-    return self._process_data(data, worker_id)
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1550, in _process_data
-    data.reraise()
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/_utils.py", line 750, in reraise
-    raise exception
-FileNotFoundError: Caught FileNotFoundError in DataLoader worker process 0.
-Original Traceback (most recent call last):
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 349, in _worker_loop
-    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in <listcomp>
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/repr_dataset.py", line 86, in __getitem__
-    pd = np.load(pd_path)
-  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/numpy/lib/_npyio_impl.py", line 451, in load
-    fid = stack.enter_context(open(os.fspath(file), "rb"))
-FileNotFoundError: [Errno 2] No such file or directory: '/data/canonical-volumetric-wam/cache/point_ep/demo_clean_balanced/episode_0000045/frame_000077.npz'
-
+step 1 loss 1.9356 (1s, peak 1.53GiB)
+step 50 loss 0.8678 (5s, peak 1.55GiB)
+step 100 loss 0.3846 (8s, peak 1.55GiB)
+step 150 loss 0.2469 (12s, peak 1.55GiB)
+step 200 loss 0.1851 (15s, peak 1.55GiB)
+step 250 loss 0.1556 (19s, peak 1.55GiB)
+step 250 val_loss 0.2173
+step 300 loss 0.1501 (24s, peak 1.55GiB)
+step 350 loss 0.1102 (27s, peak 1.55GiB)
+step 400 loss 0.1101 (31s, peak 1.55GiB)
+step 450 loss 0.1098 (34s, peak 1.55GiB)
+step 500 loss 0.0934 (38s, peak 1.55GiB)
+step 500 val_loss 0.1565
+step 550 loss 0.0928 (43s, peak 1.55GiB)
+step 600 loss 0.0828 (46s, peak 1.55GiB)
+step 650 loss 0.0580 (50s, peak 1.55GiB)
+step 700 loss 0.0663 (53s, peak 1.55GiB)
+step 750 loss 0.0563 (57s, peak 1.55GiB)
+step 750 val_loss 0.1186
+step 800 loss 0.0709 (61s, peak 1.55GiB)
+step 850 loss 0.0476 (65s, peak 1.55GiB)
+step 900 loss 0.0525 (69s, peak 1.55GiB)
+step 950 loss 0.0533 (72s, peak 1.55GiB)
+step 1000 loss 0.0476 (76s, peak 1.55GiB)
+step 1000 val_loss 0.0964
+step 1050 loss 0.0620 (80s, peak 1.55GiB)
+step 1100 loss 0.0594 (84s, peak 1.55GiB)
+step 1150 loss 0.0472 (88s, peak 1.55GiB)
+step 1200 loss 0.0394 (91s, peak 1.55GiB)
+step 1250 loss 0.0446 (95s, peak 1.55GiB)
+step 1250 val_loss 0.0937
+step 1300 loss 0.0425 (99s, peak 1.55GiB)
+step 1350 loss 0.0599 (103s, peak 1.55GiB)
+step 1400 loss 0.0556 (106s, peak 1.55GiB)
+step 1450 loss 0.0393 (110s, peak 1.55GiB)
+step 1500 loss 0.0368 (114s, peak 1.55GiB)
+step 1500 val_loss 0.0791
+step 1550 loss 0.0331 (118s, peak 1.55GiB)
+step 1600 loss 0.0484 (122s, peak 1.55GiB)
+step 1650 loss 0.0345 (126s, peak 1.55GiB)
+step 1700 loss 0.0311 (129s, peak 1.55GiB)
+step 1750 loss 0.0383 (133s, peak 1.55GiB)
+step 1750 val_loss 0.0780
+step 1800 loss 0.0408 (138s, peak 1.55GiB)
+step 1850 loss 0.0286 (141s, peak 1.55GiB)
+step 1900 loss 0.0360 (145s, peak 1.55GiB)
+step 1950 loss 0.0298 (148s, peak 1.55GiB)
+step 2000 loss 0.0316 (152s, peak 1.55GiB)
+step 2000 val_loss 0.0708
+step 2050 loss 0.0301 (157s, peak 1.55GiB)
+step 2100 loss 0.0362 (160s, peak 1.55GiB)
+step 2150 loss 0.0246 (164s, peak 1.55GiB)
+step 2200 loss 0.0407 (168s, peak 1.55GiB)
+step 2250 loss 0.0262 (171s, peak 1.55GiB)
+step 2250 val_loss 0.0716
+step 2300 loss 0.0470 (176s, peak 1.55GiB)
+step 2350 loss 0.0359 (180s, peak 1.55GiB)
+step 2400 loss 0.0252 (185s, peak 1.55GiB)
+step 2450 loss 0.0260 (190s, peak 1.55GiB)
+step 2500 loss 0.0302 (194s, peak 1.55GiB)
+step 2500 val_loss 0.0618
+step 2550 loss 0.0293 (200s, peak 1.55GiB)
+step 2600 loss 0.0311 (205s, peak 1.55GiB)
+step 2650 loss 0.0334 (210s, peak 1.55GiB)
+step 2700 loss 0.0493 (214s, peak 1.55GiB)
+step 2750 loss 0.0252 (219s, peak 1.55GiB)
+step 2750 val_loss 0.0656
+step 2800 loss 0.0283 (225s, peak 1.55GiB)
+step 2850 loss 0.0267 (229s, peak 1.55GiB)
+step 2900 loss 0.0371 (234s, peak 1.55GiB)
+step 2950 loss 0.0291 (239s, peak 1.55GiB)
+step 3000 loss 0.0312 (244s, peak 1.55GiB)
+step 3000 val_loss 0.0626
+{"variant": "p2e", "steps": 3000, "batch": 8, "lr": 0.0003, "base": 32, "params": 1437432, "train_pairs": 26840, "val_pairs": 9736, "best_val": 0.0617986594637235, "wall_s": 244.8, "peak_gib": 1.552, "seed": 42, "train_eps": ["demo_clean_balanced:10", "demo_clean_balanced:25", "demo_clean_balanced:40", "demo_clean_balanced:0", "demo_clean_balanced:5", "demo_clean_balanced:15", "demo_clean_balanced:20", "demo_clean_balanced:30", "demo_clean_balanced:35", "demo_clean_balanced:45"], "val_eps": ["demo_clean_balanced:1", "demo_clean_balanced:2", "demo_clean_balanced:3", "demo_randomized_balanced:0", "demo_randomized_balanced:2", "demo_randomized_balanced:3"], "loss": "p1v_decoupled_posweight"}
