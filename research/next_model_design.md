@@ -52,5 +52,6 @@ qpos_t, a_t..──▶│ (现役 voxel 管线,P2E 备选)                │
 ## 风险与开放问题
 
 1. Observation Model 的相机外生性:部署时相机位姿已知(本体感知),不构成信息泄漏;但若未来相机随动作变化(腕部相机),camera 参数依赖动作 → Observation Model 输入包含 action-expert 的输出,信息流需要消融验证。
-2. latent 接口选择(体素 vs P2E 点场)待 Stage 3c 终审。
-3. 若 factorization 被 pareto 降级为训练技巧,L1 约束弱化为"双头是工程选择",架构主张重心移至 L4 的 Observation Model 独立性。
+2. **action→geometry 通路需要放大(实测驱动)**:反事实检验显示 tiny 模型的动作条件化聚焦正确(p1 的 |Δlogit| 在 GT 翻转细胞 0.572 vs 背景 0.026)但过弱,仅 2–3.5% 的 GT 翻转细胞跨越二值边界(runs/stage3b/metrics/action_counterfactual.json)→ Geometry Expert 的动作注入需要结构性增强(如 object-centric 状态 + 动作到物体状态的直接通路),而非更多 FiLM。
+3. latent 接口选择(体素 vs P2E 点场)已终审:体素(随机化鲁棒 + unknown 语义),见 stage3c/report.md。
+4. 若 factorization 被 pareto 降级为训练技巧(已发生),L1 约束弱化为"双头是工程选择",架构主张重心移至 L4 的 Observation Model 独立性。
