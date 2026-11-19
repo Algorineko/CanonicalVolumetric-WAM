@@ -1,0 +1,7 @@
+{
+  "steps": 2500,
+  "visIoU_inconf_holdout": 0.9874,
+  "visIoU_cross_config_probe": 0.9859,
+  "transfer_drop": 0.0015,
+  "verdict": "TRANSFERS"
+}

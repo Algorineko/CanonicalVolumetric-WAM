@@ -46,6 +46,9 @@ def main():
         chunk = np.concatenate([act_l[t:act_end], act_r[t:act_end],
                                 gl[t:act_end], gr[t:act_end]], axis=1)
         d = np.load(fr["npz"])
+        if "action_chunk" in d.files:
+            n_attached += 1  # idempotent: already attached
+            continue
         np.savez_compressed(fr["npz"], **{k: d[k] for k in d.files},
                             action_chunk=chunk, action_valid=len(chunk))
         n_attached += 1
