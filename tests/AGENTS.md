@@ -10,3 +10,5 @@
 | `test_stage3b.py` | 因式分解 BCE ≡ 三分类 NLL(数值)、pos_weight 回归守卫(Bug-3)、P1-W/P1-F 结构 |
 
 运行:`/home/zhangjialiang/miniconda3/envs/openwam/bin/python tests/test_X.py`。改 src/cvwam 或 scripts 的坐标/损失/体素语义前先跑对应文件;新增机制必须带等价性或回归单测。
+
+- **运行方式注意(2026-11-20)**:`test_geometry.py` 是独立脚本(直接 `<env python> tests/test_geometry.py`,自带 check 汇总),其 `test_project_unproject` 用手工参数化,pytest 收集会报 fixture 错误——以脚本模式结果为准;其余 test_*.py 均可用 pytest(`17 passed`)。

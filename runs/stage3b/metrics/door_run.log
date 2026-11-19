@@ -1,0 +1,20 @@
+[robot] ensuring FK robot regions (cached)
+[data] 820 (t,k) pairs
+[skip] p0 (resume)
+[infer] p1_s42 done
+[done] p1_s42: 820 rows -> runs/stage3b/metrics/door/door_p1_s42.csv
+[infer] p1_s43 done
+[done] p1_s43: 820 rows -> runs/stage3b/metrics/door/door_p1_s43.csv
+[infer] p1_s44 done
+[done] p1_s44: 820 rows -> runs/stage3b/metrics/door/door_p1_s44.csv
+[infer] p1_v_s42 done
+[done] p1_v_s42: 820 rows -> runs/stage3b/metrics/door/door_p1_v_s42.csv
+[infer] p1_v_s43 done
+[done] p1_v_s43: 820 rows -> runs/stage3b/metrics/door/door_p1_v_s43.csv
+[infer] p1_v_s44 done
+[done] p1_v_s44: 820 rows -> runs/stage3b/metrics/door/door_p1_v_s44.csv
+[infer] p1_w_s42 done
+[done] p1_w_s42: 820 rows -> runs/stage3b/metrics/door/door_p1_w_s42.csv
+[infer] p1_f_s42 done
+[done] p1_f_s42: 820 rows -> runs/stage3b/metrics/door/door_p1_f_s42.csv
+[all done] -> door_summary.csv
