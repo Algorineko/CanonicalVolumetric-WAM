@@ -1,15 +1,13 @@
-"""Stage 3b §5: Pareto evaluation — fixed falseOcc budgets on VAL, applied
-unchanged to TEST.
+"""Stage 3b §5: Pareto evaluation — streaming rewrite.
 
-For each model and each falseOcc budget b ∈ {0.2%, 0.5%, 1%, 2%}: sweep the
-occupancy decision threshold on VAL (per offset, computed on the pooled val
-pairs) to hit b; apply that threshold unchanged to TEST; report dynIoU,
-change precision/recall/F1, observed occupancy IoU, reveal metrics at each
-budget. Results saved per (model, seed, split, episode, offset).
-
-Statistical note: frames within an episode are correlated (15 Hz); metrics
-are aggregated per episode first, and dispersion is reported over episodes —
-adjacent frames are never treated as independent samples.
+v2 (memory-safe): v1 accumulated per-sample FULL-GRID logits across all val
+pairs (~36 GB RAM) and was OOM-killed silently. v2 streams batches and:
+  pass A (val): infer -> accumulate FREE-region logits only (~200MB/offset)
+                + per-sample free counts -> pick thresholds per falseOcc budget
+  pass B (val): infer again -> per-batch metrics at the chosen thresholds
+  pass C (test): infer -> metrics at FIXED thresholds (never re-tuned)
+Per (model, budget, offset, episode) mean rows; per-model CSV, resumable.
+Clean/Rand test reported separately via test_group.
 """
 
 import argparse
@@ -32,77 +30,195 @@ import train_tiny as tt  # noqa: E402
 BUDGETS = (0.002, 0.005, 0.01, 0.02)
 
 
-def iou(a, b):
-    u = (a | b).sum()
-    return float((a & b).sum()) / float(u) if u > 0 else float("nan")
+def dilate1(g):
+    out = g.clone()
+    for d in (1, 2, 3):
+        for s in (-1, 1):
+            out |= torch.roll(g, s, d)
+    return out
 
 
-def collect(model, variant, ds, device):
-    dl = DataLoader(ds, batch_size=16, shuffle=False, num_workers=4, pin_memory=True)
-    recs = []
-    for batch in dl:
-        vox = batch["voxel"].to(device)
-        act = batch["action"].to(device)
-        qpos = batch["qpos"].to(device)
-        oi = tt.offset_index(batch, device)
-        with torch.no_grad():
-            o = model(vox, qpos, act, oi) if model is not None else None
-        blocks = split_outputs(o, tt.MODEL_DIR[variant], len(OFFSETS)) if model is not None else None
+def load_model(path, device):
+    ck = torch.load(path, map_location=device, weights_only=False)
+    m = TinyDynamicsNet(variant=tt.MODEL_DIR[ck["variant"]], base=ck["base"],
+                        n_offsets=len(OFFSETS)).to(device).eval()
+    m.load_state_dict(ck["model"])
+    return ck["variant"], m
+
+
+def infer_batch(model, variant, batch, device):
+    """Returns occ_logit (B, grid) on CPU for one batch (any offset mix)."""
+    vox = batch["voxel"].to(device, non_blocking=True)
+    if model is None:  # P0 persistence
+        return torch.where(vox[:, 0] > 0.5, torch.full_like(vox[:, 0], 1e6),
+                           torch.full_like(vox[:, 0], -1e6)).float().cpu()
+    act = batch["action"].to(device, non_blocking=True)
+    qpos = batch["qpos"].to(device, non_blocking=True)
+    oi = tt.offset_index(batch, device)
+    with torch.no_grad():
+        o = model(torch.zeros_like(vox) if variant == "act_only" else vox,
+                  qpos, act, oi)
+    blocks = split_outputs(o, tt.MODEL_DIR[variant], len(OFFSETS))
+    occ = torch.empty_like(vox[:, 0])  # (B, grid) per-voxel occ logits
+    for ki in range(len(OFFSETS)):
+        sel = (oi == ki)
+        if sel.sum() == 0:
+            continue
+        if tt.MODEL_DIR[variant] == "decoupled":
+            occ_k = blocks[ki]["occ_logit"][sel].float()
+        else:
+            probs = torch.softmax(blocks[ki]["state_logits"][sel], dim=1)
+            p_hit = probs[:, 0]
+            occ_k = torch.log(p_hit.clamp_min(1e-6) / (1 - p_hit).clamp_min(1e-6))
+        occ[sel] = occ_k
+    return occ.float().cpu()
+
+
+def batch_gt(batch):
+    return dict(
+        state_t=batch["state_t"], state_f=batch["state_future"],
+        obs_f=batch["observed_future"].bool(),
+        cur_hit=batch["voxel"][:, 0] > 0.5,
+        episodes=batch["episode"])
+
+
+def batch_metrics(occ, gt, thrs):
+    """Per-sample metrics at each threshold; returns rows keyed (thr, sample)."""
+    obs = gt["obs_f"]
+    gt_hit = gt["state_f"] == 0
+    gt_free = gt["state_f"] == 1
+    both = obs & (gt["state_t"] != 2)
+    dyn = ((gt["state_t"] == 0) ^ gt_hit) & both
+    reveal = (gt["state_t"] == 2) & obs
+    # threshold-independent parts of surf F1 (dilated GT)
+    gt_hit_d = dilate1(gt_hit)
+    out = []
+    flat = lambda x: x.flatten(1)
+    obs_f = flat(obs)
+    gt_f = flat(gt_hit).float()
+    gt_d_f = flat(gt_hit_d).float()
+    gt_free_f = flat(gt_free).float()
+    dyn_f = flat(dyn)
+    reveal_f = flat(reveal)
+    n_free_s = flat(gt_free).sum(1)
+    for thr in thrs:
+        pred = occ > thr
+        pred_obs = flat(pred & obs)
+        # occ IoU: pred vs gt_hit restricted to obs
+        p_o = pred_obs.float()
+        inter = (p_o * gt_f).sum(1)
+        uni = ((p_o + gt_f) > 0).float().sum(1)
+        occ_iou = torch.where(uni > 0, inter / uni.clamp_min(1), float("nan"))
+        # surf F1 @1 (matches f1_per_sample: pred undilated ∩ dilated GT)
+        pred_d = flat(dilate1(pred & obs)).float()
+        tp = (p_o * gt_d_f).sum(1)
+        prec = tp / p_o.sum(1).clamp_min(1)
+        rec = (gt_f * pred_d).sum(1) / gt_f.sum(1).clamp_min(1)
+        f1 = 2 * prec * rec / (prec + rec).clamp_min(1e-9)
+        valid = (p_o.sum(1) > 0) & (gt_f.sum(1) > 0)
+        surf_f1 = torch.where(valid, f1, float("nan"))
+        pf = pred_obs.bool()
+        false_occ = (pf & gt_free_f.bool()).sum(1).float() / n_free_s.clamp_min(1).float()
+        # dyn IoU = IoU(pred_hit & dyn, gt_hit & dyn)  (original semantics)
+        a_dyn = pf & dyn_f
+        b_dyn = dyn_f & gt_f.bool()
+        dinter = (a_dyn & b_dyn).sum(1).float()
+        duni = (a_dyn | b_dyn).sum(1).float()
+        dyn_iou = torch.where(duni > 0, dinter / duni.clamp_min(1), float("nan"))
+        flip_f = flat(pred ^ gt["cur_hit"].bool())
+        chg_prec = (flip_f & dyn_f).sum(1).float() / flip_f.sum(1).clamp_min(1).float()
+        chg_rec = (flip_f & dyn_f).sum(1).float() / dyn_f.sum(1).clamp_min(1).float()
+        chg_f1 = 2 * chg_prec * chg_rec / (chg_prec + chg_rec).clamp_min(1e-9)
+        rev_f = flat((pred == gt_hit) & reveal)
+        rev_acc = rev_f.sum(1).float() / reveal_f.sum(1).clamp_min(1).float()
+        out.append(dict(occ_iou=occ_iou, surf_f1=surf_f1, false_occ=false_occ,
+                        dyn_iou=dyn_iou, chg_prec=chg_prec, chg_rec=chg_rec,
+                        chg_f1=chg_f1, rev_acc=rev_acc))
+    return out
+
+
+def calibrate(val_loader, model, variant, device):
+    """Pass A: free-logit quantiles per offset -> thresholds per budget."""
+    free_logits = {k: [] for k in OFFSETS}
+    free_counts = {k: [] for k in OFFSETS}
+    for bi, batch in enumerate(val_loader):
+        occ = infer_batch(model, variant, batch, device)
+        gt = batch_gt(batch)
+        is_free = (gt["state_f"] == 1) & gt["obs_f"]
+        oi = tt.offset_index(batch, torch.device("cpu"))
         for ki, k in enumerate(OFFSETS):
-            sel = oi == ki
+            sel = (oi == ki)
             if sel.sum() == 0:
                 continue
-            state_t = batch["state_t"].to(device)[sel]
-            state_f = batch["state_future"].to(device)[sel]
-            obs_f = batch["observed_future"].to(device).bool()[sel]
-            cur_hit = (vox[:, 0] > 0.5)[sel]
-            gt_hit = state_f == 0
-            gt_free = state_f == 1
-            if model is None:  # P0
-                occ_logit = torch.full_like(cur_hit, 0.5, dtype=torch.float32) * \
-                    (cur_hit.float() * 2 - 1) * 1e6   # +inf where current hit
-                occ_logit = torch.where(cur_hit, torch.ones_like(cur_hit, dtype=torch.float32) * 1e6,
-                                        -torch.ones_like(cur_hit, dtype=torch.float32) * 1e6)
-            elif tt.MODEL_DIR[variant] == "decoupled":
-                occ_logit = blocks[ki]["occ_logit"][sel].float()
-            else:
-                probs = torch.softmax(blocks[ki]["state_logits"][sel], dim=1)
-                p_hit = probs[:, 0]
-                occ_logit = torch.log(p_hit.clamp_min(1e-6) /
-                                      (1 - p_hit).clamp_min(1e-6))
-            recs.append(dict(offset=k, state_t=state_t.cpu(), obs=obs_f.cpu(),
-                             gt_hit=gt_hit.cpu(), gt_free=gt_free.cpu(),
-                             cur_hit=cur_hit.cpu(), occ_logit=occ_logit.cpu(),
-                             episodes=batch["episode"]))
-    return recs
+            free_logits[k].append(occ[sel][is_free[sel]].numpy().ravel())
+            free_counts[k].append(is_free[sel].flatten(1).sum(1).numpy())
+        if bi % 50 == 0:
+            print(f"  [cal {bi}/{len(val_loader)}]", flush=True)
+    thr_tables = {b: {} for b in BUDGETS}
+    thr_tables["default"] = {k: 0.0 for k in OFFSETS}
+    for k in OFFSETS:
+        if not free_counts[k]:
+            continue
+        lg = np.concatenate(free_logits[k])
+        seg = np.concatenate([np.full(int(c.sum()), i, dtype=np.int32)
+                              for i, c in enumerate(free_counts[k])])
+        nf = np.concatenate(free_counts[k]).astype(np.float64)
+        qs = np.quantile(lg, np.linspace(0, 1, 41))
+        for b in BUDGETS:
+            best_thr, best_err = float(qs[0]), 1e9
+            for thr in qs:
+                cnt = np.bincount(seg, weights=(lg > thr).astype(np.float64),
+                                  minlength=len(nf))
+                fo = np.mean(cnt / np.maximum(nf, 1))
+                if abs(fo - b) < best_err:
+                    best_err, best_thr = abs(fo - b), float(thr)
+            thr_tables[b][k] = best_thr
+            print(f"  [thr] k={k} budget={b} thr={best_thr:.3f} "
+                  f"(err {best_err:.4f})", flush=True)
+        free_logits[k] = None
+    return thr_tables
 
 
-def metrics_at(recs, thr_by_offset):
-    """Per-rec metrics at given thresholds; returns rows with per-episode split."""
+def evaluate(loader, model, variant, thr_tables, device, split_name):
+    """Pass B/C: per (budget, offset, episode) mean of per-sample metrics."""
+    acc = {}  # (budget, offset, episode) -> list of metric dicts
+    blist = list(BUDGETS) + ["default"]
+    for bi, batch in enumerate(loader):
+        occ = infer_batch(model, variant, batch, device)
+        gt = batch_gt(batch)
+        oi = tt.offset_index(batch, torch.device("cpu"))
+        for ki, k in enumerate(OFFSETS):
+            sel = (oi == ki)
+            if sel.sum() == 0:
+                continue
+            idx = torch.nonzero(sel).flatten()
+            gt_k = {}
+            for key, v in gt.items():
+                if torch.is_tensor(v):
+                    gt_k[key] = v[idx]
+                else:
+                    gt_k[key] = [v[i] for i in idx.tolist()]
+            occ_k = occ[idx]
+            thrs_k = [thr_tables[b][k] for b in blist]
+            met = batch_metrics(occ_k, gt_k, thrs_k)
+            eps_k = gt_k["episodes"]
+            for ti, b in enumerate(blist):
+                for j in range(len(eps_k)):
+                    key = (str(b), k, eps_k[j])
+                    acc.setdefault(key, []).append(
+                        {m: float(v[j]) for m, v in met[ti].items()})
+        if bi % 50 == 0:
+            print(f"  [{split_name} {bi}/{len(loader)}]", flush=True)
     rows = []
-    for r in recs:
-        thr = thr_by_offset[r["offset"]]
-        pred_hit = r["occ_logit"] > thr
-        obs = r["obs"]
-        gt_hit, gt_free, cur_hit = r["gt_hit"], r["gt_free"], r["cur_hit"]
-        occ_iou = iou(pred_hit & obs, gt_hit & obs)
-        false_occ = float((pred_hit & gt_free).sum()) / float(max(gt_free.sum(), 1))
-        both = obs & (r["state_t"] != 2)
-        dyn = ((r["state_t"] == 0) ^ gt_hit) & both
-        pred_flip = pred_hit ^ cur_hit
-        # change P/R/F1 (exact match)
-        tp = float((pred_flip & dyn).sum())
-        prec = tp / float(max((pred_flip & both).sum(), 1))
-        rec = tp / float(max(dyn.sum(), 1))
-        f1 = 2 * prec * rec / max(prec + rec, 1e-9)
-        dyn_iou = iou(pred_hit & dyn, gt_hit & dyn)
-        reveal = (r["state_t"] == 2) & obs
-        rev_acc = float(((pred_hit == gt_hit) & reveal).sum()) / float(max(reveal.sum(), 1))
-        ep = sorted(set(r["episodes"]))[0] if len(set(r["episodes"])) == 1 else "mixed"
-        rows.append(dict(offset=r["offset"], episode=ep, occ_iou=occ_iou,
-                         false_occ=false_occ, dyn_iou=dyn_iou,
-                         change_p=prec, change_r=rec, change_f1=f1,
-                         reveal_acc=rev_acc))
+    for (b, k, ep), ms in acc.items():
+        tg = ("rand_" if "randomized" in ep else "clean_") + split_name
+        row = dict(budget=b, split=split_name, test_group=tg if
+                   split_name == "test" else "", episode=ep, offset=k, n=len(ms))
+        for m in ("occ_iou", "surf_f1", "false_occ", "dyn_iou", "chg_prec",
+                  "chg_rec", "chg_f1", "rev_acc"):
+            vals = [x[m] for x in ms if not np.isnan(x[m])]
+            row[m] = round(float(np.mean(vals)), 5) if vals else ""
+        rows.append(row)
     return rows
 
 
@@ -110,9 +226,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/smoke.yaml")
     ap.add_argument("--split-manifest", default="runs/stage3b/split_manifest.json")
-    ap.add_argument("--checkpoints", nargs="+", required=True,
-                    help="name=path pairs, e.g. p1=runs/stage3b/ckpt/p1_s42/best.pt; use p0 for persistence")
-    ap.add_argument("--out", default="runs/stage3b/metrics/pareto.csv")
+    ap.add_argument("--checkpoints", nargs="+", required=True)
+    ap.add_argument("--out-dir", default="runs/stage3b/metrics/pareto")
+    ap.add_argument("--stride-test", type=int, default=2)
+    ap.add_argument("--batch-size", type=int, default=64)
     args = ap.parse_args()
     device = "cuda:0"
     cfg = yaml.safe_load(Path(args.config).read_text())
@@ -120,76 +237,34 @@ def main():
     sm = json.loads(Path(args.split_manifest).read_text())
     val_eps = sm["splits"]["clean_val"] + sm["splits"]["rand_val"]
     test_eps = sm["splits"]["clean_test"] + sm["splits"]["rand_test"]
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    val_ds = DynamicsDataset(root, val_eps)
+    test_ds = DynamicsDataset(root, test_eps, stride_t=args.stride_test)
+    print(f"[data] val {len(val_ds)} pairs, test {len(test_ds)} pairs", flush=True)
 
-    all_rows = []
     for spec in args.checkpoints:
         name, path = spec.split("=", 1)
-        variant = "p0" if path == "p0" else None
-        model = None
-        if path != "p0":
-            ck = torch.load(path, map_location=device, weights_only=False)
-            variant = ck["variant"]
-            model = TinyDynamicsNet(variant=tt.MODEL_DIR[variant], base=ck["base"],
-                                    n_offsets=len(OFFSETS)).to(device).eval()
-            model.load_state_dict(ck["model"])
-        val_recs = collect(model, variant, DynamicsDataset(root, val_eps), device)
-        # calibrate on VAL per offset per budget
-        thr_tables = {b: {} for b in BUDGETS}
-        for k in OFFSETS:
-            vr = [r for r in val_recs if r["offset"] == k]
-            if not vr:
-                continue
-            gt_free_frac = float(np.mean([float(r["gt_free"][r["obs"]].float().mean())
-                                          for r in vr]))
-            for b in BUDGETS:
-                # threshold such that VAL false_occ == b (b = frac of GT-free voxels
-                # predicted occupied); sweep over quantiles of occ_logit within
-                # GT-free & observed region
-                thr_list = np.quantile(np.concatenate(
-                    [r["occ_logit"][r["gt_free"] & r["obs"]].numpy().ravel()
-                     for r in vr]), np.linspace(0, 1, 81))
-                best_thr, best_err = thr_list[0], 1e9
-                for thr in thr_list:
-                    fo = np.mean([float(((r["occ_logit"] > thr) & r["gt_free"]).sum()) /
-                                  max(float(r["gt_free"].sum()), 1) for r in vr])
-                    err = abs(fo - b)
-                    if err < best_err:
-                        best_err, best_thr = err, float(thr)
-                thr_tables[b][k] = best_thr
-        test_recs = collect(model, variant, DynamicsDataset(root, test_eps), device)
-        for b in BUDGETS:
-            rows = metrics_at(test_recs, thr_tables[b])
+        csv_path = out_dir / f"pareto_{name}.csv"
+        if csv_path.exists():
+            print(f"[skip] {name} (resume)", flush=True)
+            continue
+        print(f"[start] {name}", flush=True)
+        variant, model = (None, None) if path == "p0" else load_model(path, device)
+        val_loader = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False,
+                                num_workers=8, pin_memory=True)
+        thr_tables = calibrate(val_loader, model, variant, device)
+        rows = evaluate(val_loader, model, variant, thr_tables, device, "val")
+        test_loader = DataLoader(test_ds, batch_size=args.batch_size, shuffle=False,
+                                 num_workers=8, pin_memory=True)
+        rows += evaluate(test_loader, model, variant, thr_tables, device, "test")
+        with open(csv_path, "w", newline="") as fh:
+            w = csv.DictWriter(fh, fieldnames=sorted({c for r in rows for c in r}))
+            w.writeheader()
             for r in rows:
-                r.update({"model": name, "budget": b})
-            all_rows.extend(rows)
-        # also record the raw default-threshold operating point
-        rows = metrics_at(test_recs, {k: 0.0 for k in OFFSETS})
-        for r in rows:
-            r.update({"model": name, "budget": "default"})
-        all_rows.extend(rows)
-
-    out = Path(args.out)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    keys = sorted({k for r in all_rows for k in r})
-    with open(out, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=keys)
-        w.writeheader()
-        for r in all_rows:
-            w.writerow({k: (round(v, 5) if isinstance(v, float) else v)
-                        for k, v in r.items()})
-    print(f"-> {out} ({len(all_rows)} rows)")
-    # summary print: dynIoU at each budget
-    import collections
-    agg = collections.defaultdict(list)
-    for r in all_rows:
-        agg[(r["model"], r["budget"])].append(r)
-    print(f"{'model':12s} {'budget':>8s} {'occIoU':>7s} {'dynIoU':>7s} {'chgF1':>7s} {'falseOcc':>8s}")
-    for (m, b), rs in sorted(agg.items(), key=lambda x: (x[0][0], str(x[0][1]))):
-        print(f"{m:12s} {str(b):>8s} "
-              f"{np.nanmean([r['occ_iou'] for r in rs]):7.3f} "
-              f"{np.nanmean([r['dyn_iou'] for r in rs]):7.3f} "
-              f"{np.nanmean([r['change_f1'] for r in rs]):7.3f} "
-              f"{np.nanmean([r['false_occ'] for r in rs]):8.4f}")
+                w.writerow(r)
+        print(f"[done] {name}: {len(rows)} rows -> {csv_path}", flush=True)
+    print("[all done]", flush=True)
 
 
 if __name__ == "__main__":

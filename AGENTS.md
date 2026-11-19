@@ -25,4 +25,4 @@ Candidate A(Canonical Volumetric WAM):在 robot-base 坐标系维护 canonical 3
 - `state/*_arm_joint_states` 是 **PD 驱动目标非真实 qpos**;`state/*_ee_poses` 是真实 link6 位姿(**world,wxyz**)。重放 episode(replay_gt)才有真实 qpos。
 - 体素:20mm 全局 pitch;每相机射线只连**自己的**观测点;hit 后不标 free;无效深度≠free;矛盾计数,hit 优先。
 - 实验纪律:新实验写新 runs/stageX 目录,禁止覆盖;失败与 bug 全部存档 failures/;未执行标 NOT_RUN;数字必须来自实测;每批结束跑对抗性数字复算(Stage 3a 的 pos_weight bug 即由此发现)。
-- 环境:几何/训练 `miniconda3/envs/openwam`;仿真/重放 `envs/robottwin`;OmniVGGT/可视化 `/data/canonical-volumetric-wam/venv` 或 `PhysAdaptWAM/.venv-wam`;大文件一律 /data(根分区近满);只用 GPU 0。
+- 环境:几何/训练 `miniconda3/envs/openwam`;仿真/重放 `envs/robottwin`;OmniVGGT/可视化 `/data/canonical-volumetric-wam/venv` 或 `PhysAdaptWAM/.venv-wam`;大文件一律 /data(根分区近满);单卡执行,按 /code/AGENTS.md 优先 1 号卡,若被占则选空闲显存最大的卡(启动前 nvidia-smi 复核)。

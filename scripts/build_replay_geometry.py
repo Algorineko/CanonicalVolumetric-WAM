@@ -213,13 +213,26 @@ def main():
                     obj_region |= mark_voxels(p_pts[m], b_min, args.pitch, shape)
                 elif role == "mic":
                     obj_region |= mark_voxels(p_pts[m], b_min, args.pitch, shape)
-        qpos = np.asarray(r["robot_qpos_actual"], dtype=np.float32)[:14]
+        # qpos in TRAINING semantics [l_arm6, r_arm6, l_grip_norm, r_grip_norm].
+        # sim entity qpos dim mapping (correlation-verified vs drive targets,
+        # r>=0.998; FK link6 vs original ee_poses mean 2.34mm): left arm joints
+        # at dims [6,14,18,22,26,30], left grip physical meters at dim 34
+        # (q35 = mimic finger), right grip at dim 36; right arm at dims 0-5
+        # (frozen 0 in this episode). Full raw vector kept as qpos_full.
+        qraw = np.asarray(r["robot_qpos_actual"], dtype=np.float64)
+        L_ARM_DIMS = (6, 14, 18, 22, 26, 30)
+        l_arm = qraw[list(L_ARM_DIMS)]
+        r_arm = qraw[0:6]
+        l_grip_norm = float(np.clip((qraw[34] + 0.01) / 0.055, 0, 1))
+        r_grip_norm = float(np.clip((qraw[36] + 0.01) / 0.055, 0, 1))
+        qpos = np.concatenate([l_arm, r_arm,
+                               [l_grip_norm, r_grip_norm]]).astype(np.float32)
         npz = out_dir / f"frame_{t:07d}.npz"
         np.savez_compressed(
             npz, hit=g["hit"], free=g["free"], observed=g["observed"],
             unknown=g["unknown"], view_count=g["view_count"],
             conflict=g["conflict"], door_region=door_region,
-            obj_region=obj_region, qpos=qpos,
+            obj_region=obj_region, qpos=qpos, qpos_full=qraw.astype(np.float32),
             door_angle=np.float64(r.get("door_angle", np.nan)),
             b_min=b_min.astype(np.float32), pitch=np.float32(args.pitch),
             shape=np.asarray(shape))
