@@ -35,6 +35,11 @@ def build_model(variant, base, grid):
 def make_infer(grid):
     def infer_repr(model_pack, variant, batch, device):
         variant_ck, model = model_pack
+        with torch.no_grad():
+            return _infer_repr(model_pack, variant, batch, device)
+
+    def _infer_repr(model_pack, variant, batch, device):
+        variant_ck, model = model_pack
         oi = tr.offset_index(batch, device)
         qpos = batch["qpos"].to(device)
         act = batch["action"].to(device)
