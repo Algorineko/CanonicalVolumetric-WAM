@@ -29,7 +29,7 @@ FREE_FRACTIONS = (0.25, 0.5, 0.75, 0.9)
 class ReprDataset(Dataset):
     def __init__(self, voxel_root, point_root, episodes, offsets=OFFSETS,
                  stride_t=1, repr="p2", n_pts=4096, n_free_per_cam=341,
-                 action_horizon=16):
+                 n_free_fixed=4096, action_horizon=16):
         self.base = DynamicsDataset(voxel_root, episodes, offsets=offsets,
                                     stride_t=stride_t,
                                     action_horizon=action_horizon)
@@ -37,6 +37,7 @@ class ReprDataset(Dataset):
         self.repr = repr
         self.n_pts = n_pts
         self.n_free_per_cam = n_free_per_cam
+        self.n_free_fixed = n_free_fixed
         # per-episode grid metadata from the voxel cache manifest
         self.meta = {}
         for spec in episodes:
@@ -89,10 +90,12 @@ class ReprDataset(Dataset):
         surf, grids, Tbc = self._unproject(pd)
         fused = np.concatenate(surf, 0)
         if self.repr in ("p2", "p2e"):
-            n = min(self.n_pts, len(fused))
-            sel = rng.choice(len(fused), n, replace=False)
-            pts = np.zeros((self.n_pts, 3), dtype=np.float32)
-            pts[:n] = fused[sel]
+            # FIXED-SIZE outputs (DataLoader collate requires equal shapes):
+            # surface part always self.n_pts rows (resampled with replacement
+            # if fewer), free part (P2-E) always self.n_free_fixed rows.
+            sel = rng.choice(len(fused), self.n_pts,
+                             replace=len(fused) < self.n_pts)
+            pts = fused[sel].astype(np.float32)
             if self.repr == "p2":
                 return {**item, "points": pts,
                         "grid_meta": np.concatenate([b_min, [pitch]]).astype(np.float32)}
@@ -111,10 +114,11 @@ class ReprDataset(Dataset):
                 inside = np.all((smp >= b_min) & (smp < b_min + np.asarray(shape) * pitch), 1)
                 free.append(smp[inside])
             free = np.concatenate(free, 0) if free else np.zeros((0, 3))
-            nf = min(len(free), self.n_pts)
-            fsel = rng.choice(len(free), nf, replace=False) if nf else np.zeros(0, int)
-            allp = np.concatenate([fused[sel], free[fsel]], 0) if nf else fused[sel]
-            typ = np.concatenate([np.ones(len(sel)), np.zeros(nf)])
+            nf = self.n_free_fixed
+            fsel = rng.choice(len(free), nf, replace=len(free) < nf) if len(free) \
+                else np.zeros(nf, int)
+            allp = np.concatenate([pts, free[fsel]], 0)
+            typ = np.concatenate([np.ones(self.n_pts), np.zeros(nf)])
             pts4 = np.zeros((len(allp), 4), dtype=np.float32)
             pts4[:, :3] = allp
             pts4[:, 3] = typ
