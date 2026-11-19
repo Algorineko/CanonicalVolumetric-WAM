@@ -61,5 +61,5 @@ qpos 映射勘误:replay npz 的 qpos 曾错误截取 robot_qpos_actual[:14](实
 1. Factorization 是否保留?**否——降级为训练技巧**(匹配预算全表 ≤0,P1-W 可复现,P1-F 反而最差;详见 §1)
 2. Voxel/Point/View 正式表示?**体素(canonical voxel)**——阈值扫描定稿(stage3c/report.md):域内点表示前沿更优(clean +0.05–0.13)但随机化下 falseOcc 膨胀 8×、匹配 fo 处体素反超(0.474 vs 0.348);体素另承载 unknown/visibility 语义接口。域内无随机化场景点表示是合理替代。
 3. 对象动力学是否真实可预测?**是**(door_new_recall 0.58–0.87 vs persistence 0.0,prec 1.0)——该结果不依赖 factorization。**反事实检验补充**(`metrics/action_counterfactual.json`):动作条件化在 logit 层精确聚焦于物理变化细胞(p1: |Δ| 0.572 vs 背景 0.026,22×),但强度不足以跨越二值决策边界(仅 2–3.5% GT 翻转细胞依赖动作)——同时解释了 precision=1.0/recall 中等,并给出下一代架构的明确改进方向:放大 action→geometry 通路。hold 仿真分支 NOT_RUN(时间盒;模型侧敏感性已测)
-4. Observer-Factorized 架构实现条件?**具备**(L4 探针:同物理 2.5mm 相机偏移 → 146 cells/帧可见性翻转、物理 0 变化;多相机配置数据构造已管线化 `--head-cam-dis`)
+4. Observer-Factorized 架构实现条件?**具备且已验证**(L4 完整证据链):①同物理 2.5mm 相机偏移 → 146 cells/帧可见性翻转、物理 0 变化(probe_vis_compare);②**tiny Observation Model 只训相机配置 A,跨配置 B 迁移 visIoU 0.9859 vs 同配置 holdout 0.9874(损失 0.0015,TRANSFERS)**(`observer_proto/result.json`)——可见性是 (几何, 相机参数) 的函数,可作为独立专家学习。注:迁移域为"跨相机配置"(单 episode),跨场景迁移未测;偏移幅度 2.5mm,强干预 stress test 留待后续
 5. 是否进入 Tiny Joint WAM?**有条件进入**:先 Observation Model tiny prototype(visibility 跨相机迁移验证,<1h GPU,见 research/next_model_design.md);Geometry-Action 闭环对照超出本批预算,列为下一阶段提案
