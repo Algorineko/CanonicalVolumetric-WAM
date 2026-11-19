@@ -20,6 +20,7 @@ from torch.utils.data import DataLoader
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from cvwam.dynamics_dataset import DynamicsDataset  # noqa: E402
+from cvwam.repr_dataset import ReprDataset  # noqa: E402
 from cvwam.models_tiny import TinyDynamicsNet  # noqa: E402
 import train_tiny as tt  # noqa: E402
 import pareto_eval as pe  # noqa: E402
@@ -37,20 +38,34 @@ def main():
     device = "cuda:0"
     cfg = yaml.safe_load(Path(args.config).read_text())
     root = Path(cfg["cache_dir"]) / "voxels_ep"
+    pt_root = Path(cfg["cache_dir"]) / "point_ep"
     sm = json.loads(Path(args.split_manifest).read_text())
     test_eps = sm["splits"]["clean_test"] + sm["splits"]["rand_test"]
-    ds = DynamicsDataset(root, test_eps, stride_t=2)
-    dl = DataLoader(ds, batch_size=64, shuffle=False, num_workers=8, pin_memory=True)
+    REPR = ("p2", "p2e", "p3")
     rows = []
     for spec in args.checkpoints:
         name, path = spec.split("=", 1)
         ck = torch.load(path, map_location=device, weights_only=False)
-        model = TinyDynamicsNet(variant=tt.MODEL_DIR[ck["variant"]], base=ck["base"],
-                                n_offsets=4).to(device).eval()
-        model.load_state_dict(ck["model"])
+        if ck["variant"] in REPR:
+            import eval_repr as er
+            g0 = np.load(root / "demo_clean_balanced" / "episode_0000010" / "20mm" /
+                         "frame_0000000.npz")
+            grid = tuple(int(v) for v in g0["shape"])
+            model = er.build_model(ck["variant"], ck.get("base", 32), grid).to(device).eval()
+            model.load_state_dict(ck["model"])
+            ds = ReprDataset(root, pt_root, test_eps, stride_t=2, repr=ck["variant"])
+            infer = er.make_infer(grid)
+        else:
+            model = TinyDynamicsNet(variant=tt.MODEL_DIR[ck["variant"]], base=ck["base"],
+                                    n_offsets=4).to(device).eval()
+            model.load_state_dict(ck["model"])
+            ds = DynamicsDataset(root, test_eps, stride_t=2)
+            infer = pe.infer_batch
+        dl = DataLoader(ds, batch_size=64, shuffle=False, num_workers=8, pin_memory=True)
         acc = {t: collections_() for t in THRS}
         for batch in dl:
-            occ = pe.infer_batch(model, ck["variant"], batch, device)
+            occ = infer((ck["variant"], model) if ck["variant"] in REPR else model,
+                        ck["variant"], batch, device)
             gt = pe.batch_gt(batch)
             oi = tt.offset_index(batch, torch.device("cpu"))
             obs = gt["obs_f"]
