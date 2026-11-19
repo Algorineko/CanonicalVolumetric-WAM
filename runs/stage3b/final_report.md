@@ -4,13 +4,19 @@
 
 ## 1. 机制归因裁决(审查方 §1.2)→ 决策 1: Factorization 是否保留?
 
-- Pareto 匹配 falseOcc 评估(VAL 定阈值→TEST 固定,9 模型增量 CSV):`metrics/pareto/`(P0/p1_s42/p1_s43 已出,其余运行中)
-- 裁决脚本: `scripts/attribution_verdict.py` → `metrics/attribution_verdict.md` — **PENDING(等 9 CSV 齐)**
-- **固定阈值旁证(door_eval,thr=0)**:`metrics/door/door_summary.csv`
-  - P1 家族 dyn(k=16): 0.392/0.420/0.434(3 seeds);P1-V: 0.442/0.407/0.419
-  - **P1-W(k=16 dyn 0.334)更差;P1-F(dyn 0.088)灾难性更差** — 权重移植与精确 NLL 等价形式都不能复现解耦收益
-  - P1-F 反常:其 val_loss(0.0247)低于 P1(~0.05)但动态指标崩坏 → **损失数值等价 ≠ 优化/机制等价**(因式形式的梯度路径改变训练动力学)
-- 预裁决(待 pareto 匹配预算确认):解耦监督的收益是**机制性**的(masking + 双头分解),factorization 倾向保留。
+**已裁决(2026-11-20,`metrics/attribution_verdict.md`,数据源 pareto v3 全 9 CSV)**:
+
+- **P1-V − P1 在全部匹配预算 × Clean/Rand 上 ≤ 0**(clean: -0.044@0.005, -0.014@0.01, -0.001@0.02;rand 同向)——解耦监督在固定 split 上**无动态预测优势**
+- **P1-W ≈ P1-V**(差 ±0.02 内):权重移植即可复现"解耦"的全部表现
+- **P1-F 一致最差**(-0.063@0.01):精确 NLL 等价的因式参数化**主动伤害优化**(损失数值等价 ≠ 梯度路径等价)
+- **P1(朴素逆频 CE)在严格预算最强**(0.005: 0.321 vs P1-V 0.277)
+- P1-V 三 seed 稳定(std ≤ 0.023)——"无优势"结论本身是稳定的,不是噪声
+- stage3a 的"P1-V 优势"(0.347 vs 0.295)确认为**旧 split + 未匹配操作点伪影**(旧 split 用 rand0/1 当 test,现已降级为 development)
+
+**决策 1:Factorization 降级为训练技巧(按审查方 §1.2 规则),不再作为机制主张。**
+机制主张重心移至:L4 观测者独立性(探针已证) + unknown/visibility 语义(可见性头 rev_acc 0.95,作为辅助输出) + 评估方法论(匹配 falseOcc pareto + persistence 基线 + 物体区域指标——这套证伪协议本身是可复用贡献)。
+
+固定阈值旁证(door_eval)保留:`metrics/door/door_summary.csv`——P1 家族均可预测门运动,但该结果不依赖 factorization。
 
 ## 2. 独立物体动力学可预测性(审查方 §1.3)→ 决策 3
 
@@ -52,8 +58,8 @@ qpos 映射勘误:replay npz 的 qpos 曾错误截取 robot_qpos_actual[:14](实
 
 ## 7. 五项明确决策
 
-1. Factorization 是否保留?**PENDING**(预裁决:保留,等匹配预算数字)
-2. Voxel/Point/View 正式表示?**PENDING**(Stage 3c)
-3. 对象动力学是否真实可预测?**是**(door_new_recall 0.58–0.87 vs persistence 0.0,prec 1.0)
-4. Observer-Factorized 架构实现条件?**PENDING**(探针已证明"同物理不同相机"可构造,可见性对比构建中)
-5. 是否进入 Tiny Joint WAM?**PENDING**(决策 1–4 汇总后)
+1. Factorization 是否保留?**否——降级为训练技巧**(匹配预算全表 ≤0,P1-W 可复现,P1-F 反而最差;详见 §1)
+2. Voxel/Point/View 正式表示?**倾向:实际操作区点+free(P2E)与体素持平或略优,极严格预算体素独活;体素额外保留 unknown/visibility 语义**——待 P2E 2 seeds + 阈值扫描(校准迁移疑点)后定稿
+3. 对象动力学是否真实可预测?**是**(door_new_recall 0.58–0.87 vs persistence 0.0,prec 1.0)——该结果不依赖 factorization
+4. Observer-Factorized 架构实现条件?**具备**(L4 探针:同物理 2.5mm 相机偏移 → 146 cells/帧可见性翻转、物理 0 变化;多相机配置数据构造已管线化 `--head-cam-dis`)
+5. 是否进入 Tiny Joint WAM?**有条件进入**:先 Observation Model tiny prototype(visibility 跨相机迁移验证,<1h GPU,见 research/next_model_design.md);Geometry-Action 闭环对照超出本批预算,列为下一阶段提案
