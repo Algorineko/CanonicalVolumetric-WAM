@@ -3,4 +3,15 @@
 [done] a2 s42
 [done] a3 s42
 [skip] a3mask s42
-s42
+[done] a0 s43
+[done] a1 s43
+[done] a2 s43
+[done] a3 s43
+[done] a3mask s43
+[skip] a0 s44
+[done] a1 s44
+[done] a2 s44
+[done] a3 s44
+s44
+[done] a3mask s44
+ALL VARIANTS DONE

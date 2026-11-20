@@ -1,7 +1,102 @@
 enc AE-init: missing=0 unexpected=0
-Traceback (most recent call last):
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 365, in <module>
-    main()
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 240, in main
-    out_dir / "latent_stats.pt")
-UnboundLocalError: local variable 'out_dir' referenced before assignment
+variant=a1 params=2.15M frozen=0.00M train=26840 val=9736
+step 1 loss 3.0604 (2s, peak 8.44GiB)
+step 50 loss 0.7780 (28s, peak 8.47GiB)
+step 100 loss 0.1879 (54s, peak 8.47GiB)
+step 150 loss 0.1292 (80s, peak 8.47GiB)
+step 200 loss 0.1251 (107s, peak 8.47GiB)
+step 250 loss 0.0767 (133s, peak 8.47GiB)
+step 250 train_loss 0.0767
+step 300 loss 0.0896 (159s, peak 8.47GiB)
+step 350 loss 0.0874 (185s, peak 8.47GiB)
+step 400 loss 0.0840 (211s, peak 8.48GiB)
+step 450 loss 0.0477 (237s, peak 8.48GiB)
+step 500 loss 0.0445 (264s, peak 8.48GiB)
+step 500 train_loss 0.0445
+step 550 loss 0.0614 (290s, peak 8.48GiB)
+step 600 loss 0.0330 (316s, peak 8.48GiB)
+step 650 loss 0.0428 (342s, peak 8.48GiB)
+step 700 loss 0.0624 (369s, peak 8.48GiB)
+step 750 loss 0.0432 (395s, peak 8.48GiB)
+step 750 train_loss 0.0432
+step 800 loss 0.0514 (421s, peak 8.48GiB)
+step 850 loss 0.0441 (448s, peak 8.48GiB)
+step 900 loss 0.0354 (474s, peak 8.48GiB)
+step 950 loss 0.0319 (500s, peak 8.48GiB)
+step 1000 loss 0.0392 (526s, peak 8.48GiB)
+step 1000 train_loss 0.0392
+step 1050 loss 0.0425 (553s, peak 8.48GiB)
+step 1100 loss 0.0500 (579s, peak 8.48GiB)
+step 1150 loss 0.0380 (605s, peak 8.48GiB)
+step 1200 loss 0.0447 (632s, peak 8.48GiB)
+step 1250 loss 0.0389 (658s, peak 8.48GiB)
+step 1250 train_loss 0.0389
+step 1300 loss 0.0334 (684s, peak 8.48GiB)
+step 1350 loss 0.0465 (710s, peak 8.48GiB)
+step 1400 loss 0.0358 (736s, peak 8.48GiB)
+step 1450 loss 0.0338 (763s, peak 8.48GiB)
+step 1500 loss 0.0446 (789s, peak 8.48GiB)
+step 1500 train_loss 0.0446
+step 1550 loss 0.0213 (815s, peak 8.48GiB)
+step 1600 loss 0.0344 (842s, peak 8.48GiB)
+step 1650 loss 0.0333 (868s, peak 8.48GiB)
+step 1700 loss 0.0403 (894s, peak 8.48GiB)
+step 1750 loss 0.0219 (921s, peak 8.48GiB)
+step 1750 train_loss 0.0219
+step 1800 loss 0.0370 (947s, peak 8.48GiB)
+step 1850 loss 0.0207 (973s, peak 8.48GiB)
+step 1900 loss 0.0262 (999s, peak 8.48GiB)
+step 1950 loss 0.0259 (1026s, peak 8.48GiB)
+step 2000 loss 0.0438 (1052s, peak 8.48GiB)
+step 2000 train_loss 0.0438
+step 2050 loss 0.0225 (1078s, peak 8.48GiB)
+step 2100 loss 0.0329 (1104s, peak 8.48GiB)
+step 2150 loss 0.0264 (1130s, peak 8.48GiB)
+step 2200 loss 0.0232 (1157s, peak 8.48GiB)
+step 2250 loss 0.0275 (1183s, peak 8.48GiB)
+step 2250 train_loss 0.0275
+step 2300 loss 0.0191 (1209s, peak 8.48GiB)
+step 2350 loss 0.0296 (1235s, peak 8.48GiB)
+step 2400 loss 0.0215 (1261s, peak 8.48GiB)
+step 2450 loss 0.0185 (1287s, peak 8.48GiB)
+step 2500 loss 0.0219 (1314s, peak 8.48GiB)
+[extend] val-ish loss improving; steps -> 4000
+step 2500 train_loss 0.0219
+step 2550 loss 0.0396 (1341s, peak 8.48GiB)
+step 2600 loss 0.0181 (1367s, peak 8.48GiB)
+step 2650 loss 0.0230 (1393s, peak 8.48GiB)
+step 2700 loss 0.0364 (1419s, peak 8.48GiB)
+step 2750 loss 0.0217 (1445s, peak 8.48GiB)
+step 2750 train_loss 0.0217
+step 2800 loss 0.0295 (1472s, peak 8.48GiB)
+step 2850 loss 0.0219 (1498s, peak 8.48GiB)
+step 2900 loss 0.0254 (1524s, peak 8.48GiB)
+step 2950 loss 0.0175 (1550s, peak 8.48GiB)
+step 3000 loss 0.0258 (1576s, peak 8.48GiB)
+step 3000 train_loss 0.0258
+step 3050 loss 0.0269 (1602s, peak 8.48GiB)
+step 3100 loss 0.0292 (1629s, peak 8.48GiB)
+step 3150 loss 0.0185 (1655s, peak 8.48GiB)
+step 3200 loss 0.0233 (1681s, peak 8.48GiB)
+step 3250 loss 0.0237 (1707s, peak 8.48GiB)
+step 3250 train_loss 0.0237
+step 3300 loss 0.0195 (1733s, peak 8.48GiB)
+step 3350 loss 0.0359 (1760s, peak 8.48GiB)
+step 3400 loss 0.0231 (1786s, peak 8.48GiB)
+step 3450 loss 0.0239 (1812s, peak 8.48GiB)
+step 3500 loss 0.0231 (1839s, peak 8.48GiB)
+step 3500 train_loss 0.0231
+step 3550 loss 0.0225 (1865s, peak 8.48GiB)
+step 3600 loss 0.0226 (1891s, peak 8.48GiB)
+step 3650 loss 0.0189 (1917s, peak 8.48GiB)
+step 3700 loss 0.0259 (1943s, peak 8.48GiB)
+step 3750 loss 0.0463 (1963s, peak 8.48GiB)
+step 3750 train_loss 0.0463
+step 3800 loss 0.0313 (1992s, peak 8.48GiB)
+step 3850 loss 0.0216 (2021s, peak 8.48GiB)
+step 3900 loss 0.0281 (2050s, peak 8.48GiB)
+step 3950 loss 0.0350 (2079s, peak 8.48GiB)
+step 4000 loss 0.0255 (2108s, peak 8.48GiB)
+step 4000 train_loss 0.0255
+{"variant": "a1", "steps": 4000, "batch": 32, "lr": 0.0003, "params": 2145814, "frozen_params": 0, "seed": 43, "lam": {"aux": 1.0, "world": 1.0, "obs": 1.0}, "train_pairs": 26840, "wall_s": 2109.1, "peak_gib": 8.477, "diagnostics": {"act_x0_mse_t0.5": 0.3096252381801605, "act_x0_mse_t0.9": 0.3674885928630829}, "train_eps": ["demo_clean_balanced:10", "demo_clean_balanced:25", "demo_clean_balanced:40", "demo_clean_balanced:0", "demo_clean_balanced:5", "demo_clean_balanced:15", "demo_clean_balanced:20", "demo_clean_balanced:30", "demo_clean_balanced:35", "demo_clean_balanced:45"], "val_eps": ["demo_clean_balanced:1", "demo_clean_balanced:2", "demo_clean_balanced:3", "demo_randomized_balanced:0", "demo_randomized_balanced:2", "demo_randomized_balanced:3"]}
+}

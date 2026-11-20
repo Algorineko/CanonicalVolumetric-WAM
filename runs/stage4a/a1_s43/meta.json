@@ -1,0 +1,41 @@
+{
+  "variant": "a1",
+  "steps": 4000,
+  "batch": 32,
+  "lr": 0.0003,
+  "params": 2145814,
+  "frozen_params": 0,
+  "seed": 43,
+  "lam": {
+    "aux": 1.0,
+    "world": 1.0,
+    "obs": 1.0
+  },
+  "train_pairs": 26840,
+  "wall_s": 2109.1,
+  "peak_gib": 8.477,
+  "diagnostics": {
+    "act_x0_mse_t0.5": 0.3096252381801605,
+    "act_x0_mse_t0.9": 0.3674885928630829
+  },
+  "train_eps": [
+    "demo_clean_balanced:10",
+    "demo_clean_balanced:25",
+    "demo_clean_balanced:40",
+    "demo_clean_balanced:0",
+    "demo_clean_balanced:5",
+    "demo_clean_balanced:15",
+    "demo_clean_balanced:20",
+    "demo_clean_balanced:30",
+    "demo_clean_balanced:35",
+    "demo_clean_balanced:45"
+  ],
+  "val_eps": [
+    "demo_clean_balanced:1",
+    "demo_clean_balanced:2",
+    "demo_clean_balanced:3",
+    "demo_randomized_balanced:0",
+    "demo_randomized_balanced:2",
+    "demo_randomized_balanced:3"
+  ]
+}

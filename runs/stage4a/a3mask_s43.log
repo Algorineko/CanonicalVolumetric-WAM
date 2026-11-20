@@ -1,12 +1,89 @@
 enc AE-init: missing=0 unexpected=0
-variant=a3mask params=2.67M frozen=0.00M train=26840 val=9736
-Traceback (most recent call last):
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 367, in <module>
-    main()
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 349, in main
-    run_epoch(tr_dl, train=True)
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 291, in run_epoch
-    z_fut = encode_frozen(model, x_fut, latent_stats)
-  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 142, in encode_frozen
-    z = (z - latent_stats["mu"]) / latent_stats["sd"]
-RuntimeError: The size of tensor a (12) must match the size of tensor b (45) at non-singleton dimension 5
+variant=a3mask params=2.64M frozen=0.00M train=26840 val=9736
+step 1 loss 2.1983 (2s, peak 3.09GiB)
+step 50 loss 1.3035 (12s, peak 3.10GiB)
+step 100 loss 1.1031 (22s, peak 3.10GiB)
+step 150 loss 1.0630 (33s, peak 3.10GiB)
+step 200 loss 1.0123 (43s, peak 3.10GiB)
+step 250 loss 1.0012 (53s, peak 3.10GiB)
+  [world] step 250 loss 1.0012
+step 250 train_loss 1.0012
+step 300 loss 0.9943 (63s, peak 3.10GiB)
+step 350 loss 0.9632 (74s, peak 3.10GiB)
+step 400 loss 0.9644 (84s, peak 3.10GiB)
+step 450 loss 0.9645 (94s, peak 3.10GiB)
+step 500 loss 0.9605 (105s, peak 3.10GiB)
+  [world] step 500 loss 0.9605
+step 500 train_loss 0.9605
+step 550 loss 0.9513 (115s, peak 3.10GiB)
+step 600 loss 0.9527 (125s, peak 3.10GiB)
+step 650 loss 0.9366 (136s, peak 3.10GiB)
+step 700 loss 0.9549 (147s, peak 3.10GiB)
+step 750 loss 0.9440 (157s, peak 3.10GiB)
+  [world] step 750 loss 0.9440
+step 750 train_loss 0.9440
+step 800 loss 0.9335 (167s, peak 3.10GiB)
+step 850 loss 0.9364 (179s, peak 3.10GiB)
+step 900 loss 0.9485 (189s, peak 3.10GiB)
+step 950 loss 0.9330 (200s, peak 3.10GiB)
+step 1000 loss 0.9423 (211s, peak 3.10GiB)
+  [world] step 1000 loss 0.9423
+step 1000 train_loss 0.9423
+step 1050 loss 0.9361 (221s, peak 3.10GiB)
+step 1100 loss 0.9474 (232s, peak 3.10GiB)
+step 1150 loss 0.9346 (242s, peak 3.10GiB)
+step 1200 loss 0.9275 (253s, peak 3.10GiB)
+step 1250 loss 0.9303 (263s, peak 3.10GiB)
+  [world] step 1250 loss 0.9303
+step 1250 train_loss 0.9303
+step 1300 loss 0.9338 (274s, peak 3.10GiB)
+step 1350 loss 0.9285 (284s, peak 3.10GiB)
+step 1400 loss 0.9436 (294s, peak 3.10GiB)
+step 1450 loss 0.9361 (304s, peak 3.10GiB)
+step 1500 loss 0.9369 (315s, peak 3.10GiB)
+  [world] step 1500 loss 0.9369
+step 1500 train_loss 0.9369
+step 1550 loss 0.9434 (326s, peak 3.10GiB)
+step 1600 loss 0.9381 (337s, peak 3.10GiB)
+step 1650 loss 0.9280 (347s, peak 3.10GiB)
+step 1700 loss 0.9459 (359s, peak 3.10GiB)
+step 1750 loss 0.9361 (369s, peak 3.10GiB)
+  [world] step 1750 loss 0.9361
+step 1750 train_loss 0.9361
+step 1800 loss 0.9320 (380s, peak 3.10GiB)
+step 1850 loss 0.9340 (391s, peak 3.10GiB)
+step 1900 loss 0.9262 (401s, peak 3.10GiB)
+step 1950 loss 0.9311 (411s, peak 3.10GiB)
+step 2000 loss 0.9298 (422s, peak 3.10GiB)
+  [world] step 2000 loss 0.9298
+step 2000 train_loss 0.9298
+step 2050 loss 0.9239 (433s, peak 3.10GiB)
+step 2100 loss 0.9239 (444s, peak 3.10GiB)
+step 2150 loss 0.9310 (454s, peak 3.10GiB)
+step 2200 loss 0.9249 (465s, peak 3.10GiB)
+step 2250 loss 0.9303 (476s, peak 3.10GiB)
+  [world] step 2250 loss 0.9303
+step 2250 train_loss 0.9303
+step 2300 loss 0.9238 (486s, peak 3.10GiB)
+step 2350 loss 0.9180 (496s, peak 3.10GiB)
+step 2400 loss 0.9265 (506s, peak 3.10GiB)
+step 2450 loss 0.9213 (519s, peak 3.10GiB)
+step 2500 loss 0.9233 (531s, peak 3.10GiB)
+  [world] step 2500 loss 0.9233
+step 2500 train_loss 0.9233
+step 2550 loss 0.9314 (545s, peak 3.10GiB)
+step 2600 loss 0.9208 (558s, peak 3.10GiB)
+step 2650 loss 0.9267 (570s, peak 3.10GiB)
+step 2700 loss 0.9253 (583s, peak 3.10GiB)
+step 2750 loss 0.9292 (596s, peak 3.10GiB)
+  [world] step 2750 loss 0.9292
+step 2750 train_loss 0.9292
+step 2800 loss 0.9260 (609s, peak 3.10GiB)
+step 2850 loss 0.9253 (621s, peak 3.10GiB)
+step 2900 loss 0.9192 (634s, peak 3.10GiB)
+step 2950 loss 0.9289 (646s, peak 3.10GiB)
+step 3000 loss 0.9317 (658s, peak 3.10GiB)
+  [world] step 3000 loss 0.9317
+step 3000 train_loss 0.9317
+{"variant": "a3mask", "steps": 3000, "batch": 32, "lr": 0.0003, "params": 2638297, "frozen_params": 0, "seed": 43, "lam": {"aux": 1.0, "world": 1.0, "obs": 1.0}, "train_pairs": 26840, "wall_s": 659.6, "peak_gib": 3.104, "diagnostics": {"act_x0_mse_t0.5": 0.28257161378860474, "act_x0_mse_t0.9": 0.35207492113113403, "w0_soft_dynIoU_t0.5": 0.0461}, "train_eps": ["demo_clean_balanced:10", "demo_clean_balanced:25", "demo_clean_balanced:40", "demo_clean_balanced:0", "demo_clean_balanced:5", "demo_clean_balanced:15", "demo_clean_balanced:20", "demo_clean_balanced:30", "demo_clean_balanced:35", "demo_clean_balanced:45"], "val_eps": ["demo_clean_balanced:1", "demo_clean_balanced:2", "demo_clean_balanced:3", "demo_randomized_balanced:0", "demo_randomized_balanced:2", "demo_randomized_balanced:3"]}
+

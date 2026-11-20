@@ -1,0 +1,17 @@
+{
+  "ckpt": "runs/stage4a/a3mask_s43/best.pt",
+  "variant": "a3mask",
+  "act_x0_mse_rad": 0.00376,
+  "world_masked_dynIoU": 0.1162,
+  "aux_masked_dynIoU": null,
+  "observer_visIoU": null,
+  "observer_visIoU_gt_geom": null,
+  "gates": [
+    0.013,
+    0.038,
+    -0.068,
+    -0.038,
+    -3.929
+  ],
+  "n_batches": 40
+}
