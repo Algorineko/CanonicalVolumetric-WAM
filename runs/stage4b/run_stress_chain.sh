@@ -22,6 +22,7 @@ SRV_KEYS=""
 
 case "$COND" in
   baseline)  ;;
+  baselinefix) ;;  # post-extrinsics-fix reference (blind-policy era kept as `baseline`)
   cam_t005)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.05") ;;
   cam_t015)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.15") ;;
   cam_t030)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.30") ;;
