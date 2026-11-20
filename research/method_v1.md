@@ -29,7 +29,7 @@
 
 - 编码器特征→占用预测的判别通路已证(dynIoU 0.42–0.49,P1-V 家族);tokenizer 有损瓶颈(8× 压缩不能表达薄层结构,三次门失败存档 runs/stage4a/gate_note.md)→ 世界 FM 目标用 E_frozen 潜码,世界侧评估以 A1 aux 为判别参照
 - 动作条件化在 logit 层聚焦正确但过弱(stage3b 反事实检验)→ 动作专家用 cross-attn 读世界流(FiLM 被证不足)
-- Observer 跨相机迁移已验证(visIoU 0.9859/0.9874)
+- Observer 跨相机全局保持但变化级预测弱(reveal 0.26–0.29 vs persistence 0)→ A3 标注 architecture prototype
 - 在线体素构建 GPU 版 10.4ms(逐位等价 numpy)→ 闭环 replan 可行
 
 ## 5. 评估协议
