@@ -3,7 +3,7 @@
   "obs_ratio_shift_over_nom": 2.0671819591837854,
   "hit_iou_mean": 0.5462507640448955,
   "obs_iou_mean": 0.3893275422974457,
-  "door_obs_shift_mean": 0.8009725158562369,
+  "door_obs_shift_mean": 0.9767441860465116,
   "act_mse_norm_mean": 0.002509243645553672,
   "ee_diff_m_mean": 0.023662463264101447,
   "ee_diff_m_max": 0.02899432643599905

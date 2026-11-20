@@ -71,11 +71,14 @@ def main():
     ap.add_argument("--stride", type=int, default=10)
     ap.add_argument("--max-frames", type=int, default=0)
     ap.add_argument("--device", default="cuda:1")
-    ap.add_argument("--door-link", default="door_link",
-                    help="substring match on microwave link name for the "
-                         "door-region observability box")
+    ap.add_argument("--geom-dir",
+                    default="/data/canonical-volumetric-wam/cache/voxels_ep_replay/"
+                            "demo_clean_balanced_10_replay/20mm",
+                    help="build_replay_geometry output with segmentation-driven "
+                         "door_region per frame (overrides the fixed box)")
     args = ap.parse_args()
     device = args.device
+    geom_dir = args.geom_dir or None
 
     nom = json.loads((Path(args.nominal) / "replay_gt.json").read_text())
     shf = json.loads((Path(args.shifted) / "replay_gt.json").read_text())
@@ -141,7 +144,13 @@ def main():
         hiou = float(((xn[0, 0] > 0) & (xs[0, 0] > 0)).sum()) / max(
             float(((xn[0, 0] > 0) | (xs[0, 0] > 0)).sum()), 1.0)
         door = float("nan")
-        if door_box is not None:
+        if geom_dir is not None:
+            gf = Path(args.geom_dir) / f"frame_{i:07d}.npz"
+            if gf.exists():
+                dr = np.load(gf)["door_region"]
+                dr_t = torch.as_tensor(dr, device=device)
+                door = float((gn["observed"][dr_t]).sum()) / max(int(dr_t.sum()), 1)
+        elif door_box is not None:
             lo = torch.as_tensor(np.asarray(door_box[0]), device=device)
             hi = torch.as_tensor(np.asarray(door_box[1]), device=device)
             bmin_t = torch.as_tensor(np.asarray(b_min), device=device)
