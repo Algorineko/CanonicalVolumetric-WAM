@@ -1,0 +1,3 @@
+[chain] baseline port=8850 trials=20 seed=0
+[chain] verified | [cvwam_fm] variant=a0 ckpt=/home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a0_s42/best.pt exec=4 euler=8 sampler=x0jump
+[chain-done] baseline: Final success rate: 20/20 = 100.0%

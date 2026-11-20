@@ -55,18 +55,10 @@ def main():
     mid = frames[len(frames) // 2]
     fr = np.load(mid)
     print(f"  frame {mid.name} keys: {fr.files}")
-    x_c = None
-    for key in ("voxel", "x", "occ"):
-        if key in fr.files:
-            x_c = fr[key]
-            break
-    if x_c is None:
-        x_c = fr[fr.files[0]]
-    if x_c.ndim == 2:  # compact sparse layout? show raw keys instead
-        print(f"  raw arrays: {[ (k, fr[k].shape, str(fr[k].dtype)) for k in fr.files ]}")
-    else:
-        for k, v in chan_stats(x_c[None]).items():
-            print(f"  {k}: {v}")
+    x_c = np.stack([fr["hit"], fr["free"], fr["observed"],
+                    fr["view_count"]])[None].astype(np.float32)
+    for k, v in chan_stats(x_c).items():
+        print(f"  {k}: {v}")
     # bbox comparison: where do online points live? Rebuild from depth+E
     from cvwam.geometry import cam2world_gl_to_world_cam_cv, depth_to_base
     import cvwam.robotwin_adapter as rta

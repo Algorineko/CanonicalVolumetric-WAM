@@ -1,0 +1,14 @@
+  per-episode table z (base) = 0.7402
+  [clean_open_laptop ep0000012 20mm] 0/232 (1926 ms/frame)
+  [clean_open_laptop ep0000012 20mm] 100/232 (1778 ms/frame)
+  [clean_open_laptop ep0000012 20mm] 200/232 (1609 ms/frame)
+[done] clean_open_laptop ep0000012 20mm: 232 frames in 396s -> /data/canonical-volumetric-wam/cache/voxels_ep/clean_open_laptop/episode_0000012/20mm
+  per-episode table z (base) = 0.7402
+  [clean_open_laptop ep0000013 20mm] 0/183 (1807 ms/frame)
+  [clean_open_laptop ep0000013 20mm] 100/183 (1665 ms/frame)
+[done] clean_open_laptop ep0000013 20mm: 183 frames in 307s -> /data/canonical-volumetric-wam/cache/voxels_ep/clean_open_laptop/episode_0000013/20mm
+  per-episode table z (base) = 0.7402
+  [clean_open_laptop ep0000014 20mm] 0/223 (1756 ms/frame)
+  [clean_open_laptop ep0000014 20mm] 100/223 (1777 ms/frame)
+  [clean_open_laptop ep0000014 20mm] 200/223 (1450 ms/frame)
+[done] clean_open_laptop ep0000014 20mm: 223 frames in 372s -> /data/canonical-volumetric-wam/cache/voxels_ep/clean_open_laptop/episode_0000014/20mm

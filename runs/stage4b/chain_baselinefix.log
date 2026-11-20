@@ -1,0 +1,5 @@
+[chain] baselinefix port=8850 trials=5 seed=0
+[chain] verified | [cvwam_fm] variant=a0 ckpt=/home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a0_s42/best.pt exec=4 euler=8 sampler=x0jump
+runs/stage4b/run_stress_chain.sh: line 98: 838353 Killed                  env "${CLIENT_ENV[@]}" "$ROBOTWIN_PY" scripts/eval_policy_xpolicylab.py --task_name $TASK --policy_name cvwam_fm --port $PORT --protocol ws --task_config demo_clean_balanced --seed $SEED --test_num $TRIALS --instruction_type seen --device_id 0 > "$REPO/runs/stage4b/rollout_${COND}_p${PORT}.log" 2>&1
+runs/stage4b/run_stress_chain.sh: line 122: 838106 Killed                  setsid nohup env CUDA_VISIBLE_DEVICES=$GPU PYTHONUNBUFFERED=1 PYTHONWARNINGS=ignore::UserWarning python $ROBOTWIN/XPolicyLab/setup_policy_server.py --config_path "$DEPLOY" --overrides port=$PORT host=localhost bench_name=RoboTwin task_name=$TASK ckpt_name=runs/stage4a/a0_s42/best.pt env_cfg_type=demo_clean_balanced seed=$SEED policy_name=cvwam_fm action_type=joint${DUMP_KEY} > "$LOG" 2>&1
+[chain-done] baselinefix: 

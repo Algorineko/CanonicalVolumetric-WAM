@@ -1,0 +1,11 @@
+{
+  "task": "open_laptop",
+  "note": "stage4b P4: train 10 / val 3 / test 5, mirroring stage3b structure; episodes from clean_open_laptop (50 collected, 18 cached)",
+  "splits": {
+    "clean_train": ["clean_open_laptop:0", "clean_open_laptop:1", "clean_open_laptop:2", "clean_open_laptop:3", "clean_open_laptop:4", "clean_open_laptop:5", "clean_open_laptop:6", "clean_open_laptop:7", "clean_open_laptop:8", "clean_open_laptop:9"],
+    "clean_val": ["clean_open_laptop:10", "clean_open_laptop:11", "clean_open_laptop:12"],
+    "clean_test": ["clean_open_laptop:13", "clean_open_laptop:14", "clean_open_laptop:15", "clean_open_laptop:16", "clean_open_laptop:17"],
+    "rand_val": [],
+    "rand_test": []
+  }
+}
