@@ -148,8 +148,13 @@ def main():
                 z = model["neck"](z)
             recon = model["dec"](z, out_shape=tuple(x.shape[2:]))
             obs_b = obs > 0.5
+            # occupancy pos_weight = free/hit within observed (project lesson L5:
+            # unweighted BCE collapses sparse hits — same failure class as the
+            # stage3a pos_weight bug)
+            hit_frac = (hit[obs_b] > 0.5).float().mean().clamp(min=1e-4)
+            pw = (1.0 - hit_frac) / hit_frac
             l_hit = nn.functional.binary_cross_entropy_with_logits(
-                recon[:, 0][obs_b], hit[obs_b])
+                recon[:, 0][obs_b], hit[obs_b], pos_weight=pw)
             l_free = nn.functional.binary_cross_entropy_with_logits(
                 recon[:, 1][obs_b], free[obs_b])
             l_obs = nn.functional.binary_cross_entropy_with_logits(
