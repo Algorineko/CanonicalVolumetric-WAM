@@ -1,0 +1,2 @@
+[chain] cam_t030blind port=8854 trials=5 seed=0
+[chain] verified | [cvwam_fm] variant=a0 ckpt=/home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a0_s42/best.pt exec=4 euler=8 sampler=x0jump

@@ -403,3 +403,577 @@ step: [92m1 / 1500[0mstep: [92m2 / 1500[0mstep: [92m3 / 1500[0mstep: [
 [34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 107/180, timeout=30s)
 [33m[1m[WAITING][0m policy server not ready (attempt 107/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
 [33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 108/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 108/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 109/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 109/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 110/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 110/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 111/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 111/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 112/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 112/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 113/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 113/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 114/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 114/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 115/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 115/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 116/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 116/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 117/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 117/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 118/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 118/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 119/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 119/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 120/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 120/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 121/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 121/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 122/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 122/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 123/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 123/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 124/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 124/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 125/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 125/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 126/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 126/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 127/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 127/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 128/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 128/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 129/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 129/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 130/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 130/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 131/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 131/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 132/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 132/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 133/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 133/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 134/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 134/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 135/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 135/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 136/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 136/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 137/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 137/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 138/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 138/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 139/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 139/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 140/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 140/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 141/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 141/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 142/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 142/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 143/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 143/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 144/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 144/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 145/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 145/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 146/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 146/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 147/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 147/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 148/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 148/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 149/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 149/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 150/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 150/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 151/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 151/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 152/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 152/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 153/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 153/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 154/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 154/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 155/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 155/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 156/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 156/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 157/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 157/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 158/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 158/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 159/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 159/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 160/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 160/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 161/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 161/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 162/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 162/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 163/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 163/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 164/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 164/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 165/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 165/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 166/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 166/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 167/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 167/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 168/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 168/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 169/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 169/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 170/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 170/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 171/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 171/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 172/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 172/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 173/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 173/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 174/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 174/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 175/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 175/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 176/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 176/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 177/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 177/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 178/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 178/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 179/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 179/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 180/180, timeout=30s)
+[31m[1m[ERROR][0m failed to connect to ws://localhost:8850 after 180 attempts
+
+[91mPolicy rollout error:[0m
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 281, in connect
+    self._ws = await asyncio.wait_for(
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/tasks.py", line 650, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/site-packages/websockets/asyncio/client.py", line 555, in __await_impl__
+    self.connection = await self.create_connection()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/site-packages/websockets/asyncio/client.py", line 470, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 938, in eval_remote_policy
+    model_client.call(func_name="update_obs", obs=xpl_obs)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 182, in call
+    response = self._run(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 94, in _run
+    return asyncio.run_coroutine_threadsafe(coro, self._loop).result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 624, in call
+    return await self.request(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 472, in request
+    await self.connect(handshake=True, evaluation_plan=self._evaluation_plan)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 338, in connect
+    raise ConnectionError(
+ConnectionError: failed to connect after 180 attempts: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+
+[33m[1m[RECONNECT][0m connection to ws://localhost:8850 is closed; reconnecting before trial_end
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 1/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 1/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 2/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 2/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 3/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 3/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 4/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 4/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 5/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 5/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 6/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 6/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 7/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 7/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 8/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 8/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 9/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 9/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 10/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 10/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 11/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 11/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 12/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 12/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 13/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 13/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 14/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 14/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 15/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 15/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 16/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 16/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 17/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 17/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 18/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 18/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 19/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 19/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 20/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 20/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 21/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 21/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 22/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 22/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 23/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 23/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 24/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 24/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 25/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 25/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 26/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 26/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 27/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 27/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 28/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 28/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 29/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 29/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 30/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 30/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 31/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 31/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 32/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 32/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 33/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 33/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 34/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 34/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 35/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 35/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 36/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 36/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 37/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 37/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 38/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 38/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 39/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 39/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 40/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 40/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 41/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 41/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 42/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 42/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 43/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 43/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 44/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 44/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 45/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 45/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 46/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 46/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 47/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 47/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 48/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 48/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 49/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 49/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 50/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 50/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 51/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 51/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 52/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 52/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 53/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 53/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 54/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 54/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 55/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 55/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 56/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 56/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 57/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 57/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 58/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 58/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 59/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 59/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 60/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 60/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 61/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 61/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 62/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 62/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 63/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 63/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 64/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 64/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 65/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 65/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 66/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 66/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 67/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 67/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 68/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 68/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 69/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 69/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 70/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 70/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 71/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 71/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 72/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 72/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 73/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 73/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 74/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 74/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 75/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 75/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 76/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 76/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 77/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 77/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 78/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 78/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 79/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 79/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 80/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 80/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 81/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 81/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 82/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 82/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 83/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 83/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 84/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 84/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 85/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 85/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 86/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 86/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 87/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 87/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 88/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 88/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 89/180, timeout=30s)
+[33m[1m[WAITING][0m policy server not ready (attempt 89/180): ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 8850)
+[33m[1m[RECONNECT][0m reconnecting to ws://localhost:8850; retry in 5s
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 90/180, timeout=30s)
+[32m[1m[CONNECTED][0m websocket policy server connected: ws://localhost:8850
+[91mFail![0m
+[93mopen_microwave[0m | [94mcvwam_fm[0m | [92mdemo_clean_balanced[0m | [91mdefault[0m
+Success rate: [96m14/15[0m => [95m93.3%[0m, current seed: [90m100022[0m
+
+error occurs during expert check! seed=100023 err=AssertionError: target_pose cannot be None for move action.
+error occurs during expert check! seed=100024 err=AssertionError: target_pose cannot be None for move action.
+error occurs during expert check! seed=100026 err=AssertionError: target_pose cannot be None for move action.
+error occurs during expert check! seed=100027 err=AssertionError: target_pose cannot be None for move action.
+[33m[1m[RECONNECT][0m connection to ws://localhost:8850 is closed; reconnecting before prepare_case
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 1/180, timeout=30s)
+[32m[1m[CONNECTED][0m websocket policy server connected: ws://localhost:8850
+[33m[1m[RECONNECT][0m connection to ws://localhost:8850 is closed; reconnecting before reset
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8850 (attempt 1/180, timeout=30s)
+[32m[1m[CONNECTED][0m websocket policy server connected: ws://localhost:8850
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 1497, in <module>
+    main(parsed_args)
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 356, in main
+    _, suc_num = eval_remote_policy(
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 927, in eval_remote_policy
+    reset_policy(model_client)
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 1049, in reset_policy
+    model_client.call(func_name="reset")
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 154, in call
+    response = self._run(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 94, in _run
+    return asyncio.run_coroutine_threadsafe(coro, self._loop).result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 603, in reset
+    return await self.request(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 472, in request
+    await self.connect(handshake=True, evaluation_plan=self._evaluation_plan)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 294, in connect
+    self._check_server_identity(ack)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 356, in _check_server_identity
+    raise ServerRestartedError(
+client_server.ws.protocol.exceptions.ServerRestartedError: policy server restarted mid-evaluation; the fresh server lost all model state, so continuing would corrupt results

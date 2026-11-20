@@ -49,6 +49,10 @@ def main():
     ap.add_argument("--head-cam-shift-cm", type=float, default=0.0,
                     help="observer probe: shift head camera position by this "
                          "many cm along a seeded random direction (deterministic)")
+    ap.add_argument("--head-cam-dir-seed", type=int, default=None,
+                    help="override the shift-direction seed (default: "
+                         "episode*1000 + cm*10 + deg*10; set 1000 to match the "
+                         "stage4b cam_t030 client hook)")
     ap.add_argument("--task", default="open_microwave",
                     help="RoboTwin task name (data path + env module)")
     args_cli = ap.parse_args()
@@ -75,9 +79,12 @@ def main():
                    + ax * np.dot(ax, fwd) * (1 - np.cos(th)))
             hc["forward"] = fwd.tolist()
         if args_cli.head_cam_shift_cm != 0.0:
-            rng = np.random.default_rng(args_cli.episode * 1000
-                                        + int(args_cli.head_cam_shift_cm * 10)
-                                        + int(args_cli.head_cam_rot_deg * 10))
+            dir_seed = args_cli.head_cam_dir_seed
+            if dir_seed is None:
+                dir_seed = (args_cli.episode * 1000
+                            + int(args_cli.head_cam_shift_cm * 10)
+                            + int(args_cli.head_cam_rot_deg * 10))
+            rng = np.random.default_rng(dir_seed)
             d = rng.normal(size=3)
             d /= np.linalg.norm(d)
             pos = np.asarray(hc["position"], dtype=np.float64) \

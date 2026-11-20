@@ -1,0 +1,1 @@
+[SERVER] policy=cvwam_fm, task=open_microwave, policy_server_port=8849

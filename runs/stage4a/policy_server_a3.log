@@ -1,0 +1,201 @@
+[SERVER] policy=cvwam_fm, task=open_microwave, policy_server_port=8849
+policy server call request failed: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 500, in _handle_call
+    result = await self._call_model_method(method)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 400, in _call_model_method
+    return await self._invoke_method(method, *args)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 393, in _invoke_method
+    result = await asyncio.to_thread(method, *args)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 169, in get_action
+    self.chunk = self._infer_chunk()
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 157, in _infer_chunk
+    o = self.model(x, act, t, qpos_t,
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 347, in forward
+    w_tok = self.w_tok(noisy_world) + self.t_world(t)[:, None] \
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 99, in forward
+    pooled = F.avg_pool3d(z, 2, ceil_mode=True)        # (B,C,5,9,6)
+TypeError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 336, in _execute_frame
+    response = await self._dispatch_frame(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 418, in _dispatch_frame
+    return await self._handle_call(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 504, in _handle_call
+    raise WsError(ErrorCode.CALL_FAILED, str(exc)) from exc
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+policy server call request failed: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 500, in _handle_call
+    result = await self._call_model_method(method)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 400, in _call_model_method
+    return await self._invoke_method(method, *args)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 393, in _invoke_method
+    result = await asyncio.to_thread(method, *args)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 169, in get_action
+    self.chunk = self._infer_chunk()
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 157, in _infer_chunk
+    o = self.model(x, act, t, qpos_t,
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 347, in forward
+    w_tok = self.w_tok(noisy_world) + self.t_world(t)[:, None] \
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 99, in forward
+    pooled = F.avg_pool3d(z, 2, ceil_mode=True)        # (B,C,5,9,6)
+TypeError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 336, in _execute_frame
+    response = await self._dispatch_frame(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 418, in _dispatch_frame
+    return await self._handle_call(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 504, in _handle_call
+    raise WsError(ErrorCode.CALL_FAILED, str(exc)) from exc
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+policy server call request failed: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 500, in _handle_call
+    result = await self._call_model_method(method)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 400, in _call_model_method
+    return await self._invoke_method(method, *args)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 393, in _invoke_method
+    result = await asyncio.to_thread(method, *args)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 169, in get_action
+    self.chunk = self._infer_chunk()
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 157, in _infer_chunk
+    o = self.model(x, act, t, qpos_t,
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 347, in forward
+    w_tok = self.w_tok(noisy_world) + self.t_world(t)[:, None] \
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 99, in forward
+    pooled = F.avg_pool3d(z, 2, ceil_mode=True)        # (B,C,5,9,6)
+TypeError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 336, in _execute_frame
+    response = await self._dispatch_frame(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 418, in _dispatch_frame
+    return await self._handle_call(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 504, in _handle_call
+    raise WsError(ErrorCode.CALL_FAILED, str(exc)) from exc
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+policy server call request failed: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 500, in _handle_call
+    result = await self._call_model_method(method)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 400, in _call_model_method
+    return await self._invoke_method(method, *args)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 393, in _invoke_method
+    result = await asyncio.to_thread(method, *args)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 169, in get_action
+    self.chunk = self._infer_chunk()
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 157, in _infer_chunk
+    o = self.model(x, act, t, qpos_t,
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 347, in forward
+    w_tok = self.w_tok(noisy_world) + self.t_world(t)[:, None] \
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 99, in forward
+    pooled = F.avg_pool3d(z, 2, ceil_mode=True)        # (B,C,5,9,6)
+TypeError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 336, in _execute_frame
+    response = await self._dispatch_frame(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 418, in _dispatch_frame
+    return await self._handle_call(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 504, in _handle_call
+    raise WsError(ErrorCode.CALL_FAILED, str(exc)) from exc
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+policy server call request failed: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 500, in _handle_call
+    result = await self._call_model_method(method)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 400, in _call_model_method
+    return await self._invoke_method(method, *args)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 393, in _invoke_method
+    result = await asyncio.to_thread(method, *args)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 169, in get_action
+    self.chunk = self._infer_chunk()
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/policy/cvwam_fm/model.py", line 157, in _infer_chunk
+    o = self.model(x, act, t, qpos_t,
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 347, in forward
+    w_tok = self.w_tok(noisy_world) + self.t_world(t)[:, None] \
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/src/cvwam/models_stage4a.py", line 99, in forward
+    pooled = F.avg_pool3d(z, 2, ceil_mode=True)        # (B,C,5,9,6)
+TypeError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 336, in _execute_frame
+    response = await self._dispatch_frame(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 418, in _dispatch_frame
+    return await self._handle_call(frame)
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_server.py", line 504, in _handle_call
+    raise WsError(ErrorCode.CALL_FAILED, str(exc)) from exc
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType

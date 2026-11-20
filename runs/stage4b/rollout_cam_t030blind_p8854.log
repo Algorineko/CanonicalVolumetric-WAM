@@ -1,0 +1,18 @@
+[32mRender Well[0m
+[cvwam-stress] head camera offset: rot=0.0deg shift=0.3m dir_seed=1000 pos=[-0.08621399530346525, -0.5319395394842017, 1.6334550309702631] fwd=[0, 0.6, -0.8]
+============= Config =============
+
+[95mMessy Table:[0m False
+[95mRandom Background:[0m False
+[95mRandom Light:[0m False
+[95mRandom Table Height:[0m 0
+[95mRandom Head Camera Distance:[0m 0
+[94mHead Camera Config:[0m D435, True
+[94mWrist Camera Config:[0m D435, True
+[94mEmbodiment Config:[0m aloha-agilex
+[96mEval Instruction:[0m seen
+
+==================================
+missing pytorch3d
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8854 (attempt 1/180, timeout=30s)
+[32m[1m[CONNECTED][0m websocket policy server connected: ws://localhost:8854

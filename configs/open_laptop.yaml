@@ -1,0 +1,42 @@
+# CV-WAM stage4b P4: open_laptop config (second task for G0 new-task audit).
+# Collected 2026-11-20: /data/task2_work/clean_open_laptop (50 eps, expert-clean).
+task: open_laptop
+data_root: /data/task2_work
+variants:
+  - clean_open_laptop
+episodes:
+  clean_open_laptop: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+timestep_mode: uniform5
+
+camera:
+  name_map: {cam_head: head, cam_left_wrist: left_wrist, cam_right_wrist: right_wrist}
+  extrinsics_key: extrinsics_matrix      # cam2world_gl (cam->world, OpenGL axes)
+  intrinsics_key: intrinsic_matrix       # (3,3) OpenCV K at 320x240
+  depth_codec: ffv1                      # gray16le uint16 millimeters, z-depth, 0 = invalid
+  image_shape: [240, 320, 3]
+
+robot_base:
+  # Same aloha-agilex rig as open_microwave (contract: T_world_base=(Rz90,[0,-0.65,0]),
+  # head anchor base [0.2, 0.032, 1.35])
+  pos_m: [0.0, -0.65, 0.0]
+  quat_wxyz: [0.7071067811865476, 0.0, 0.0, 0.7071067811865476]
+  head_cam_base_anchor_m: [0.2, 0.032, 1.35]
+  anchor_tol_m: 0.001
+
+# Same scene/table as open_microwave; VERIFY observed fraction after caching
+# (stage4b report §verification) before trusting training.
+workspace_bbox_base:
+  x: [0.30, 1.10]
+  y: [-0.65, 0.65]
+  z: [0.71, 1.60]
+table_z_base: 0.7401
+
+voxel:
+  pitches_m: [0.02]
+  local_fine_pitch_m: 0.005
+
+envs:
+  main_python: /home/zhangjialiang/miniconda3/envs/openwam/bin/python
+  viz_python: /home/zhangjialiang/code/PhysAdaptWAM/.venv-wam/bin/python
+heavy_root: /data/canonical-volumetric-wam
+cache_dir: /data/canonical-volumetric-wam/cache

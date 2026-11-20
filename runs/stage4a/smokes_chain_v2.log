@@ -1,0 +1,9 @@
+runs/stage4a/run_variant_smokes.sh: line 35: 762440 Killed                  setsid nohup bash $SRV RoboTwin open_microwave runs/stage4a/${v}_s42/best.pt demo_clean_balanced joint 0 $GPU openwam 8849 localhost > runs/stage4a/policy_server_${v}.log 2>&1
+[smoke-done] a1
+runs/stage4a/run_variant_smokes.sh: line 35: 774516 Killed                  setsid nohup bash $SRV RoboTwin open_microwave runs/stage4a/${v}_s42/best.pt demo_clean_balanced joint 0 $GPU openwam 8849 localhost > runs/stage4a/policy_server_${v}.log 2>&1
+[smoke-done] a2
+runs/stage4a/run_variant_smokes.sh: line 35: 777263 Killed                  setsid nohup bash $SRV RoboTwin open_microwave runs/stage4a/${v}_s42/best.pt demo_clean_balanced joint 0 $GPU openwam 8849 localhost > runs/stage4a/policy_server_${v}.log 2>&1
+[smoke-done] a3
+runs/stage4a/run_variant_smokes.sh: line 35: 780580 Killed                  setsid nohup bash $SRV RoboTwin open_microwave runs/stage4a/${v}_s42/best.pt demo_clean_balanced joint 0 $GPU openwam 8849 localhost > runs/stage4a/policy_server_${v}.log 2>&1
+[smoke-done] a3mask
+ALL_SMOKES_DONE

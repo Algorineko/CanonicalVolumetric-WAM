@@ -1,0 +1,34 @@
+{
+  "results": {
+    "camera_contract": {
+      "ok": true,
+      "detail": "anchor err 4.16e-17 (t=[0.2   0.032 1.35 ])"
+    },
+    "obs_nonempty": {
+      "ok": true,
+      "detail": "observed=21194 hit=2256 (min 1000)"
+    },
+    "hit_obs_ratio_plausible": {
+      "ok": true,
+      "detail": "hit/observed=0.106"
+    },
+    "depth_nonzero_all_cams": {
+      "ok": true,
+      "detail": "valid-depth frac ['1.00', '1.00', '1.00']"
+    },
+    "qpos_firstcall": {
+      "ok": true,
+      "detail": "arm_all_zero=True (known first-call artifact if chunk0)"
+    },
+    "sameframe_parity": {
+      "ok": true,
+      "detail": "observed IoU 0.973 vs frame_0000000.npz (min 0.9)"
+    },
+    "hashes": {
+      "model.py": "91ec3ff7",
+      "eval_policy_xpolicylab.py": "7b150849",
+      "collect_data.py": "0b940529"
+    }
+  },
+  "dump": "/data/cvwam_debug/online_x_fixed/online_x_obs_chunk0.npz"
+}

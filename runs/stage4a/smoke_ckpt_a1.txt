@@ -1,0 +1,1 @@
+13:ckpt_path: /home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a1_s42/best.pt

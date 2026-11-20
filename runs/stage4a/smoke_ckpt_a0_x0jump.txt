@@ -1,0 +1,2 @@
+13:ckpt_path: /home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a0_s42/best.pt
+16:sampler: x0jump

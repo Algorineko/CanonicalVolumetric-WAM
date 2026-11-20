@@ -85,3 +85,110 @@ serving 中"单步预测比迭代采样更抗输入偏移"的经验一致。
   + stress 配置;适配器所有权归协作会话,本会话 16:24 的编辑已被取代。
 - 结论修正:"当前源码=坏"表述过强,应为"当前源码的两种 euler 采样器闭环均与
   筛查时代不一致;筛查数字有效性待采样器考古/复跑确认"。
+
+## 追加 2(17:3x,协作会话 sanity 链实测,SAMPLER=x0jump)
+- a0 + x0jump: **5/5** ⇒ 筛查时代(19/20×2)采样器=x0jump 假说与闭环实测吻合,
+  a0 筛查数字有效性恢复。
+- a2 + x0jump: **0/5** ⇒ a2 闭环问题候选(其离线 act MSE 与 a0 同级 0.003),
+  与 L9/Gate "world→action 耦合失效" 方向一致;待 a3/a3mask 落盘后一并判读。
+- 时间线澄清:a1 v2-smoke 5/5(16:06-18)运行于 16:24 我编辑之前的源码;
+  我 16:24 Edit 的 old_string 含 `+=` 且匹配成功 ⇒ 16:24 时源码已是 `+=`;
+  ⇒ `+=` 翻转发生在 16:18-16:24 之间(非我所为),16:06-18 的 a1 5/5
+  运行的仍是翻转前的正确代码 ⇒ a1 redo 有效性恢复(待 sanity 链 a1 复跑确认)。
+- v3 链(+=,16:30-16:35)a2 的 1/2 仍无法解释,孤例,存疑不引用。
+- 本会话 v3 监控作废(旧文件名);监督权移交协作会话 sanity 链。
+
+## 追加 3(17:2x-17:4x,autopilot 会话)——根因:盲策略(serving 输入为空)
+
+**所有闭环数字(含筛查时代 19/20×2、a0/x0jump 5/5、a2/x0jump 0/5、baseline 20/20)
+都是"盲策略"数字:serving 的在线体素 x=全零、qpos=全零(夹爪=1)。策略从未见过
+观测,~100% 来自单任务无条件先验动作回放。**
+
+证据链(`runs/stage4b/diagnose_online_x.py` + `/data/cvwam_debug/online_x_baseline/`):
+- dump:三相机 depth 全有效(431-1028mm)、K/E 存在,但 x=0 非零体素、qpos=[0]×12+[1,1]。
+- 离线复现:dump 的 depth/K/E 过 wrapper 建链 → 点云落 base x∈[1.33,2.17](bbox x≤1.1,
+  0 部分命中);头相机算出 base (1.1,-0.032,1.35),真实锚点 (0.2,0.032,1.35)。
+- 根因:eval client `convert_camera` 优先取 `extrinsic_cv`(sapien world→cam,即
+  cam2world_gl 的逆)填 `extrinsics_matrix`,而契约(根 AGENTS.md)要求 cam2world_gl。
+  位置列恰好 x,y 取反(逆矩阵平移列),与 embodiment 名义位姿 (-0.032,-0.45,1.35)
+  对比即可判定。12:39 起的 wrapper 一直中招 ⇒ 筛查时代即盲。
+- 修复(已提交):`convert_camera` 改为 cam2world_gl 优先;名义位姿过链验证
+  锚点精确复现 (0.2, 0.032, 1.35)。
+- 采样器矩阵重估:上表全部闭环列作废(空输入下测得)。x0jump"成功"= 先验回放;
+  euler_minus"失败"= 先验 v 场迭代积分漂移。**修复后需重跑全部采样器 A/B、
+  a0 基线与变体 smoke;P0 压力测试必须以修复后的 pipeline 运行**(否则扰动条件
+  全部无效——盲策略根本不看相机)。
+- 次要 bug:qpos 首调全零(arms drive target 未初始化;夹爪=1 正常)。每 4 步
+  replan 中仅第一次受影响;后续 replan 读到真实 drive target。留观。
+
+## 追加 3(17:5x,跨链冲突警报,已通报协作会话)
+- sanity 链 a3 客户端(834457)17:29:45 起挂死(1 rate-line 后 20+ 分钟无更新),
+  疑似 a3 路径(世界流+observer)在 x0jump 下 server 侧异常 → WS 无响应。
+- 冲突:协作会话 stage4b 链(run_stress_chain.sh baselinefix, 端口 8850, 17:30 起)
+  与 sanity 链共用 deploy.yml;17:27 起 ckpt_path=a3_s42 ⇒ 其 baselinefix
+  可能实际加载 a3 权重(待其 server 日志 variant 行核实)。
+- 危害:sanity 脚本清理用全局 pgrep kill,将在 a3 客户端退出时连带杀掉 8850 服务器,
+  并把 deploy.yml sed 成 a3mask_s42 继续污染。已建议:ckpt 走 CLI overrides、
+  按 PID 清理、杀掉挂死三件套(834457/805706/834298)后接管 a3/a3mask。
+- 教训(机制层):多链并发时 ①deploy.yml 是单点竞争资源,ckpt 必须走 CLI;
+  ②清理必须按 PID,禁止全局 pkill;③监控过滤器不得跨日志 grep 完成标记
+  (本会话监控曾被旧 a0 日志的 SANITY_ALL_DONE 误触发提前退出)。
+
+## 追加 4(17:36,误报更正 + a3 首个闭环成功)
+- **"a3 挂死"系误报**:a3 客户端 17:27-17:32 正常跑完 5 集 = **5/5**
+  (stdout 块缓冲导致 mtime/rate-line 数滞后,本会话误判 hung)。
+  教训:判断客户端卡死要看 /proc/PID/io 增长或等真正超时,别只看日志 mtime。
+- 闭环 x0jump smoke 现有:a0 **5/5**、a2 **0/5**、a3 **5/5**(a3mask 未跑,
+  sanity 脚本在 a3mask turn 启动前被终止,deploy.yml 遗留 a3mask_s42)。
+- **a2 0/5 vs a3 5/5(同协议同任务)= 两条流架构的首个闭环分化证据**:
+  a2 联合栈离线动作 MSE 与 a0/a3 同级(~0.003)但闭环全败 ⇒ 其动作被
+  闭环分布偏移下的 world token 污染;a3 的门控/近闭环 act←world 路径
+  (a3mask 学习门 ~0.49 half-open,current_cross ~0.02)则鲁棒。
+  注意:5 集为 smoke 规模,方向性证据非结论;a0 5/5 说明本任务无需世界流,
+  与 L9 内容不敏感一致。
+- **协作会话 baselinefix 无 ckpt 污染**(更正追加 3):其链用
+  --overrides ckpt_name=runs/stage4a/a0_s42/best.pt 传参,server 日志
+  variant=a0 sampler=x0jump 实证;deploy.yml 竞争只影响读它的 sanity 链。
+  其链 [chain-done] baselinefix 已收尾(结果在其 rollout_baselinefix_p8850.log)。
+
+## 追加 5(17:4x,终局:盲策略根因,协作会话发现与修复)
+- **根因**:wrapper `convert_camera` 把 `extrinsic_cv`(逆矩阵)当 `cam2world_gl`
+  喂入 → 在线体素全零 → **本文件此前讨论的所有闭环数字(含 a0 19/20×2 筛查、
+  a2 0/5、a3 5/5)均为"无条件先验回放"**:策略从未见过真实观测,任务成功来自
+  固定初始状态下开环先验 chunk 的可达性(注意 eval 配置打印 Random Light/
+  Background/Table Height 全为 False/0,先验回放可高成功率,与 Randomized
+  也 19/20 自洽)。修复后 dump 验证 x_nonzero=1.0、qpos 真实(协作会话实测)。
+- 本文件结论降级说明:
+  - 采样器考古(追加 1-2、4 的 euler 方向/x0jump 判别)仍成立——它们刻画的是
+    盲模式下哪种确定性 chunk 被回放;
+  - **追加 4 的"a2 0/5 vs a3 5/5 分化"降级为盲输入下的先验行为差异,方向性参考;
+    world-token 耦合鲁棒性机制结论待修复后重跑**(协作会话已排期统一重测)。
+- 附加确认:17:32-33 sanity 脚本清理段的全局 pkill 确实误杀了当时在跑的
+  baselinefix server(追加 3 预警的风险实际发生)。后续纪律:per-chain deploy
+  + 按 PID 清理;共享 deploy.yml 的 sed 仅在确认无并行链时使用。
+- 现状:协作会话在跑修复输入下 baseline 20-trial(8850)+ euler_minus A/B(8851)
+  + open_laptop 体素缓存 6 路 + cabinet 采集(300s SIGALRM 护栏)。
+  a3mask x0jump 盲策略数字作废不补。本会话保持停机,不再触碰共享文件。
+
+## 追加 6(17:58,autopilot 会话)——采样器矩阵定论(修复输入)
+
+修复 extrinsics 后重测(`rollout_results/a0_smoke5_rates_euler_minus.txt`):
+- **euler_minus a0 = 0/5**(修复输入下);x0jump a0 = 9/9+(20-trial 进行中)。
+- **结论:serving 采样器 = x0jump**,与输入是否盲无关;euler_minus 在盲/真实两种
+  输入下均闭环失败(尽管离线 MSE 0.0043≈GT)。矩阵:
+
+| 采样器 | 离线 MSE | 盲输入闭环 | 修复输入闭环 |
+|---|---|---|---|
+| x0jump | 0.0076 | 5/5 | 9/9+ |
+| euler_minus | 0.0043 | 0/3 | 0/5 |
+| euler_plus | 8.9333 | (a2 1/2) | NOT_RUN |
+
+- OPEN 分析项(数据在手):在线 x(实时 sim 观测)与缓存 x(导出管线)的分布差
+  使迭代 ODE 漂移;`diagnose_online_x.py` 量化中。对部署含义:单步预测对此类
+  分布差鲁棒;若 P2/P3 需要迭代采样,须先对齐 online/cache 通路。
+- 同帧量化(17:5x):online chunk0 vs cached frame0 — 通道差 <2%,observed IoU 0.973,
+  hit IoU 0.817 ⇒ serving/训练输入分布几乎一致,分布差假设排除。
+  euler_minus 闭环失败的最佳解释改为**闭环协变量偏移**:模型自执行动作访问的状态
+  超出专家状态分布,迭代 ODE 在偏移状态处失准并复合;单步条件均值(回归到均值)
+  对此鲁棒——与模仿学习文献中 regression-vs-sampling 的鲁棒性差异一致。P2 若需
+  迭代采样,考虑 DAgger 式状态覆盖或对采样轨迹加约束。

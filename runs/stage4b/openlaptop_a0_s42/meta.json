@@ -1,0 +1,38 @@
+{
+  "variant": "a0",
+  "steps": 4000,
+  "batch": 32,
+  "lr": 0.0003,
+  "params": 1448270,
+  "frozen_params": 0,
+  "seed": 42,
+  "lam": {
+    "aux": 1.0,
+    "world": 1.0,
+    "obs": 1.0
+  },
+  "train_pairs": 7856,
+  "wall_s": 577.7,
+  "peak_gib": 3.084,
+  "diagnostics": {
+    "act_x0_mse_t0.5": 0.20473334193229675,
+    "act_x0_mse_t0.9": 0.22427420318126678
+  },
+  "train_eps": [
+    "clean_open_laptop:0",
+    "clean_open_laptop:1",
+    "clean_open_laptop:2",
+    "clean_open_laptop:3",
+    "clean_open_laptop:4",
+    "clean_open_laptop:5",
+    "clean_open_laptop:6",
+    "clean_open_laptop:7",
+    "clean_open_laptop:8",
+    "clean_open_laptop:9"
+  ],
+  "val_eps": [
+    "clean_open_laptop:10",
+    "clean_open_laptop:11",
+    "clean_open_laptop:12"
+  ]
+}

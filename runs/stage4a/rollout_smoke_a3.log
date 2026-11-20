@@ -1,0 +1,146 @@
+[32mRender Well[0m
+============= Config =============
+
+[95mMessy Table:[0m False
+[95mRandom Background:[0m False
+[95mRandom Light:[0m False
+[95mRandom Table Height:[0m 0
+[95mRandom Head Camera Distance:[0m 0
+[94mHead Camera Config:[0m D435, True
+[94mWrist Camera Config:[0m D435, True
+[94mEmbodiment Config:[0m aloha-agilex
+[96mEval Instruction:[0m seen
+
+==================================
+missing pytorch3d
+[34m[1m[CONNECTING][0m websocket policy server ws://localhost:8849 (attempt 1/180, timeout=30s)
+[32m[1m[CONNECTED][0m websocket policy server connected: ws://localhost:8849
+[34mTask Name: open_microwave[0m
+[34mPolicy Name: cvwam_fm[0m
+Warp DeprecationWarning: The symbol `warp.torch.device_from_torch` will soon be removed from the public API. Use `warp.device_from_torch` instead.
+
+[91mPolicy rollout error:[0m
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 893, in eval_remote_policy
+    action_chunk = normalize_action_chunk(model_client.call(func_name="get_action"))
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 182, in call
+    response = self._run(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 94, in _run
+    return asyncio.run_coroutine_threadsafe(coro, self._loop).result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 624, in call
+    return await self.request(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 522, in request
+    response = await asyncio.wait_for(fut, timeout=timeout)
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+env error before first action at seed=100000; episode not counted (consecutive=1)
+
+[91mPolicy rollout error:[0m
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 893, in eval_remote_policy
+    action_chunk = normalize_action_chunk(model_client.call(func_name="get_action"))
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 182, in call
+    response = self._run(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 94, in _run
+    return asyncio.run_coroutine_threadsafe(coro, self._loop).result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 624, in call
+    return await self.request(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 522, in request
+    response = await asyncio.wait_for(fut, timeout=timeout)
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+env error before first action at seed=100001; episode not counted (consecutive=2)
+error occurs during expert check! seed=100002 err=AssertionError: target_pose cannot be None for move action.
+
+[91mPolicy rollout error:[0m
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 893, in eval_remote_policy
+    action_chunk = normalize_action_chunk(model_client.call(func_name="get_action"))
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 182, in call
+    response = self._run(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 94, in _run
+    return asyncio.run_coroutine_threadsafe(coro, self._loop).result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 624, in call
+    return await self.request(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 522, in request
+    response = await asyncio.wait_for(fut, timeout=timeout)
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+env error before first action at seed=100003; episode not counted (consecutive=3)
+error occurs during expert check! seed=100004 err=AssertionError: target_pose cannot be None for move action.
+error occurs during expert check! seed=100005 err=AssertionError: target_pose cannot be None for move action.
+error occurs during expert check! seed=100006 err=AssertionError: target_pose cannot be None for move action.
+error occurs during expert check! seed=100007 err=AssertionError: target_pose cannot be None for move action.
+error occurs during expert check! seed=100008 err=AssertionError: target_pose cannot be None for move action.
+
+[91mPolicy rollout error:[0m
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 893, in eval_remote_policy
+    action_chunk = normalize_action_chunk(model_client.call(func_name="get_action"))
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 182, in call
+    response = self._run(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 94, in _run
+    return asyncio.run_coroutine_threadsafe(coro, self._loop).result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 624, in call
+    return await self.request(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 522, in request
+    response = await asyncio.wait_for(fut, timeout=timeout)
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+env error before first action at seed=100009; episode not counted (consecutive=4)
+error occurs during expert check! seed=100010 err=AssertionError: target_pose cannot be None for move action.
+error occurs during expert check! seed=100011 err=AssertionError: target_pose cannot be None for move action.
+
+[91mPolicy rollout error:[0m
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 893, in eval_remote_policy
+    action_chunk = normalize_action_chunk(model_client.call(func_name="get_action"))
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 182, in call
+    response = self._run(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/model_client.py", line 94, in _run
+    return asyncio.run_coroutine_threadsafe(coro, self._loop).result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 624, in call
+    return await self.request(
+  File "/home/zhangjialiang/code/RoboTwin/XPolicyLab/client_server/ws/protocol/client.py", line 522, in request
+    response = await asyncio.wait_for(fut, timeout=timeout)
+  File "/home/zhangjialiang/miniconda3/envs/robottwin/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+client_server.ws.protocol.exceptions.WsError: avg_pool3d(): argument 'input' (position 1) must be Tensor, not NoneType
+
+env error before first action at seed=100012; episode not counted (consecutive=5)
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 1444, in <module>
+    main(parsed_args)
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 311, in main
+    _, suc_num = eval_remote_policy(
+  File "/home/zhangjialiang/code/RoboTwin/scripts/eval_policy_xpolicylab.py", line 945, in eval_remote_policy
+    raise RuntimeError(
+RuntimeError: Aborting task: 5 consecutive env errors before first action (simulator/renderer is likely wedged).

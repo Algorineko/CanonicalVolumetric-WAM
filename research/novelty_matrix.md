@@ -11,6 +11,7 @@
 | **AWAM** (arXiv:2610.23396) | 几何条件世界模型 + **主动虚拟视点想象** | 部分(想象未见视点=观测过程建模的一种,但以"新视点渲染"为目标) | ✗ 无物理 occupancy 指标 | 动机相邻、机制不同:它想象**换一个相机往回看**,我们预测**同一相机下未知区的 reveal/occlude**(visibility head 的 rev_acc 指标)。二者可互补(其视点选择可消费我们的 unknown 场) |
 | **OccWAM** (arXiv:2610.17688) | 自动驾驶 occupancy + ego flow matching | ✗ 单一 occupancy 状态,无 free/unknown 分解、无可见性 | ✗ | 范式引用点:occupancy-WAM 存在,但驾驶场景 ego-motion 主导;操作场景臂体自遮挡+物体交互使可见性解耦成为必要(Stage 2c 实测 4.6–6.3×) |
 | GeoMem-VLA (2610.29866, ICLR27 投稿) | 隐式 GeoPlan tokens(point map 蒸馏)+时序记忆;**明确放弃完整可渲染重建** | ✗ 无分离 | ✗ 不评估内化几何的物理正确性(只有 policy 成功率) | **最直接竞品**。差异:①显式可测量占用场 vs 隐式 token;②p_obs/p_occ 因式分解监督;③物理可证伪评估(门区 new_recall 0.58–0.87 vs persistence 0.0,精确复现见 runs/stage3b/metrics/door/)。其 teacher 蒸馏用法可借鉴,不构成差异点 |
+| **ReconVLA** (arXiv:2508.10333) | 无显式 3D 表示;VLA 内以重建式辅助目标(重建注视区域视觉 token)强化感知 | ✗ | ✗(只有 policy 成功率) | **A1(Action FM + P1-V 辅助解码)的文献先例,不是因果验证**。Stage 4a §3 匹配消融(a1 vs a1nofm,3 seeds,masked dynIoU 0.830 vs 0.831,Δ=−0.0018)显示在本设定下 FM 共训练对世界预测无增益;ReconVLA 的机制在 CV-WAM 中**未被因果验证**。 |
 | FoundObj (2605.27178, ICML26) | 点云超点分割(FM 先验作 RL 奖励) | ✗ | ✗ | 边缘:物体区域 GT 工具候选;非世界模型 |
 | FastVGGT (2509.02560, ICLR26) | VGGT 加速(token 合并,4×) | ✗ | ✗ | 工程使能;不解决实测精度阻塞(MAE 43–78mm) |
 | PointWAM (2610.02840) | 点轨迹 | ✗ | 部分(点跟踪误差) | 已在 plan.md §2;无可见性分离 |
@@ -28,3 +29,7 @@
 
 - 门区 new_recall:P1/P1-V **0.58–0.87(精度 1.0)** vs persistence **0.0**(`runs/stage3b/metrics/door/door_summary.csv`)——独立物体运动可预测,GeoMem-VLA 类隐式方法不提供此项测量。
 - P1-W(权重移植)更差、P1-F(精确 NLL 等价分解)更差(dyn 0.09 vs P1 0.42,固定阈值)——解耦收益非 loss 数值形式可复现,机制归因最终裁决待 pareto 匹配 falseOcc(运行中)。
+
+## Stage 4a 待核实条目(2026-11-20)
+
+以下论文仅记录了编号,本会话尚未重读全文,**未写入主表**(NOT_VERIFIED,避免凭记忆写关系):Robot-Factored World Models (2607.22535)、MVISTA-4D (2602.09878)、SelfWAM。UNITAS (2610.12099) 已在主表。待下一轮文献核对后补行。

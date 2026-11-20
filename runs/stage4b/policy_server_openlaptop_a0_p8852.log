@@ -1,0 +1,5 @@
+[cvwam_fm] variant=a0 ckpt=/home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4b/openlaptop_a0_s42/best.pt exec=4 euler=8 sampler=x0jump voxel_manifest=/data/canonical-volumetric-wam/cache/voxels_ep/clean_open_laptop/episode_0000000/20mm/manifest.json
+[cvwam-stress-server] drop_cam=none occ_box=no calib_shift_m=0 calib_rot_deg=0 manifest=default debug_dump=yes
+[cvwam-debug] dumped chunk0 x_nonzero_frac=1.000 qpos0=0.000
+[cvwam-debug] dumped chunk5 x_nonzero_frac=1.000 qpos0=-0.225
+[cvwam-debug] dumped chunk20 x_nonzero_frac=1.000 qpos0=-0.181

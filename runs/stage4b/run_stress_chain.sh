@@ -31,9 +31,22 @@ case "$COND" in
     CKPT=runs/stage4b/openlaptop_a0_s42/best.pt
     MANIFEST_KEY=" voxel_manifest=/data/canonical-volumetric-wam/cache/voxels_ep/clean_open_laptop/episode_0000000/20mm/manifest.json"
     ;;
+  blind_openlaptop)
+    # G-Integrity blind对照: openlaptop ckpt + zero-obs (prior-replay rate)
+    TASK=open_laptop
+    CKPT=runs/stage4b/openlaptop_a0_s42/best.pt
+    MANIFEST_KEY=" voxel_manifest=/data/canonical-volumetric-wam/cache/voxels_ep/clean_open_laptop/episode_0000000/20mm/manifest.json"
+    SRV_KEYS=$'\nstress:\n  drop_cam: all'
+    ;;
   cam_t005)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.05") ;;
   cam_t015)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.15") ;;
   cam_t030)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.30") ;;
+  cam_t030blind)
+    # §3 zero-obs diagnostic: shifted camera + blind policy (is offset obs
+    # actively harmful vs prior replay?)
+    CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.30")
+    SRV_KEYS=$'\nstress:\n  drop_cam: all'
+    ;;
   cam_r7.5)  CLIENT_ENV=("CVWAM_HEAD_CAM_ROT_DEG=7.5") ;;
   cam_r20)   CLIENT_ENV=("CVWAM_HEAD_CAM_ROT_DEG=20") ;;
   drop1of3)  SRV_KEYS=$'\nstress:\n  drop_cam: one_of_three' ;;

@@ -1,0 +1,18 @@
+policy_name: cvwam_fm
+protocol: ws
+host: localhost
+port: null
+bench_name: null
+task_name: open_microwave
+ckpt_name: runs/stage4a/a0_s42/best.pt
+env_cfg_type: demo_clean_balanced
+seed: 0
+action_type: joint
+gpu_id: 0
+eval_batch: false
+ckpt_path: /home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a0_s42/best.pt
+exec_horizon: 4
+n_euler: 8
+sampler: x0jump
+stress:
+  drop_cam: all
