@@ -84,8 +84,10 @@ def evaluate(model, dl, device, max_batches=40):
         if bi >= max_batches:
             break
         x = batch["voxel"].to(device)
-        recon = model["dec"](model["enc"](x),
-                             out_shape=tuple(x.shape[2:]))
+        z = model["enc"](x)
+        if "neck" in model:
+            z = model["neck"](z)
+        recon = model["dec"](z, out_shape=tuple(x.shape[2:]))
         for j in range(x.shape[0]):
             for k, v in recon_ious(recon[j], x[j]).items():
                 if not np.isnan(v):
