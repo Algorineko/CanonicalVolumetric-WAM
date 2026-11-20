@@ -2,3 +2,8 @@
   "p": np.asarray(ln.get_pose().p, dtype=np.float64).tolist(),
 /home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/replay_episode_gt.py:150: DeprecationWarning: component.get_pose can be ambiguous thus deprecated. It is equivalent to component.get_entity_pose, which should be used instead
   "q_wxyz": np.asarray(ln.get_pose().q, dtype=np.float64).tolist(),
+[probe] head camera rot=0.0deg shift=30.0cm -> fwd=[0, 0.6, -0.8] pos=[-0.08621399530346525, -0.5319395394842017, 1.6334550309702631]
+missing pytorch3d
+Warp DeprecationWarning: The symbol `warp.torch.device_from_torch` will soon be removed from the public API. Use `warp.device_from_torch` instead.
+{"captured_frames": 427, "plan_success": true, "task_success": true, "seed": 1000019, "episode": 10, "variant": "demo_clean_balanced"}
+rows -> /data/canonical-volumetric-wam/cache/replay_gt/probe_ep10_camshift030_seed1000/replay_gt.json; seg -> /data/canonical-volumetric-wam/cache/replay_gt/probe_ep10_camshift030_seed1000/seg

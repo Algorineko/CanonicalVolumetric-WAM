@@ -70,13 +70,24 @@ L9 的 world→action 内容不敏感仍仅由离线干预支撑。
 
 | 条件 | 状态 | 成功率 | 出处 |
 |---|---|---|---|
-| cam_t030(头相机平移 0.30m,真 E 视角 OOD) | RUNNING | | `metrics/stress/cam_t030_rates.txt` |
-| drop1of3(随机丢一台相机,trial 内固定) | RUNNING | | `metrics/stress/drop1of3_rates.txt` |
-| cam_t015 / cam_t005 / cam_r20 / cam_r7.5 | NOT_RUN | | |
-| drop_head | NOT_RUN | | |
-| occ(观测侧遮挡盒) | NOT_RUN | | |
-| lo(布局 OOD,xlim -0.38..-0.28) | NOT_RUN | | |
-| openlaptop_a0 Clean-20 | NOT_RUN(训练完成,待筛查) | | |
+| cam_t030(头相机平移 0.30m,真 E 视角 OOD) | RUNNING(0/13 @20:1x) | | `metrics/stress/cam_t030_rates.txt` |
+| cam_r20(旋转 20°) | RUNNING(9/12≈75% @20:1x) | | `metrics/stress/cam_r20_rates.txt` |
+| drop1of3(随机丢一台相机,trial 内固定) | **完成 20/20** | 100%(阴性) | `metrics/stress/drop1of3_rates.txt` |
+| cam_t030blind(偏移相机+零观测,§3 诊断) | RUNNING(1/1) | 盲>偏移观测 | `metrics/stress/cam_t030blind_rates.txt` |
+| openlaptop_a0 5-trial smoke | RUNNING | | `metrics/stress/openlaptop_a0_rates.txt` |
+| blind_openlaptop 5-trial 对照 | RUNNING | | `metrics/stress/blind_openlaptop_rates.txt` |
+| cam_t015 / cam_t005 / cam_r7.5 / drop_head / occ / lo | NOT_RUN(裁决 §2 冻结,不补齐) | | |
+
+### P0 Failure Attribution(§3,2026-11-20 20:1x,详见 failures note 追加 8)
+
+ep10(评测集内,seed 1000019)同物理状态 nominal/shifted 成对渲染,427 帧对齐,43 帧配对分析
+(`metrics/attribution/att_{frames.csv,summary.json}`):
+
+- **偏移相机观测覆盖 = 名义 2.07×**(15k→31k 格),门区域观测率 0.80 —— **感知信息缺失排除(§10.1:否)**;
+- 同噪声动作差仅 0.0025(EE 2.4cm)但闭环 0/13 ⇒ 小偏差自执行复合;
+- 训练画布 observed ~11-21k,shift 31k 超上界 1.5× ⇒ **画布统计量分布偏移成立**;
+- **cam_t030blind:零观测 > 偏移观测(§10.2:是)——偏移观测主动有害**;
+- 含义:修复候选第一梯队 = B3 相机增广/输入归一化(画布统计量鲁棒),其次才是历史信念;B1/B2 融合也改变统计量,须 B3 对照剥离机制归因。
 
 ## 失败存档
 

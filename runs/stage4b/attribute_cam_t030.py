@@ -94,29 +94,13 @@ def main():
     from cvwam import voxel as vx
     _, _, shape = vx.grid_config(b_min, b_max, pitch)
 
-    # door-region box (base frame): identify the DOOR link as the non-base
-    # microwave link whose world position moves most over the episode (the
-    # hinge rotates; model links use generic names base/link_0..3)
-    door_link_name = None
-    link_names = list((nom[0].get("mic_link_poses") or {}).keys())
-    mov = {}
-    for ln in link_names:
-        if ln == "base":
-            continue
-        ps = [np.asarray(r["mic_link_poses"][ln]["p"]) for r in nom
-              if ln in (r.get("mic_link_poses") or {})]
-        if len(ps) >= 2:
-            mov[ln] = float(np.ptp(np.stack(ps), axis=0).max())
-    if mov:
-        door_link_name = max(mov, key=mov.get)
-        p_w = np.asarray(nom[0]["mic_link_poses"][door_link_name]["p"])
-        p_b = T_bw[:3, :3].T @ (p_w - T_bw[:3, 3])
-        door_box = (p_b - 0.10, p_b + 0.10)
-        print(f"door link '{door_link_name}' (move {mov[door_link_name]:.3f} m) "
-              f"world={p_w.round(3)} -> base={p_b.round(3)}")
-    else:
-        door_box = None
-        print("WARN: door link not found; door observability will be NaN")
+    # door-region box (base frame): link names are generic (base/link_0..3) and
+    # per-frame movement detection failed (all-zero ptp); use the measured door
+    # front location in base frame (stage4b design notes: door link base
+    # ≈ (0.72,-0.03,0.88)); document as an approximation box
+    door_center = np.asarray([0.72, -0.03, 0.88])
+    door_box = (door_center - 0.10, door_center + 0.10)
+    print(f"door box (base frame approximation): {door_box[0].round(2)}..{door_box[1].round(2)}")
 
     ck = torch.load(REPO / args.ckpt, map_location=device, weights_only=False)
     from cvwam.models_stage4a import Stage4AModel
@@ -138,13 +122,11 @@ def main():
         img_n = np.load(Path(args.nominal) / "rgbdepth" / f"frame_{i:07d}.npz")
         img_s = np.load(Path(args.shifted) / "rgbdepth" / f"frame_{i:07d}.npz")
         def cams(img, row):
-            Ks = {c: row[f"K_{c}"] for c in
-                  ("head_camera", "left_camera", "right_camera")}
-            Es = {c: row[f"T_world_cam_gl_{c}"] for c in
-                  ("head_camera", "left_camera", "right_camera")}
-            d = {c: img[f"depth_mm_{t}"] for c, t in
-                 (("head_camera", "head"), ("left_camera", "left"),
-                  ("right_camera", "right"))}
+            ren = {"head_camera": "head", "left_camera": "left",
+                   "right_camera": "right"}
+            Ks = {ren[c]: row[f"K_{c}"] for c in ren}
+            Es = {ren[c]: row[f"T_world_cam_gl_{c}"] for c in ren}
+            d = {t: img[f"depth_mm_{t}"] for t in ("head", "left", "right")}
             return d, Ks, Es
         d_n, K_n, E_n = cams(img_n, rn)
         d_s, K_s, E_s = cams(img_s, rs)
@@ -160,11 +142,12 @@ def main():
             float(((xn[0, 0] > 0) | (xs[0, 0] > 0)).sum()), 1.0)
         door = float("nan")
         if door_box is not None:
-            lo, hi = (torch.as_tensor(door_box[0], device=device),
-                      torch.as_tensor(door_box[1], device=device))
+            lo = torch.as_tensor(np.asarray(door_box[0]), device=device)
+            hi = torch.as_tensor(np.asarray(door_box[1]), device=device)
+            bmin_t = torch.as_tensor(np.asarray(b_min), device=device)
             cells = torch.stack(torch.meshgrid(
                 *[torch.arange(s, device=device) for s in shape], indexing="ij"), -1)
-            centers = b_min + (cells + 0.5) * pitch
+            centers = bmin_t + (cells + 0.5) * pitch
             inbox = ((centers >= lo) & (centers <= hi)).all(-1)
             door = float((gn["observed"][inbox]).sum()) / max(float(inbox.sum()), 1.0)
         # same-noise x0jump action difference
@@ -187,8 +170,8 @@ def main():
         sc_s = np.asarray(stats["scale"], dtype=np.float32)
         an = lo_s + a_n[0].cpu().numpy() * sc_s
         asf = lo_s + a_s[0].cpu().numpy() * sc_s
-        qn = {jn: float(v) for jn, v in zip(jnames, an[0:6])}
-        qs = {jn: float(v) for jn, v in zip(jnames, asf[0:6])}
+        qn = {jn: float(v) for jn, v in zip(jnames, an[0][0:6])}
+        qs = {jn: float(v) for jn, v in zip(jnames, asf[0][0:6])}
         pn = fk_links(chain, joints, qn)["fl_link6"][1]
         ps = fk_links(chain, joints, qs)["fl_link6"][1]
         ee_diff = float(np.linalg.norm(pn - ps))
