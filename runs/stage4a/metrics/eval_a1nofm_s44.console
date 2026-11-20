@@ -1,0 +1,11 @@
+{
+  "ckpt": "runs/stage4a/a1nofm_s44/best.pt",
+  "variant": "a1",
+  "act_x0_mse_rad": 1.17349,
+  "world_masked_dynIoU": null,
+  "aux_masked_dynIoU": 0.8412,
+  "observer_visIoU": null,
+  "observer_visIoU_gt_geom": null,
+  "gates": null,
+  "n_batches": 40
+}

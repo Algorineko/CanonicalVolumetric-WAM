@@ -240,6 +240,10 @@ def main():
     ap.add_argument("--lam-aux", type=float, default=1.0)
     ap.add_argument("--lam-world", type=float, default=1.0)
     ap.add_argument("--lam-obs", type=float, default=1.0)
+    ap.add_argument("--no-fm-loss", action="store_true",
+                    help="§3 matched ablation: drop the action FM loss (aux-only); "
+                         "same architecture/data/steps as a1 — isolates the FM "
+                         "co-training effect on the aux world prediction")
     ap.add_argument("--out", required=True)
     ap.add_argument("--split-manifest", default="runs/stage3b/split_manifest.json")
     args = ap.parse_args()
@@ -340,7 +344,8 @@ def main():
                 o = model(x, x_t_a, t, qpos, oi,
                           noisy_world=noisy_w, cam72=cam72)
                 v_target_a = eps_a - act
-                L = L + fm_loss(o["v_a"], x_t_a, v_target_a)
+                if not args.no_fm_loss:
+                    L = L + fm_loss(o["v_a"], x_t_a, v_target_a)
                 if o.get("v_w") is not None:
                     v_target_w = eps_w - tgt_w
                     L = L + args.lam_world * fm_loss(o["v_w"], noisy_w, v_target_w)

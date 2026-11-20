@@ -12,6 +12,6 @@
 [done] a1 s44
 [done] a2 s44
 [done] a3 s44
-s44
 [done] a3mask s44
 ALL VARIANTS DONE
+rmdir: failed to remove '/tmp/cvwam_variants.lock': No such file or directory
