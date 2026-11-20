@@ -212,7 +212,7 @@ def main():
     hist = []
 
     def run_epoch(dl, train=True):
-        nonlocal step
+        nonlocal step, steps_target
         if train:
             model.train()
         else:
