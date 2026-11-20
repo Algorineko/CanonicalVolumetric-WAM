@@ -70,7 +70,7 @@ L9 的 world→action 内容不敏感仍仅由离线干预支撑。
 
 | 条件 | 状态 | 成功率 | 出处 |
 |---|---|---|---|
-| cam_t030(头相机平移 0.30m,真 E 视角 OOD) | **完成 0/20** | **0.0%,Wilson 上界 0.168 → 门条件满足** | `metrics/stress/cam_t030_rates.txt` |
+| cam_t030(头相机平移 0.30m,真 E 视角 OOD) | **完成 0/20** | **0.0%,Wilson 上界 0.161 → 门条件满足** | `metrics/stress/cam_t030_rates.txt` |
 | cam_r20(旋转 20°) | **完成 15/20** | 75.0%,Wilson 上界 0.888,成功率条款 0.75>0.70 → **单独不满足** | `metrics/stress/cam_r20_rates.txt` |
 | drop1of3(随机丢一台相机,trial 内固定) | **完成 20/20** | 100%(阴性) | `metrics/stress/drop1of3_rates.txt` |
 | cam_t030blind(偏移相机+零观测,§3 诊断) | **完成 5/5** | 100% —— 盲>偏移观测 | `metrics/stress/cam_t030blind_rates.txt` |
@@ -95,7 +95,7 @@ failures/;未执行项标 NOT_RUN。
 
 ## G0 正式裁决(2026-11-20 20:4x,预注册判据)
 
-**cam_t030:0/20 = 0.0%,Wilson 95% CI [0.000, 0.168],上界 < 0.90 且 0.0 ≤ 70% → G0 条件满足(MET)。**
+**cam_t030:0/20 = 0.0%,Wilson 95% CI [0.000, 0.161],上界 < 0.90 且 0.0 ≤ 70% → G0 条件满足(MET)。**
 cam_r20(15/20,75%,上界 0.888)与 drop1of3(20/20)单独不满足。剂量响应:平移 0.30m 完全致残(0/20)、旋转 20° 轻度退化(75%)、丢一台相机无影响(100%)。
 按 roadmap §5:过门 → **P1(oracle 上界,重设计版见 p1_oracle_design.md)进入待授权队列**。
 失败机制归因(P0 Failure Attribution):观测覆盖 2.07×/门 0.977 排除感知缺失;画布统计量 OOD + 闭环复合(偏移观测严格有害:盲 5/5 vs 观测 0/20)。
