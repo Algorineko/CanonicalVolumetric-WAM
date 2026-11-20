@@ -1,0 +1,13 @@
+{
+  "episode": "demo_clean_balanced:10",
+  "frames_stepped": 423,
+  "take_action_calls": 361,
+  "success_step": 360,
+  "success": true,
+  "plan_success": true,
+  "door_qpos": 0.942732572555542,
+  "wall_s": 13.1,
+  "voxel_n": 48,
+  "voxel_latency_mean_ms": 18.3,
+  "voxel_latency_max_ms": 63.4
+}
