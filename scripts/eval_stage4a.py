@@ -20,8 +20,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from cvwam.dynamics_dataset import OFFSETS, DynamicsDataset  # noqa: E402
 from cvwam.models_stage4a import Stage4AModel  # noqa: E402
-from train_stage4a import (act_normalization, decode_frozen, encode_frozen,  # noqa: E402
-                           masked_dyn_iou, normalize_act, sample_time)
+from train_stage4a import (pooled_occupancy, soft_masked_dyn_iou,  # noqa: E402
+                           unpool_soft, normalize_act, sample_time)
 from train_tokenizer_ae import LatentDecoder  # noqa: E402
 
 
@@ -56,11 +56,7 @@ def main():
     ae_dec = LatentDecoder(in_ch=ck.get("bottleneck_ch", 128), out_ch=4).to(device)
     ae_dec.load_state_dict(ae["dec"])
     ae_dec.eval()
-    ls_path = Path(args.ckpt).parent / "latent_stats.pt"
-    latent_stats = None
-    if ls_path.exists():
-        ls = torch.load(ls_path, map_location=device, weights_only=False)
-        latent_stats = dict(mu=ls["mu"].to(device), sd=ls["sd"].to(device))
+
 
     agg = dict(act_mse=[], world_dyn_iou=[], aux_dyn_iou=[], obs_iou=[],
                obs_iou_gt_geom=[], gates=None)
@@ -79,9 +75,9 @@ def main():
         x_t_a = (1 - t)[:, None, None] * act + t[:, None, None] * eps_a
         noisy_w = None
         if model.variant in ("a2", "a3", "a3mask"):
-            z_fut = encode_frozen(model, x_fut, latent_stats)
-            eps_w = torch.randn_like(z_fut)
-            noisy_w = (1 - t)[:, None, None, None, None] * z_fut \
+            tgt_w = pooled_occupancy(x_fut)
+            eps_w = torch.randn_like(tgt_w)
+            noisy_w = (1 - t)[:, None, None, None, None] * tgt_w \
                 + t[:, None, None, None, None] * eps_w
         o = model(x, x_t_a, t, qpos, oi, noisy_world=noisy_w, cam72=None)
         # action x0 reconstruction (denormalized error)
@@ -91,8 +87,8 @@ def main():
         # world decode dynIoU
         if noisy_w is not None:
             w0 = noisy_w - t[:, None, None, None, None] * o["v_w"]
-            vox = decode_frozen(model, w0, ae_dec, latent_stats)
-            agg["world_dyn_iou"].append(masked_dyn_iou(vox, batch))
+            vox = unpool_soft(w0, x.shape[2:])
+            agg["world_dyn_iou"].append(soft_masked_dyn_iou(vox, batch))
         # aux head dynIoU (a1): occ logit per offset, threshold 0
         if o.get("aux_logits") is not None:
             logits = o["aux_logits"]

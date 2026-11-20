@@ -138,22 +138,28 @@ class VActionHead(nn.Module):
 
 
 class VWorldHead(nn.Module):
-    """world tokens -> latent velocity (B,128,10,17,12); 1x1 zero-init."""
+    """world tokens -> pooled future-occupancy velocity (B,2,10,17,12).
 
-    def __init__(self, d=128, out_ch=128):
+    v4 redesign: the world FM target is the POOLED FUTURE OCCUPANCY CANVAS
+    (hit_frac, obs_frac at 10x17x12, values in [0,1]) — physically meaningful
+    and bounded, replacing the AE-latent target whose raw scale (absmax 497,
+    per-position zero-inflation) made any normalization pathological.
+    """
+
+    def __init__(self, d=128, out_ch=2):
         super().__init__()
         self.lin = nn.Linear(d, d)
-        self.dw = nn.Conv3d(out_ch, out_ch, 3, padding=1, groups=out_ch)
-        self.pw = nn.Conv3d(out_ch, out_ch, 1)
-        nn.init.zeros_(self.pw.weight)
-        nn.init.zeros_(self.pw.bias)
+        self.dw = nn.Conv3d(d, d, 3, padding=1, groups=d)
+        self.head = nn.Conv3d(d, out_ch, 1)
+        nn.init.zeros_(self.head.weight)
+        nn.init.zeros_(self.head.bias)
 
     def forward(self, tok, out_shape=(10, 17, 12)):
         h = self.lin(tok)
         v = unpool_tokens(h, out_shape)
         v = F.interpolate(v, size=out_shape, mode="trilinear", align_corners=False)
         v = F.silu(self.dw(v))
-        return self.pw(v)
+        return self.head(v)
 
 
 # ---------------------------------------------------------------- variants
@@ -268,20 +274,20 @@ class Stage4AModel(nn.Module):
 
         if variant in ("a2",):
             # single joint stack over [G_tok | w_tok | act | qpos]
-            self.w_tok = WorldTokenizer(bottleneck_ch, d)
+            self.w_tok = WorldTokenizer(2, d)
             self.t_world = FMTimeEmb(d)
             self.w_off = nn.Embedding(n_offsets, d)
             self.stack = nn.ModuleList([AttnBlock(d), AttnBlock(d)])
-            self.v_w = VWorldHead(d)
+            self.v_w = VWorldHead(d, out_ch=2)
         elif variant in ("a3", "a3mask"):
-            self.w_tok = WorldTokenizer(bottleneck_ch, d)
+            self.w_tok = WorldTokenizer(2, d)
             self.t_world = FMTimeEmb(d)
             self.w_off = nn.Embedding(n_offsets, d)
             self.world_stack = nn.ModuleList([AttnBlock(d, cross=True),
                                               AttnBlock(d, cross=True)])
             self.action_stack = nn.ModuleList([AttnBlock(d, cross=True),
                                                AttnBlock(d, cross=True)])
-            self.v_w = VWorldHead(d)
+            self.v_w = VWorldHead(d, out_ch=2)
             self.observer = ObserverHead(d, cond_dim=72, n_offsets=n_offsets)
             if variant == "a3mask":
                 # gates on every cross-attn path + extra action<-current path

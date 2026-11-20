@@ -33,6 +33,43 @@ from cvwam.models_tiny import count_params  # noqa: E402
 VARIANTS = ("a0", "a1", "a2", "a3", "a3mask")
 
 
+
+
+def pooled_occupancy(x_fut, out_shape=(10, 17, 12)):
+    """(B,4,40,65,45) -> (B,2,10,17,12): [hit_frac, obs_frac] via adaptive pool.
+
+    Bounded [0,1] world-FM target — physically meaningful (fraction of each
+    latent cell occupied/observed), no AE-latent scale pathology.
+    """
+    hit = x_fut[:, 0:1]
+    obs = x_fut[:, 2:3]
+    h = torch.nn.functional.adaptive_avg_pool3d(hit, out_shape)
+    o = torch.nn.functional.adaptive_avg_pool3d(obs, out_shape)
+    return torch.cat([h, o], 1)
+
+
+def unpool_soft(w0, out_shape=(40, 65, 45)):
+    """(B,2,10,17,12) soft canvas -> (B,2,40,65,45) [hit,obs] logits-ish maps."""
+    return torch.nn.functional.interpolate(w0, size=out_shape, mode="trilinear",
+                                           align_corners=False)
+
+
+def soft_masked_dyn_iou(vox_soft, batch, thr=0.5):
+    """vox_soft: (B,2,40,65,45) [hit,obs] soft maps in [0,1]."""
+    obs_f = batch["observed_future"].to(vox_soft.device).bool()
+    gt_hit = batch["state_future"].to(vox_soft.device) == 0
+    st = batch["state_t"].to(vox_soft.device)
+    pred_hit = vox_soft[:, 0] > thr
+    both = obs_f & (st != 2)
+    dyn = ((st == 0) ^ gt_hit) & both
+    inter = (pred_hit & dyn).sum((1, 2, 3)).float()
+    uni = ((pred_hit & dyn) | (gt_hit & dyn)).sum((1, 2, 3)).float()
+    iou = torch.where(uni > 0, inter / uni.clamp_min(1), float("nan"))
+    ok = ~torch.isnan(iou)
+    return float(iou[ok].mean()) if ok.any() else float("nan")
+
+
+
 def act_normalization(root, train_eps):
     """Per-dim affine stats over ALL train frame chunks -> runs/stage4a/act_stats.json."""
     stats_path = Path("runs/stage4a/act_stats.json")
@@ -112,18 +149,18 @@ def diagnostics(model, batch, stats, ae_dec, device):
             x0, act, reduction="mean"))
     if model.variant in ("a2", "a3", "a3mask"):
         x_fut = batch["voxel_future"].to(device)
-        z_fut = encode_frozen(model, x_fut, latent_stats)
+        tgt_w = pooled_occupancy(x_fut)
         t = torch.full((B,), 0.5, device=device)
-        eps_w = torch.randn_like(z_fut)
-        x_t_w = (1 - t)[:, None, None, None, None] * z_fut + t[:, None, None, None, None] * eps_w
+        eps_w = torch.randn_like(tgt_w)
+        x_t_w = (1 - t)[:, None, None, None, None] * tgt_w + t[:, None, None, None, None] * eps_w
         cam72 = batch.get("cam72")
         cam72 = cam72.to(device) if cam72 is not None else None
         o = model(x, x_t_a, t, qpos,
                   torch.tensor([OFFSETS.index(k) for k in batch["offset"]], device=device),
                   noisy_world=x_t_w, cam72=cam72)
         w0 = x_t_w - t[:, None, None, None, None] * o["v_w"]
-        vox = decode_frozen(model, w0, ae_dec, latent_stats)
-        out["w0_masked_dynIoU_t0.5"] = round(masked_dyn_iou(vox, batch), 4)
+        vox = unpool_soft(w0, x.shape[2:])           # soft (2,40,65,45): hit,obs
+        out["w0_soft_dynIoU_t0.5"] = round(soft_masked_dyn_iou(vox, batch), 4)
         if "obs_logits" in o and o["obs_logits"] is not None:
             vis_p = o["obs_logits"][:, OFFSETS.index(batch["offset"][0])][0] > 0
             vis_g = batch["observed_future"][0].bool()
@@ -288,9 +325,9 @@ def main():
                 noisy_w, cam72 = None, None
                 L = 0.0
                 if args.variant in ("a2", "a3", "a3mask"):
-                    z_fut = encode_frozen(model, x_fut, latent_stats)
-                    eps_w = torch.randn_like(z_fut)
-                    noisy_w = (1 - t)[:, None, None, None, None] * z_fut \
+                    tgt_w = pooled_occupancy(x_fut)
+                    eps_w = torch.randn_like(tgt_w)
+                    noisy_w = (1 - t)[:, None, None, None, None] * tgt_w \
                         + t[:, None, None, None, None] * eps_w
                 with torch.no_grad():
                     cam72 = None  # camera params not in voxels_ep cache (a3 obs aux off)
@@ -299,7 +336,7 @@ def main():
                 v_target_a = eps_a - act
                 L = L + fm_loss(o["v_a"], x_t_a, v_target_a)
                 if o.get("v_w") is not None:
-                    v_target_w = eps_w - z_fut
+                    v_target_w = eps_w - tgt_w
                     L = L + args.lam_world * fm_loss(o["v_w"], noisy_w, v_target_w)
                 if o.get("aux_logits") is not None:
                     tgt = batch["state_future"].to(device)
