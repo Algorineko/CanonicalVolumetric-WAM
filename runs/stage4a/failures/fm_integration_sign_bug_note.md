@@ -59,6 +59,22 @@ world_intervention.py),之后的全部 Euler 闭环数字均不可比。本笔�
 - euler_minus 的"协议正确但闭环失败"之谜(在线体素输入 vs 离线缓存分布差异?)
   列为 OPEN 问题;若 x0jump 复现 5/5,serving 采样器锁定 x0jump,谜题留档不阻塞。
 
+## 三采样器实证矩阵(17:3x 定稿,接管会话)
+
+| 采样器 | 离线 MSE(归一化,a0_s42,6 批) | 闭环 a0 open_microwave |
+|---|---|---|
+| euler_minus(协议 ODE) | **0.0043**(≈GT) | **0/3**(killed) |
+| x0jump(单步 ε−v @ t=1) | 0.0076(≈GT) | **5/5 = 100%**(`rollout_results/a0_smoke5_rates_x0jump.txt`) |
+| euler_plus | 8.9333(垃圾) | (v3 a2 1/2,存疑未复跑) |
+
+解读:离线上 x0jump 与 euler_minus 都恢复 ≈GT 动作;闭环只有 x0jump 存活。
+x0jump 从 (ε, t=1) 一步预测 = **条件均值动作**(平滑、保守),对 serving 输入的
+轻微分布偏移鲁棒;euler_minus 沿路径迭代采样,放大 v 场误差。这与蒸馏/流模型
+serving 中"单步预测比迭代采样更抗输入偏移"的经验一致。
+**serving 采样器锁定 x0jump**(deploy 键可切换,默认即 x0jump)。OPEN 问题降级为
+分析项:为何 euler_minus 离线好却闭环死(在线 x vs 缓存 x 的分布差?dump 诊断
+`/data/cvwam_debug/online_x_baseline/`,见 stage4b)。
+
 ## 追加(16:55,协作会话接管后的新事实)
 - v3 a2 在 `+=` 符号下出现 1/2 成功(16:35,seed 100001 成功)— 与"垃圾动作必然失败"
   的预期矛盾,原因未明(运气/成功判据宽松/其他),待全量落盘后再判。勿引用。

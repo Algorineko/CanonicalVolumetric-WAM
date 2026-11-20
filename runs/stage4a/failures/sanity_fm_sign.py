@@ -37,6 +37,15 @@ def integrate(model, x, qpos, oi, act_gt, v_field, sign, n_euler, noise):
     return ((act - act_gt) ** 2).mean().item()
 
 
+@torch.no_grad()
+def x0jump_mse(model, x, qpos, oi, act_gt, v_field, noise):
+    """Serving x0jump sampler: single call at t=1, x0 = eps - v(eps, t=1)."""
+    o = model(x, noise, torch.tensor([1.0] * x.shape[0], device=x.device),
+              qpos, oi, noisy_world=None, cam72=None)
+    act = noise - o[v_field]
+    return ((act - act_gt) ** 2).mean().item()
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ckpt", default="runs/stage4a/a0_s42/best.pt")
@@ -62,7 +71,7 @@ def main():
     model.load_state_dict(ck["model"])
     stats = ck["stats"]
 
-    mse = {"plus": [], "minus": []}
+    mse = {"plus": [], "minus": [], "x0jump": []}
     for bi, batch in enumerate(dl):
         if bi >= args.max_batches:
             break
@@ -76,13 +85,16 @@ def main():
                                      args.n_euler, noise))
         mse["minus"].append(integrate(model, x, qpos, oi, act_gt, "v_a", -1.0,
                                       args.n_euler, noise))
-        print(f"batch {bi}: += {mse['plus'][-1]:.4f}  -= {mse['minus'][-1]:.4f}")
+        mse["x0jump"].append(x0jump_mse(model, x, qpos, oi, act_gt, "v_a", noise))
+        print(f"batch {bi}: += {mse['plus'][-1]:.4f}  -= {mse['minus'][-1]:.4f}  "
+              f"x0jump {mse['x0jump'][-1]:.4f}")
 
     out = {k: float(np.mean(v)) for k, v in mse.items()}
     print(f"MEAN over {len(mse['plus'])} batches: "
-          f"act += dt*v -> {out['plus']:.4f}   act -= dt*v -> {out['minus']:.4f}")
+          f"act += dt*v -> {out['plus']:.4f}   act -= dt*v -> {out['minus']:.4f}   "
+          f"x0jump -> {out['x0jump']:.4f}")
     ok = out["minus"] < 0.05 and out["plus"] > 1.0
-    print("SANITY:", "PASS (minus=correct, plus=garbage)" if ok else "UNEXPECTED")
+    print("SANITY:", "PASS (minus=correct ODE, plus=garbage)" if ok else "UNEXPECTED")
     (Path(__file__).parent / "sanity_fm_sign_result.json").write_text(
         json.dumps({"result": out, "n_batches": len(mse["plus"]),
                     "n_euler": args.n_euler, "ckpt": args.ckpt}, indent=2))
