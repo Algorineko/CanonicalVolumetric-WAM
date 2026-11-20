@@ -1,14 +1,17 @@
 """Stage 4a training: A0/A1/A2/A3/A3-mask Action/World FM variants.
 
-Protocol cloned from train_tiny.py (AdamW 3e-4 wd 1e-4, grad-clip 1.0, fp32,
-eval every 250 on fixed val subset, best-by-val, meta.json). Batch 32,
-3000 steps (extend to 4000 iff val FM loss improved >=2% over last 500 steps
-— pre-registered). Encoder AE-initialized from Stage A; E_frozen (frozen
-encoder copy) provides the world FM target for a2/a3/a3mask — NEVER backprops
-(.detach()/no_grad; a moving target is the top silent-bug risk).
+Protocol (AdamW 3e-4 wd 1e-4, grad-clip 1.0, fp32). Batch 32, 3000 steps
+(extend to 4000 iff TRAIN loss improved >=2% over last 500 steps — the
+original "val-ish" wording was inaccurate; AUDIT-S6). Every 250 steps a fixed
+val subset gets a full noise-to-action x0jump evaluation; best-by-val is saved
+as best_val.pt (AUDIT-S6: the old code saved the FINAL weights as best.pt with
+no val selection — historical best.pt files are final checkpoints, re-labeled
+by the Model Integrity Audit). Final weights: last.pt (+ best.pt legacy alias
+for serving compatibility). Encoder AE-initialized from Stage A.
 
-Diagnostics (not trained on): decoded w0 masked dynIoU; action x0-MSE @
-t in {0.5,0.9}; observer-on-GT-geometry upper bound (a3); learned gates (a3mask).
+World FM target = pooled_occupancy(x_future) (pooled canvas, v4 protocol).
+Diagnostics (not trained on): decoded w0 masked dynIoU (formula fixed under
+AUDIT-S7); action x0-MSE @ t in {0.5,0.9}; learned gates (a3mask).
 """
 
 import argparse
@@ -70,15 +73,26 @@ def soft_masked_dyn_iou(vox_soft, batch, thr=0.5):
 
 
 
-def act_normalization(root, train_eps, stats_path="runs/stage4a/act_stats.json"):
+def act_normalization(root, train_eps, stats_path="runs/stage4a/act_stats.json",
+                      binding=None):
     """Per-dim affine stats over ALL train frame chunks -> <stats_path>.
 
-    NOTE: the path must be task-specific (stage4b: pass --act-stats); reusing
-    another task's stats silently is a correctness bug (caught in stage4b prep).
+    AUDIT-S6: new files embed a binding dict {task, train_eps}; loading with a
+    mismatched binding aborts (silently reusing another task's stats was a
+    real correctness bug — open_laptop prep, 2026-11-20). Legacy files without
+    a binding are accepted with a warning.
     """
     stats_path = Path(stats_path)
     if stats_path.exists():
-        return json.loads(stats_path.read_text())
+        st = json.loads(stats_path.read_text())
+        b = st.get("binding")
+        if b is not None and binding is not None and b != binding:
+            raise SystemExit(f"[AUDIT-S6] act_stats binding mismatch: "
+                             f"{stats_path} bound to {b}, current {binding}")
+        if b is None:
+            print(f"[AUDIT-S6] warning: {stats_path} has no binding record "
+                  f"(legacy file); verify it matches this task/split manually")
+        return st
     lo = np.full(14, np.inf)
     hi = np.full(14, -np.inf)
     from cvwam.dynamics_dataset import load_episode
@@ -90,7 +104,8 @@ def act_normalization(root, train_eps, stats_path="runs/stage4a/act_stats.json")
             lo = np.minimum(lo, a.min(0))
             hi = np.maximum(hi, a.max(0))
     scale = np.where(hi - lo > 1e-6, hi - lo, 1.0)
-    stats = dict(lo=lo.tolist(), hi=hi.tolist(), scale=scale.tolist())
+    stats = dict(lo=lo.tolist(), hi=hi.tolist(), scale=scale.tolist(),
+                 binding=binding)
     stats_path.parent.mkdir(parents=True, exist_ok=True)
     stats_path.write_text(json.dumps(stats, indent=2))
     return stats
@@ -100,6 +115,37 @@ def normalize_act(a, stats):
     lo = np.asarray(stats["lo"], dtype=np.float32)
     scale = np.asarray(stats["scale"], dtype=np.float32)
     return np.clip((a - lo) / scale, 0.0, 1.0)
+
+
+@torch.no_grad()
+def val_x0jump_mse(model, fixed_batches, stats, device):
+    """AUDIT-S6: full noise-to-action x0jump (serving protocol) on fixed val
+    batches with a fixed noise seed — deterministic selection metric for
+    best_val.pt."""
+    model.eval()
+    errs = []
+    for batch in fixed_batches:
+        x = batch["voxel"].to(device)
+        qpos = batch["qpos"].to(device)
+        act = torch.from_numpy(normalize_act(
+            batch["action"].numpy(), stats)).to(device)
+        oi = torch.tensor([OFFSETS.index(k) for k in batch["offset"]], device=device)
+        torch.manual_seed(1234)
+        eps = torch.randn_like(act)
+        world = None
+        if model.variant in ("a2", "a3", "a3mask"):
+            torch.manual_seed(1234)
+            world = torch.randn(batch["voxel"].shape[0], 2, 10, 17, 12, device=device)
+            o = model(x, eps, torch.tensor([1.0] * x.shape[0], device=device),
+                      qpos, oi, noisy_world=world, cam72=None)
+            world = world - o["v_w"]  # w0 estimate, then re-call (serving)
+        a = eps.clone()
+        o = model(x, a, torch.tensor([1.0] * x.shape[0], device=device),
+                  qpos, oi, noisy_world=world, cam72=None)
+        a = (eps - o["v_a"]).clamp(0, 1)
+        errs.append(float(((a - act) ** 2).mean()))
+    model.train()
+    return float(np.mean(errs)) if errs else float("nan")
 
 
 def denormalize_act(a_norm, stats):
@@ -198,41 +244,6 @@ def decode_frozen(model, z_norm, ae_dec, latent_stats=None):
     return ae_dec(z)
 
 
-def fit_latent_stats(encoder, root, train_eps, device, n_frames=160):
-    """Per-channel latent mean/std over sampled train frames (absmax ~497 raw!).
-
-    encoder: an _Encoder instance (E_frozen), called directly.
-    """
-    from cvwam.dynamics_dataset import load_episode
-    import random
-    rng = random.Random(0)
-    zs = []
-    idx = 0
-    with torch.no_grad():
-        for spec in train_eps:
-            variant, ep = spec.split(":")
-            edir, mf = load_episode(Path(root), variant, int(ep))
-            ts = list(range(0, mf["T_total"] - 1, max(1, mf["T_total"] // 16)))
-            rng.shuffle(ts)
-            for t in ts[:16]:
-                d = np.load(edir / f"frame_{t:07d}.npz")
-                x = torch.from_numpy(np.stack([
-                    d["hit"].astype(np.float32), d["free"].astype(np.float32),
-                    d["observed"].astype(np.float32),
-                    d["view_count"].astype(np.float32) / 3.0]))[None].to(device)
-                _, _, z = encoder(x)
-                zs.append(z[0].cpu())
-                idx += 1
-                if idx >= n_frames:
-                    break
-            if idx >= n_frames:
-                break
-    Z = torch.stack(zs)
-    mu = Z.mean(0, keepdim=True).to(device)
-    sd = Z.std(0, keepdim=True).clamp_min(1e-4).to(device)
-    return dict(mu=mu, sd=sd)
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/smoke.yaml")
@@ -267,7 +278,9 @@ def main():
     sm = json.loads(Path(args.split_manifest).read_text())
     train_eps = sm["splits"]["clean_train"]
     val_eps = sm["splits"]["clean_val"] + sm["splits"]["rand_val"]
-    stats = act_normalization(root, train_eps, stats_path=args.act_stats)
+    stats = act_normalization(root, train_eps, stats_path=args.act_stats,
+                              binding={"task": cfg.get("task", "open_microwave"),
+                                       "train_eps": train_eps})
 
     from cvwam.dynamics_dataset import DynamicsDataset
     train_ds = DynamicsDataset(root, train_eps)
@@ -276,6 +289,9 @@ def main():
                        num_workers=6, drop_last=True, pin_memory=True)
     va_dl = DataLoader(val_ds, batch_size=args.batch, shuffle=False,
                        num_workers=3, pin_memory=True)
+    # AUDIT-S6: fixed val subset (first 4 batches, deterministic order) for
+    # best_val selection; _VAL_STATS shared with val_x0jump_mse
+    va_fixed = [b for i, b in enumerate(va_dl) if i < 4]
 
     ae = torch.load(args.ae, map_location="cpu",
                     weights_only=False)
@@ -286,17 +302,9 @@ def main():
     print(f"enc AE-init: missing={len(missing)} unexpected={len(unexpected)}")
     if model.neck is not None and ae.get("neck"):
         model.neck.load_state_dict(ae["neck"])
-    # E_frozen: frozen encoder copy (no grad, no optimizer state)
-    E_frozen = Stage4AModel(variant="a0", bottleneck_ch=bottleneck).enc.to(device)
-    E_frozen.load_state_dict(ae["enc"])
-    E_frozen.eval()
-    for p in E_frozen.parameters():
-        p.requires_grad_(False)
-    # latent normalization (raw encoder scale: mean 12.4, std 22.8, absmax 497
-    # — world FM diverged without this; per-channel affine to unit scale)
-    latent_stats = fit_latent_stats(E_frozen, root, train_eps, device)
-    torch.save({"mu": latent_stats["mu"].cpu(), "sd": latent_stats["sd"].cpu()},
-               out_dir / "latent_stats.pt")
+    # AUDIT-S6 cleanup: E_frozen/latent normalization belonged to the retired
+    # latent-space world FM (v3); the pooled-canvas pipeline (v4) never uses
+    # them. Removed — see runs/model_integrity/source_review.md.
     # frozen AE decoder for diagnostics
     from train_tokenizer_ae import LatentDecoder
     ae_dec = LatentDecoder(in_ch=bottleneck, out_ch=4).to(device)
@@ -307,7 +315,7 @@ def main():
 
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     n_par = count_params(model)
-    frozen_par = count_params(E_frozen)
+    frozen_par = 0  # E_frozen removed (AUDIT-S6: v3 dead code)
     print(f"variant={args.variant} params={n_par/1e6:.2f}M frozen={frozen_par/1e6:.2f}M "
           f"train={len(train_ds)} val={len(val_ds)}")
 
@@ -403,6 +411,18 @@ def main():
                     torch.save({"model": model.state_dict(), "variant": args.variant,
                                 "step": step, "bottleneck_ch": bottleneck,
                                 "stats": stats}, out_dir / "last.pt")
+                    # AUDIT-S6: real val selection — fixed val batches, serving
+                    # x0jump protocol (deterministic seed), MSE vs GT
+                    vm = val_x0jump_mse(model, va_fixed, stats, device)
+                    msg_v = f"  [val-x0jump] step {step} mse {vm:.5f}"
+                    print(msg_v, flush=True); log.write(msg_v + "\n"); log.flush()
+                    if vm < best_val:
+                        best_val = vm
+                        torch.save({"model": model.state_dict(),
+                                    "variant": args.variant, "step": step,
+                                    "bottleneck_ch": bottleneck, "stats": stats,
+                                    "val_x0jump_mse": vm},
+                                   out_dir / "best_val.pt")
 
     run_epoch(tr_dl, train=True)
     # final diagnostics on one val batch
@@ -417,7 +437,13 @@ def main():
     (out_dir / "meta.json").write_text(json.dumps(meta, indent=2))
     torch.save({"model": model.state_dict(), "variant": args.variant,
                 "bottleneck_ch": bottleneck, "stats": stats,
+                "step": steps_target}, out_dir / "last.pt")
+    # legacy alias: serving chains historically load best.pt; it is the FINAL
+    # checkpoint (NOT val-best) — best_val.pt is the val-selected one (AUDIT-S6)
+    torch.save({"model": model.state_dict(), "variant": args.variant,
+                "bottleneck_ch": bottleneck, "stats": stats,
                 "step": steps_target}, out_dir / "best.pt")
+    meta["best_val_x0jump_mse"] = best_val
     print(json.dumps(meta))
 
 

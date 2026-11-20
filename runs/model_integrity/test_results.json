@@ -1,0 +1,51 @@
+{
+  "S1_current_conditioning": {
+    "outputs": {
+      "a0": {
+        "d_v_a": 0.26757073402404785,
+        "d_v_w": null
+      },
+      "a2": {
+        "d_v_a": 0.40801259875297546,
+        "d_v_w": 0.06987333297729492
+      },
+      "a3": {
+        "d_v_a": 0.0,
+        "d_v_w": 0.0
+      },
+      "a3mask": {
+        "d_v_a": 8.262818300863728e-05,
+        "d_v_w": 0.0
+      }
+    },
+    "verdict": {
+      "a0_responds": true,
+      "a2_responds": true,
+      "a3_zero_dependency": true,
+      "a3mask_near_closed_gate": true
+    },
+    "confirmed": true
+  },
+  "S1_encoder_displacement_vs_AE_init": {
+    "n_tensors": 12,
+    "rel_displacement_mean": 0.0,
+    "rel_displacement_max": 0.0,
+    "interpretation": "~0 => encoder frozen during stage4a (expected: nothing consumes G_tok in a3)"
+  },
+  "S2_observer": {
+    "inactive_at_none": true,
+    "produces_with_cam72": true,
+    "fresh_grad_norm_one_backward": 0.0,
+    "observer_weight_disp_vs_init": 50.778703555464745
+  },
+  "S3_spatial_permutation": {
+    "v_a_diff_token_order_permute": 1.5885598259046674e-07,
+    "v_a_diff_value_shuffle": 0.0041319639421999454,
+    "note": "token-order permute diff ~0 => no positional info in world tokens (attention permutation-invariance); value shuffle is the content control"
+  },
+  "S4_time_response_v_a": {
+    "a0": 0.6068256497383118,
+    "a2": 0.4720722734928131,
+    "a3": 0.4626367688179016
+  }
+}

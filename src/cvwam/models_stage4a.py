@@ -10,7 +10,7 @@ Design per Stage 4a spec (design-agent spec, 2026-11-20):
 - A1: A0 + P1-V aux decoder WITH skips (decodes current-frame features; the
   one place skips are legitimate) (2.11M)
 - A2: single joint stack over [G_tok 270 | w_tok 270 | act 16 | qpos 1];
-  world FM target = E_frozen(x_{t+k}) (frozen AE encoder copy) (1.34M+0.86M)
+  world FM target = pooled_occupancy(x_future) (pooled canvas, v4) (1.34M+0.86M)
 - A3: two stacks + bidirectional cross-attn + HARD gates:
     action stream reads generated world tokens + qpos (NO current-geometry
     path — the attribution point); observer reads world-stream features +
