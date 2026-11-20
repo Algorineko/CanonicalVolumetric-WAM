@@ -1,0 +1,11 @@
+enc AE-init: missing=0 unexpected=0
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 364, in <module>
+    main()
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 237, in main
+    latent_stats = fit_latent_stats(E_frozen, root, train_eps, device)
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 173, in fit_latent_stats
+    _, _, z = model.enc(x)
+  File "/home/zhangjialiang/miniconda3/envs/openwam/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1940, in __getattr__
+    raise AttributeError(
+AttributeError: '_Encoder' object has no attribute 'enc'. Did you mean: 'enc1'?

@@ -1,0 +1,101 @@
+enc AE-init: missing=0 unexpected=0
+variant=a0 params=1.45M frozen=0.00M train=26840 val=9736
+step 1 loss 1.1330 (2s, peak 3.07GiB)
+step 50 loss 0.3853 (9s, peak 3.08GiB)
+step 100 loss 0.0624 (16s, peak 3.08GiB)
+step 150 loss 0.0631 (24s, peak 3.08GiB)
+step 200 loss 0.0585 (31s, peak 3.08GiB)
+step 250 loss 0.0296 (38s, peak 3.08GiB)
+step 250 train_loss 0.0296
+step 300 loss 0.0317 (46s, peak 3.08GiB)
+step 350 loss 0.0255 (53s, peak 3.08GiB)
+step 400 loss 0.0206 (60s, peak 3.08GiB)
+step 450 loss 0.0275 (68s, peak 3.08GiB)
+step 500 loss 0.0241 (75s, peak 3.08GiB)
+step 500 train_loss 0.0241
+step 550 loss 0.0097 (83s, peak 3.08GiB)
+step 600 loss 0.0156 (90s, peak 3.08GiB)
+step 650 loss 0.0385 (97s, peak 3.08GiB)
+step 700 loss 0.0133 (105s, peak 3.08GiB)
+step 750 loss 0.0161 (112s, peak 3.08GiB)
+step 750 train_loss 0.0161
+step 800 loss 0.0055 (120s, peak 3.08GiB)
+step 850 loss 0.0092 (128s, peak 3.08GiB)
+step 900 loss 0.0116 (135s, peak 3.08GiB)
+step 950 loss 0.0233 (143s, peak 3.08GiB)
+step 1000 loss 0.0079 (150s, peak 3.08GiB)
+step 1000 train_loss 0.0079
+step 1050 loss 0.0122 (157s, peak 3.08GiB)
+step 1100 loss 0.0277 (165s, peak 3.08GiB)
+step 1150 loss 0.0060 (172s, peak 3.08GiB)
+step 1200 loss 0.0121 (179s, peak 3.08GiB)
+step 1250 loss 0.0274 (187s, peak 3.08GiB)
+step 1250 train_loss 0.0274
+step 1300 loss 0.0080 (194s, peak 3.08GiB)
+step 1350 loss 0.0120 (202s, peak 3.08GiB)
+step 1400 loss 0.0117 (209s, peak 3.08GiB)
+step 1450 loss 0.0144 (216s, peak 3.08GiB)
+step 1500 loss 0.0077 (224s, peak 3.08GiB)
+step 1500 train_loss 0.0077
+step 1550 loss 0.0086 (231s, peak 3.08GiB)
+step 1600 loss 0.0078 (238s, peak 3.08GiB)
+step 1650 loss 0.0107 (246s, peak 3.08GiB)
+step 1700 loss 0.0050 (254s, peak 3.08GiB)
+step 1750 loss 0.0069 (261s, peak 3.08GiB)
+step 1750 train_loss 0.0069
+step 1800 loss 0.0159 (269s, peak 3.08GiB)
+step 1850 loss 0.0130 (276s, peak 3.08GiB)
+step 1900 loss 0.0052 (283s, peak 3.08GiB)
+step 1950 loss 0.0073 (291s, peak 3.08GiB)
+step 2000 loss 0.0093 (298s, peak 3.08GiB)
+step 2000 train_loss 0.0093
+step 2050 loss 0.0036 (306s, peak 3.08GiB)
+step 2100 loss 0.0303 (313s, peak 3.08GiB)
+step 2150 loss 0.0315 (320s, peak 3.08GiB)
+step 2200 loss 0.0404 (328s, peak 3.08GiB)
+step 2250 loss 0.0153 (335s, peak 3.08GiB)
+step 2250 train_loss 0.0153
+step 2300 loss 0.0044 (342s, peak 3.08GiB)
+step 2350 loss 0.0102 (350s, peak 3.08GiB)
+step 2400 loss 0.0057 (357s, peak 3.08GiB)
+step 2450 loss 0.0034 (364s, peak 3.08GiB)
+step 2500 loss 0.0061 (372s, peak 3.08GiB)
+[extend] val-ish loss improving; steps -> 4000
+step 2500 train_loss 0.0061
+step 2550 loss 0.0117 (381s, peak 3.08GiB)
+step 2600 loss 0.0160 (388s, peak 3.08GiB)
+step 2650 loss 0.0069 (395s, peak 3.08GiB)
+step 2700 loss 0.0021 (403s, peak 3.08GiB)
+step 2750 loss 0.0047 (410s, peak 3.08GiB)
+step 2750 train_loss 0.0047
+step 2800 loss 0.0065 (418s, peak 3.08GiB)
+step 2850 loss 0.0042 (425s, peak 3.08GiB)
+step 2900 loss 0.0073 (432s, peak 3.08GiB)
+step 2950 loss 0.0100 (440s, peak 3.08GiB)
+step 3000 loss 0.0046 (447s, peak 3.08GiB)
+step 3000 train_loss 0.0046
+step 3050 loss 0.0039 (454s, peak 3.08GiB)
+step 3100 loss 0.0081 (462s, peak 3.08GiB)
+step 3150 loss 0.0036 (469s, peak 3.08GiB)
+step 3200 loss 0.0065 (477s, peak 3.08GiB)
+step 3250 loss 0.0088 (484s, peak 3.08GiB)
+step 3250 train_loss 0.0088
+step 3300 loss 0.0080 (491s, peak 3.08GiB)
+step 3350 loss 0.0087 (499s, peak 3.08GiB)
+step 3400 loss 0.0041 (507s, peak 3.08GiB)
+step 3450 loss 0.0041 (514s, peak 3.08GiB)
+step 3500 loss 0.0219 (522s, peak 3.08GiB)
+step 3500 train_loss 0.0219
+step 3550 loss 0.0062 (529s, peak 3.08GiB)
+step 3600 loss 0.0100 (536s, peak 3.08GiB)
+step 3650 loss 0.0063 (544s, peak 3.08GiB)
+step 3700 loss 0.0108 (551s, peak 3.08GiB)
+step 3750 loss 0.0027 (558s, peak 3.08GiB)
+step 3750 train_loss 0.0027
+step 3800 loss 0.0082 (566s, peak 3.08GiB)
+step 3850 loss 0.0052 (573s, peak 3.08GiB)
+step 3900 loss 0.0142 (581s, peak 3.08GiB)
+step 3950 loss 0.0124 (588s, peak 3.08GiB)
+step 4000 loss 0.0147 (597s, peak 3.08GiB)
+step 4000 train_loss 0.0147
+{"variant": "a0", "steps": 4000, "batch": 32, "lr": 0.0003, "params": 1448270, "frozen_params": 0, "seed": 42, "lam": {"aux": 1.0, "world": 1.0, "obs": 1.0}, "train_pairs": 26840, "wall_s": 598.1, "peak_gib": 3.082, "diagnostics": {"act_x0_mse_t0.5": 0.28290653228759766, "act_x0_mse_t0.9": 0.3525710701942444}, "train_eps": ["demo_clean_balanced:10", "demo_clean_balanced:25", "demo_clean_balanced:40", "demo_clean_balanced:0", "demo_clean_balanced:5", "demo_clean_balanced:15", "demo_clean_balanced:20", "demo_clean_balanced:30", "demo_clean_balanced:35", "demo_clean_balanced:45"], "val_eps": ["demo_clean_balanced:1", "demo_clean_balanced:2", "demo_clean_balanced:3", "demo_randomized_balanced:0", "demo_randomized_balanced:2", "demo_randomized_balanced:3"]}

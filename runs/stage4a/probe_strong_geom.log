@@ -1,0 +1,8 @@
+id roles: {5: 'static:wall', 6: 'static:table', 21: 'mic', 27: 'robot', 28: 'robot', 29: 'mic', 30: 'mic', 31: 'mic', 32: 'mic', 33: 'door', 34: 'mic', 40: 'mic', 41: 'mic', 42: 'mic', 43: 'mic', 69: 'mic', 70: 'mic', 71: 'mic', 72: 'mic'}
+door id: 33 (root-frame centroid motion 448 mm)
+  frame 0 (0/427)
+  frame 100 (100/427)
+  frame 200 (200/427)
+  frame 300 (300/427)
+  frame 400 (400/427)
+-> /data/canonical-volumetric-wam/cache/voxels_ep_replay/demo_clean_balanced_10_probe_strong/20mm (427 frames)

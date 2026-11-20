@@ -1,0 +1,27 @@
+tokenizer AE params 1.447M bottleneck=256
+step 1 loss 2.7945 (1s)
+step 100 loss 0.7815 (15s)
+step 200 loss 0.4901 (29s)
+step 300 loss 0.3367 (42s)
+step 400 loss 0.2744 (56s)
+step 500 loss 0.2398 (70s)
+step 600 loss 0.2391 (83s)
+step 700 loss 0.2168 (97s)
+step 800 loss 0.2067 (111s)
+step 900 loss 0.2066 (125s)
+step 1000 loss 0.1892 (139s)
+step 1100 loss 0.1754 (152s)
+step 1200 loss 0.1739 (166s)
+step 1300 loss 0.1510 (180s)
+step 1400 loss 0.1561 (193s)
+step 1500 loss 0.1434 (207s)
+{
+  "vis_iou": 0.9331,
+  "occ_iou": 0.229,
+  "free_iou": 0.1294,
+  "bottleneck_ch": 256,
+  "params": 1447364,
+  "vis_pass": true,
+  "occ_pass": false,
+  "gate_pass": false
+}

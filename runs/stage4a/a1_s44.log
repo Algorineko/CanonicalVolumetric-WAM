@@ -1,0 +1,13 @@
+enc AE-init: missing=0 unexpected=0
+variant=a1 params=2.15M frozen=0.00M train=26840 val=9736
+step 1 loss 3.0704 (3s, peak 8.47GiB)
+step 50 loss 0.8468 (28s, peak 8.50GiB)
+step 100 loss 0.2459 (54s, peak 8.50GiB)
+step 150 loss 0.1850 (81s, peak 8.50GiB)
+step 200 loss 0.1098 (107s, peak 8.50GiB)
+step 250 loss 0.0887 (133s, peak 8.50GiB)
+step 250 train_loss 0.0887
+step 300 loss 0.0801 (159s, peak 8.50GiB)
+step 350 loss 0.1048 (185s, peak 8.50GiB)
+step 400 loss 0.0672 (211s, peak 8.50GiB)
+step 450 loss 0.0563 (237s, peak 8.50GiB)

@@ -1,0 +1,7 @@
+enc AE-init: missing=0 unexpected=0
+Traceback (most recent call last):
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 365, in <module>
+    main()
+  File "/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/train_stage4a.py", line 240, in main
+    out_dir / "latent_stats.pt")
+UnboundLocalError: local variable 'out_dir' referenced before assignment

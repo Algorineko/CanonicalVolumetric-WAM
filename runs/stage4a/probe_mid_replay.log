@@ -1,0 +1,9 @@
+/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/replay_episode_gt.py:140: DeprecationWarning: component.get_pose can be ambiguous thus deprecated. It is equivalent to component.get_entity_pose, which should be used instead
+  "p": np.asarray(ln.get_pose().p, dtype=np.float64).tolist(),
+/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/replay_episode_gt.py:141: DeprecationWarning: component.get_pose can be ambiguous thus deprecated. It is equivalent to component.get_entity_pose, which should be used instead
+  "q_wxyz": np.asarray(ln.get_pose().q, dtype=np.float64).tolist(),
+[probe] head camera rot=7.5deg shift=7.5cm -> fwd=[0.0, 0.4904459630482449, -0.8714716044310793] pos=[-0.022121704196529306, -0.5200139632284246, 1.3750092827779594]
+missing pytorch3d
+Warp DeprecationWarning: The symbol `warp.torch.device_from_torch` will soon be removed from the public API. Use `warp.device_from_torch` instead.
+{"captured_frames": 427, "plan_success": true, "task_success": true, "seed": 1000019, "episode": 10, "variant": "demo_clean_balanced"}
+rows -> /data/canonical-volumetric-wam/cache/replay_gt/probe_ep10_mid/replay_gt.json; seg -> /data/canonical-volumetric-wam/cache/replay_gt/probe_ep10_mid/seg

@@ -1,0 +1,88 @@
+enc AE-init: missing=0 unexpected=0
+variant=a2 params=1.37M frozen=0.00M train=26840 val=9736
+step 1 loss 2.1995 (2s, peak 3.48GiB)
+step 50 loss 1.3950 (13s, peak 3.49GiB)
+step 100 loss 1.1513 (25s, peak 3.49GiB)
+step 150 loss 1.0885 (36s, peak 3.49GiB)
+step 200 loss 1.0466 (48s, peak 3.49GiB)
+step 250 loss 1.0052 (59s, peak 3.49GiB)
+  [world] step 250 loss 1.0052
+step 250 train_loss 1.0052
+step 300 loss 1.0200 (71s, peak 3.49GiB)
+step 350 loss 0.9962 (82s, peak 3.49GiB)
+step 400 loss 0.9884 (94s, peak 3.49GiB)
+step 450 loss 0.9787 (105s, peak 3.49GiB)
+step 500 loss 0.9605 (117s, peak 3.49GiB)
+  [world] step 500 loss 0.9605
+step 500 train_loss 0.9605
+step 550 loss 0.9653 (128s, peak 3.49GiB)
+step 600 loss 0.9532 (139s, peak 3.49GiB)
+step 650 loss 0.9384 (151s, peak 3.49GiB)
+step 700 loss 0.9908 (162s, peak 3.49GiB)
+step 750 loss 0.9446 (174s, peak 3.49GiB)
+  [world] step 750 loss 0.9446
+step 750 train_loss 0.9446
+step 800 loss 0.9889 (185s, peak 3.49GiB)
+step 850 loss 0.9340 (198s, peak 3.49GiB)
+step 900 loss 0.9416 (209s, peak 3.49GiB)
+step 950 loss 0.9250 (221s, peak 3.49GiB)
+step 1000 loss 0.9578 (232s, peak 3.49GiB)
+  [world] step 1000 loss 0.9578
+step 1000 train_loss 0.9578
+step 1050 loss 0.9455 (244s, peak 3.49GiB)
+step 1100 loss 0.9472 (255s, peak 3.49GiB)
+step 1150 loss 0.9775 (267s, peak 3.49GiB)
+step 1200 loss 0.9367 (278s, peak 3.49GiB)
+step 1250 loss 0.9351 (290s, peak 3.49GiB)
+  [world] step 1250 loss 0.9351
+step 1250 train_loss 0.9351
+step 1300 loss 0.9388 (301s, peak 3.49GiB)
+step 1350 loss 0.9389 (313s, peak 3.49GiB)
+step 1400 loss 0.9515 (324s, peak 3.49GiB)
+step 1450 loss 0.9342 (333s, peak 3.49GiB)
+step 1500 loss 0.9330 (341s, peak 3.49GiB)
+  [world] step 1500 loss 0.9330
+step 1500 train_loss 0.9330
+step 1550 loss 0.9315 (349s, peak 3.49GiB)
+step 1600 loss 0.9334 (357s, peak 3.49GiB)
+step 1650 loss 0.9280 (365s, peak 3.49GiB)
+step 1700 loss 0.9361 (374s, peak 3.49GiB)
+step 1750 loss 0.9205 (382s, peak 3.49GiB)
+  [world] step 1750 loss 0.9205
+step 1750 train_loss 0.9205
+step 1800 loss 0.9258 (390s, peak 3.49GiB)
+step 1850 loss 0.9384 (398s, peak 3.49GiB)
+step 1900 loss 0.9330 (406s, peak 3.49GiB)
+step 1950 loss 0.9297 (414s, peak 3.49GiB)
+step 2000 loss 0.9220 (422s, peak 3.49GiB)
+  [world] step 2000 loss 0.9220
+step 2000 train_loss 0.9220
+step 2050 loss 0.9381 (430s, peak 3.49GiB)
+step 2100 loss 0.9255 (438s, peak 3.49GiB)
+step 2150 loss 0.9341 (446s, peak 3.49GiB)
+step 2200 loss 0.9235 (455s, peak 3.49GiB)
+step 2250 loss 0.9296 (463s, peak 3.49GiB)
+  [world] step 2250 loss 0.9296
+step 2250 train_loss 0.9296
+step 2300 loss 0.9339 (472s, peak 3.49GiB)
+step 2350 loss 0.9312 (480s, peak 3.49GiB)
+step 2400 loss 0.9335 (488s, peak 3.49GiB)
+step 2450 loss 0.9296 (496s, peak 3.49GiB)
+step 2500 loss 0.9313 (504s, peak 3.49GiB)
+  [world] step 2500 loss 0.9313
+step 2500 train_loss 0.9313
+step 2550 loss 0.9366 (513s, peak 3.49GiB)
+step 2600 loss 0.9304 (521s, peak 3.49GiB)
+step 2650 loss 0.9390 (529s, peak 3.49GiB)
+step 2700 loss 0.9331 (537s, peak 3.49GiB)
+step 2750 loss 0.9238 (545s, peak 3.49GiB)
+  [world] step 2750 loss 0.9238
+step 2750 train_loss 0.9238
+step 2800 loss 0.9418 (553s, peak 3.49GiB)
+step 2850 loss 0.9221 (561s, peak 3.49GiB)
+step 2900 loss 0.9227 (569s, peak 3.49GiB)
+step 2950 loss 0.9361 (577s, peak 3.49GiB)
+step 3000 loss 0.9301 (585s, peak 3.49GiB)
+  [world] step 3000 loss 0.9301
+step 3000 train_loss 0.9301
+{"variant": "a2", "steps": 3000, "batch": 32, "lr": 0.0003, "params": 1369424, "frozen_params": 0, "seed": 42, "lam": {"aux": 1.0, "world": 1.0, "obs": 1.0}, "train_pairs": 26840, "wall_s": 585.7, "peak_gib": 3.489, "diagnostics": {"act_x0_mse_t0.5": 0.29556119441986084, "act_x0_mse_t0.9": 0.3764984905719757, "w0_soft_dynIoU_t0.5": 0.051}, "train_eps": ["demo_clean_balanced:10", "demo_clean_balanced:25", "demo_clean_balanced:40", "demo_clean_balanced:0", "demo_clean_balanced:5", "demo_clean_balanced:15", "demo_clean_balanced:20", "demo_clean_balanced:30", "demo_clean_balanced:35", "demo_clean_balanced:45"], "val_eps": ["demo_clean_balanced:1", "demo_clean_balanced:2", "demo_clean_balanced:3", "demo_randomized_balanced:0", "demo_randomized_balanced:2", "demo_randomized_balanced:3"]}

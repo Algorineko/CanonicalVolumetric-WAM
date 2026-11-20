@@ -1,0 +1,14 @@
+{
+  "vis_iou": 0.9545,
+  "occ_iou": 0.3368,
+  "free_iou": 0.1271,
+  "occ_latent_iou": 0.1241,
+  "bottleneck_ch": 128,
+  "params": 1258820,
+  "steps": 2500,
+  "vis_pass": true,
+  "occ_pass": false,
+  "occ_latent_pass": false,
+  "gate_pass": false,
+  "gate_pass_v3": false
+}

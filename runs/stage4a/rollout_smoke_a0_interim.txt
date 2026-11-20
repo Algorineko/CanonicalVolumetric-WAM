@@ -1,0 +1,3 @@
+Success rate: [96m1/1[0m => [95m100.0%[0m, current seed: [90m100000[0m
+Success rate: [96m2/2[0m => [95m100.0%[0m, current seed: [90m100001[0m
+Success rate: [96m3/3[0m => [95m100.0%[0m, current seed: [90m100003[0m
