@@ -73,6 +73,7 @@ class DynamicsDataset(Dataset):
         act[:n] = action_chunk[:n]
         return {
             "voxel": torch.from_numpy(x),
+            "voxel_future": torch.from_numpy(xk),
             "state_t": torch.from_numpy(state_t),
             "qpos": torch.from_numpy(qpos),
             "action": torch.from_numpy(act),
