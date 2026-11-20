@@ -1,0 +1,66 @@
+{
+  "ckpt": "runs/stage4a/a2_s42/best.pt",
+  "variant": "a2",
+  "n_pairs": 384,
+  "gt_chunk_norm_note": "see interventions.W0.expert_err = generation-from-noise baseline error vs GT",
+  "seed": 123,
+  "n_euler": 8,
+  "oracle_note": "W4 leaks true future; OFFLINE diagnostic only",
+  "interventions": {
+    "W0": {
+      "act_dev_norm": 0.0,
+      "ee_dev_m": 0.0,
+      "expert_err_norm": 11.3696,
+      "per_k": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      }
+    },
+    "W1": {
+      "act_dev_norm": 0.0525,
+      "ee_dev_m": 0.0061,
+      "expert_err_norm": 11.3695,
+      "per_k": {
+        "4": 0.0515,
+        "8": 0.0537,
+        "12": 0.0477,
+        "16": 0.0569
+      }
+    },
+    "W2": {
+      "act_dev_norm": 0.1597,
+      "ee_dev_m": 0.0205,
+      "expert_err_norm": 11.3712,
+      "per_k": {
+        "4": 0.1694,
+        "8": 0.1572,
+        "12": 0.1445,
+        "16": 0.1676
+      }
+    },
+    "W3": {
+      "act_dev_norm": 0.1584,
+      "ee_dev_m": 0.0198,
+      "expert_err_norm": 11.3712,
+      "per_k": {
+        "4": 0.1689,
+        "8": 0.1563,
+        "12": 0.1428,
+        "16": 0.1654
+      }
+    },
+    "W4": {
+      "act_dev_norm": 0.1583,
+      "ee_dev_m": 0.0203,
+      "expert_err_norm": 11.3713,
+      "per_k": {
+        "4": 0.1687,
+        "8": 0.1562,
+        "12": 0.1428,
+        "16": 0.1654
+      }
+    }
+  }
+}

@@ -303,7 +303,8 @@ class Stage4AModel(nn.Module):
             self.aux = P1VAuxHead(n_offsets=n_offsets)
 
     def forward(self, x_t, noisy_act, t, qpos, offset_idx,
-                noisy_world=None, x_current=None, cam72=None):
+                noisy_world=None, x_current=None, cam72=None,
+                block_world_to_action=False):
         """Returns dict:
         v_a (B,16,14); v_w (B,128,10,17,12) or None;
         aux_logits (B,3*n_off,40,65,45) or None (a1);
@@ -352,7 +353,10 @@ class Stage4AModel(nn.Module):
             wf = blk(wf, kv=act_tok, gate=g)
         act_h = act_tok
         for bi, blk in enumerate(self.action_stack):
-            g = gates[2 + bi] if gates is not None else None  # act <- world
+            if block_world_to_action:
+                g = torch.full((), -1e9, device=x_t.device)   # hard block
+            else:
+                g = gates[2 + bi] if gates is not None else None  # act <- world
             act_h = blk(act_h, kv=wf, gate=g)
             if self.variant == "a3mask":
                 act_h = self.current_cross(act_h, kv=G_tok, gate=self.gates[4])
