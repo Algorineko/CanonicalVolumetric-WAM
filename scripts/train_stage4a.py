@@ -112,7 +112,7 @@ def diagnostics(model, batch, stats, ae_dec, device):
             x0, act, reduction="mean"))
     if model.variant in ("a2", "a3", "a3mask"):
         x_fut = batch["voxel_future"].to(device)
-        z_fut = encode_frozen(model, x_fut)
+        z_fut = encode_frozen(model, x_fut, latent_stats)
         t = torch.full((B,), 0.5, device=device)
         eps_w = torch.randn_like(z_fut)
         x_t_w = (1 - t)[:, None, None, None, None] * z_fut + t[:, None, None, None, None] * eps_w
@@ -122,7 +122,7 @@ def diagnostics(model, batch, stats, ae_dec, device):
                   torch.tensor([OFFSETS.index(k) for k in batch["offset"]], device=device),
                   noisy_world=x_t_w, cam72=cam72)
         w0 = x_t_w - t[:, None, None, None, None] * o["v_w"]
-        vox = ae_dec(w0)
+        vox = decode_frozen(model, w0, ae_dec, latent_stats)
         out["w0_masked_dynIoU_t0.5"] = round(masked_dyn_iou(vox, batch), 4)
         if "obs_logits" in o and o["obs_logits"] is not None:
             vis_p = o["obs_logits"][:, OFFSETS.index(batch["offset"][0])][0] > 0
@@ -132,12 +132,58 @@ def diagnostics(model, batch, stats, ae_dec, device):
     return out
 
 
-def encode_frozen(model, x):
+def encode_frozen(model, x, latent_stats=None):
     with torch.no_grad():
         _, _, z = model.enc(x)
         if model.neck is not None:
             z = model.neck(z)
-    return z.detach()
+    z = z.detach()
+    if latent_stats is not None:
+        z = (z - latent_stats["mu"]) / latent_stats["sd"]
+    return z
+
+
+def decode_frozen(model, z_norm, ae_dec, latent_stats=None):
+    if latent_stats is not None:
+        z = z_norm * latent_stats["sd"] + latent_stats["mu"]
+    else:
+        z = z_norm
+    return ae_dec(z)
+
+
+def fit_latent_stats(encoder, root, train_eps, device, n_frames=160):
+    """Per-channel latent mean/std over sampled train frames (absmax ~497 raw!).
+
+    encoder: an _Encoder instance (E_frozen), called directly.
+    """
+    from cvwam.dynamics_dataset import load_episode
+    import random
+    rng = random.Random(0)
+    zs = []
+    idx = 0
+    with torch.no_grad():
+        for spec in train_eps:
+            variant, ep = spec.split(":")
+            edir, mf = load_episode(Path(root), variant, int(ep))
+            ts = list(range(0, mf["T_total"] - 1, max(1, mf["T_total"] // 16)))
+            rng.shuffle(ts)
+            for t in ts[:16]:
+                d = np.load(edir / f"frame_{t:07d}.npz")
+                x = torch.from_numpy(np.stack([
+                    d["hit"].astype(np.float32), d["free"].astype(np.float32),
+                    d["observed"].astype(np.float32),
+                    d["view_count"].astype(np.float32) / 3.0]))[None].to(device)
+                z = encoder(x)
+                zs.append(z[0].cpu())
+                idx += 1
+                if idx >= n_frames:
+                    break
+            if idx >= n_frames:
+                break
+    Z = torch.stack(zs)
+    mu = Z.mean(0, keepdim=True).to(device)
+    sd = Z.std(0, keepdim=True).clamp_min(1e-4).to(device)
+    return dict(mu=mu, sd=sd)
 
 
 def main():
@@ -157,6 +203,8 @@ def main():
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
     device = "cuda:0"
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
     cfg = yaml.safe_load(Path(args.config).read_text())
     root = Path(cfg["cache_dir"]) / "voxels_ep"
     sm = json.loads(Path(args.split_manifest).read_text())
@@ -187,6 +235,11 @@ def main():
     E_frozen.eval()
     for p in E_frozen.parameters():
         p.requires_grad_(False)
+    # latent normalization (raw encoder scale: mean 12.4, std 22.8, absmax 497
+    # — world FM diverged without this; per-channel affine to unit scale)
+    latent_stats = fit_latent_stats(E_frozen, root, train_eps, device)
+    torch.save({"mu": latent_stats["mu"].cpu(), "sd": latent_stats["sd"].cpu()},
+               out_dir / "latent_stats.pt")
     # frozen AE decoder for diagnostics
     from train_tokenizer_ae import LatentDecoder
     ae_dec = LatentDecoder(in_ch=bottleneck, out_ch=4).to(device)
@@ -235,7 +288,7 @@ def main():
                 noisy_w, cam72 = None, None
                 L = 0.0
                 if args.variant in ("a2", "a3", "a3mask"):
-                    z_fut = encode_frozen(model, x_fut)
+                    z_fut = encode_frozen(model, x_fut, latent_stats)
                     eps_w = torch.randn_like(z_fut)
                     noisy_w = (1 - t)[:, None, None, None, None] * z_fut \
                         + t[:, None, None, None, None] * eps_w
@@ -278,6 +331,10 @@ def main():
                     print(msg, flush=True); log.write(msg + "\n"); log.flush()
                 if step % 250 == 0 or step == steps_target:
                     hist.append((step, float(L.item())))
+                    if args.variant in ("a2", "a3", "a3mask"):
+                        # separate world-term logging (the a2 explosion was invisible)
+                        msg2 = (f"  [world] step {step} loss {L.item():.4f}")
+                        print(msg2, flush=True); log.write(msg2 + "\n"); log.flush()
                     if len(hist) >= 3:
                         (s0, l0), _, (s2, l2) = hist[-3:]
                         if s2 >= 2000 and l0 > 0 and l2 <= l0 * 0.98 and steps_target < 4000:
