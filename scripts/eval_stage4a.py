@@ -37,6 +37,9 @@ def main():
     ap.add_argument("--config", default="configs/smoke.yaml")
     ap.add_argument("--split-manifest", default="runs/stage3b/split_manifest.json")
     ap.add_argument("--max-batches", type=int, default=40)
+    ap.add_argument("--out", default=None,
+                    help="output json path (default runs/stage4a/metrics/"
+                         "eval_{variant}_{ckpt_parent_dir}.json)")
     args = ap.parse_args()
     device = "cuda:0"
     ck = torch.load(args.ckpt, map_location=device, weights_only=False)
@@ -126,8 +129,9 @@ def main():
                observer_visIoU_gt_geom=(round(float(np.mean(agg["obs_iou_gt_geom"])), 4)
                                         if agg["obs_iou_gt_geom"] else None),
                gates=agg["gates"], n_batches=min(args.max_batches, len(dl)))
-    out = Path("runs/stage4a/metrics") / (
-        f"eval_{ck['variant']}_{Path(args.ckpt).parent.name}.json")
+    out = (Path(args.out) if args.out else
+           Path("runs/stage4a/metrics") / (
+               f"eval_{ck['variant']}_{Path(args.ckpt).parent.name}.json"))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(res, indent=2))
     print(json.dumps(res, indent=2))
@@ -140,7 +144,10 @@ def masked_dyn_iou_aux(pred_hit, batch):
     st = batch["state_t"].to(device)
     both = obs_f & (st != 2)
     dyn = ((st == 0) ^ gt_hit) & both
-    inter = (pred_hit & dyn).sum((1, 2, 3)).float()
+    # AUDIT-S7: inter now requires gt_hit (within dyn, gt_hit marks NEWLY
+    # occupied cells; a prediction on a freed cell has gt_hit False and must
+    # count in the union only, never as intersection)
+    inter = (pred_hit & gt_hit & dyn).sum((1, 2, 3)).float()
     uni = ((pred_hit & dyn) | (gt_hit & dyn)).sum((1, 2, 3)).float()
     iou = torch.where(uni > 0, inter / uni.clamp_min(1), float("nan"))
     ok = ~torch.isnan(iou)

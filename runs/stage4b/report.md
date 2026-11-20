@@ -99,3 +99,30 @@ failures/;未执行项标 NOT_RUN。
 cam_r20(15/20,75%,上界 0.888)与 drop1of3(20/20)单独不满足。剂量响应:平移 0.30m 完全致残(0/20)、旋转 20° 轻度退化(75%)、丢一台相机无影响(100%)。
 按 roadmap §5:过门 → **P1(oracle 上界,重设计版见 p1_oracle_design.md)进入待授权队列**。
 失败机制归因(P0 Failure Attribution):观测覆盖 2.07×/门 0.977 排除感知缺失;画布统计量 OOD + 闭环复合(偏移观测严格有害:盲 5/5 vs 观测 0/20)。
+
+## Model Integrity Audit(规划审查 S1-S7,2026-11-20 20:5x 完成)
+
+判定表与单测:`runs/model_integrity/source_review.md`、`test_results.json`;全部 10 项 CONFIRMED,代码修复全部落地并带合成/协议单测。**影响面与修正:**
+
+| 受影响数字 | 旧(有 bug) | 新(修复后) | 性质 |
+|---|---|---|---|
+| a1/a1nofm aux dynIoU(6 json) | 0.794-0.859 | **0.343-0.391** | 虚高 ≈2.2×(bug 奖励持续性;PERSISTENCE 用例 0.4→0.0) |
+| a2/a3/a3mask world dynIoU(9 json) | 0.112-0.131 | **0.066-0.074** | 世界生成质量比文档记载更弱(roadmap 引用的 0.11-0.13 作废) |
+| L9 W1 act_dev | 3.05 | 0.41(0.71 rad / 0.126 m) | 噪声重抽 + FM 符号 bug 双重污染 |
+| L9 内容敏感度 | "<1e-4"(held-canvas) | direct-forward:oracle-vs-current ≈0.002(占 \|v_a\| 0.03%),错未来是正确未来的 4× | 效应存在但极小;定性方向不变 |
+| stage3b/3c 指标 | — | **核实无病**(pareto/door/thr_sweep 的 inter 均含 gt_hit) | Stage 3 结论不受影响 |
+
+计算图判定(单测):a3 对当前体素**逐位零依赖**、编码器与 AE 初始化逐位相同(训练零梯度)、世界 token 无位置信息(token 排列 Δ=1.6e-07)、a3mask current 门 ≈0.019。**含义:原 A3 的负结果不能归因 WAM 无效——当前几何条件、空间编码、Observer 监督三者均未实际接入。**
+
+### §10 六问答案(截至本报告)
+
+1. cam_t030 是否破坏任务几何证据?**否**(门 0.977、覆盖 2.07×)。
+2. 盲输入在 cam_t030 下是否优于偏移观测?**是**(5/5 vs 0/20,偏移观测严格有害)。
+3. Oracle-C 能否恢复动作控制?NOT_RUN(设计就绪,待授权)。
+4. 历史静态融合是否已够?NOT_RUN(B1/B2 设计就绪;注意融合也会改变画布统计量,须 B3 对照剥离)。
+5. x0jump 是否缺显式 world→action 有效反馈通路?**是,且结构性更强**:a3 零当前几何依赖 + 无位置编码 + direct-forward 内容效应仅 0.03%。
+6. 是否存在只有动态信念预测能解的场景?NOT_RUN(§5 cam_switch/transient_occ 条件实现排后,需先过 B3 增广对照)。
+
+### V5 重训系列(审查 §13 P1)——待授权,不在本审计内
+
+V5-0(A0+空间位置编码)/V5-1(A3-context)/V5-2(+时间嵌入)/V5-3(clean-future conditioning):单 seed 筛选设计就绪,需规划/用户批准预算后启动。

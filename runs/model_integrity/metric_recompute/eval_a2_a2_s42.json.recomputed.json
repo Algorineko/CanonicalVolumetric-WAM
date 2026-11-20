@@ -1,0 +1,16 @@
+{
+  "file": "eval_a2_a2_s42.json",
+  "metric": "world_masked_dynIoU",
+  "old": 0.1273,
+  "new": 0.0721,
+  "buggy_same_draws": 0.1286,
+  "new_raw": 0.072110376926139,
+  "buggy_raw": 0.12859830316156148,
+  "act_x0_mse_rad_old": 0.00298,
+  "act_x0_mse_rad_new": 0.00288,
+  "ckpt": "runs/stage4a/a2_s42/best.pt",
+  "variant": "a2",
+  "seed": 0,
+  "n_batches": 40,
+  "note": "old = original eval json (buggy formula, unseeded draws); new = fixed AUDIT-S7 formula on this run's draws (seed 0); buggy_same_draws = pre-fix formula on the identical draws (isolates formula effect from redraw noise)"
+}

@@ -65,7 +65,10 @@ def soft_masked_dyn_iou(vox_soft, batch, thr=0.5):
     pred_hit = vox_soft[:, 0] > thr
     both = obs_f & (st != 2)
     dyn = ((st == 0) ^ gt_hit) & both
-    inter = (pred_hit & dyn).sum((1, 2, 3)).float()
+    # AUDIT-S7: inter now requires gt_hit (within dyn, gt_hit marks NEWLY
+    # occupied cells; a prediction on a freed cell has gt_hit False and must
+    # count in the union only, never as intersection)
+    inter = (pred_hit & gt_hit & dyn).sum((1, 2, 3)).float()
     uni = ((pred_hit & dyn) | (gt_hit & dyn)).sum((1, 2, 3)).float()
     iou = torch.where(uni > 0, inter / uni.clamp_min(1), float("nan"))
     ok = ~torch.isnan(iou)
@@ -172,7 +175,10 @@ def masked_dyn_iou(world_pred_voxel, batch, thr=0.5):
     pred_hit = world_pred_voxel[:, 0] > thr
     both = obs_f & (st != 2)
     dyn = ((st == 0) ^ gt_hit) & both
-    inter = (pred_hit & dyn).sum((1, 2, 3)).float()
+    # AUDIT-S7: inter now requires gt_hit (within dyn, gt_hit marks NEWLY
+    # occupied cells; a prediction on a freed cell has gt_hit False and must
+    # count in the union only, never as intersection)
+    inter = (pred_hit & gt_hit & dyn).sum((1, 2, 3)).float()
     uni = ((pred_hit & dyn) | (gt_hit & dyn)).sum((1, 2, 3)).float()
     iou = torch.where(uni > 0, inter / uni.clamp_min(1), float("nan"))
     ok = ~torch.isnan(iou)

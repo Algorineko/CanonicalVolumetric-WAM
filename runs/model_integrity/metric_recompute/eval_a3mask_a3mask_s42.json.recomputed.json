@@ -1,0 +1,16 @@
+{
+  "file": "eval_a3mask_a3mask_s42.json",
+  "metric": "world_masked_dynIoU",
+  "old": 0.112,
+  "new": 0.0667,
+  "buggy_same_draws": 0.1191,
+  "new_raw": 0.06670769941993057,
+  "buggy_raw": 0.11907629743218422,
+  "act_x0_mse_rad_old": 0.00429,
+  "act_x0_mse_rad_new": 0.00429,
+  "ckpt": "runs/stage4a/a3mask_s42/best.pt",
+  "variant": "a3mask",
+  "seed": 0,
+  "n_batches": 40,
+  "note": "old = original eval json (buggy formula, unseeded draws); new = fixed AUDIT-S7 formula on this run's draws (seed 0); buggy_same_draws = pre-fix formula on the identical draws (isolates formula effect from redraw noise)"
+}
