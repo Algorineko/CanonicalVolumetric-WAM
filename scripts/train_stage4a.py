@@ -173,7 +173,7 @@ def fit_latent_stats(encoder, root, train_eps, device, n_frames=160):
                     d["hit"].astype(np.float32), d["free"].astype(np.float32),
                     d["observed"].astype(np.float32),
                     d["view_count"].astype(np.float32) / 3.0]))[None].to(device)
-                z = encoder(x)
+                _, _, z = encoder(x)
                 zs.append(z[0].cpu())
                 idx += 1
                 if idx >= n_frames:
