@@ -1,2 +1,3 @@
 [chain] cam_r20 port=8851 trials=20 seed=0
 [chain] verified | [cvwam_fm] variant=a0 ckpt=/home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a0_s42/best.pt exec=4 euler=8 sampler=x0jump
+[chain-done] cam_r20: Final success rate: 15/20 = 75.0%

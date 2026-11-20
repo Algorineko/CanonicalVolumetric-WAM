@@ -23,6 +23,7 @@
 | `verify_probe_physics.py` | observer 探针裁决(物理不变+相机已动) | openwam |
 | `stage3c_point_cache.py` | Stage 3c 表示缓存(3 视角 depth+参数;点云在线构建) | openwam |
 | `train_repr.py` | Stage 3c P2/P2E/P3 训练(P1-V 同款解耦监督) | openwam + GPU |
+| `recompute_stage4a_dyniou.py` | AUDIT-S7 重算:stage4a val 重前向,同一 draws 上双算 pre-fix/fixed dyn-IoU → runs/model_integrity/metric_recompute/ | openwam + GPU |
 | `run_stage3a.sh` | Stage 3a 全序列 | — |
 | `plot_*.py` | 可视化 | venv-wam |
 

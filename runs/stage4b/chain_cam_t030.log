@@ -1,2 +1,4 @@
 [chain] cam_t030 port=8850 trials=20 seed=0
 [chain] verified | [cvwam_fm] variant=a0 ckpt=/home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a0_s42/best.pt exec=4 euler=8 sampler=x0jump
+[chain-done] cam_t030: Final success rate: 0/20 = 0.0%
+rmdir: failed to remove '/tmp/cvwam_stress_8850.lock': No such file or directory
