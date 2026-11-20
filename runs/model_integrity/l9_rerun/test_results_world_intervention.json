@@ -1,0 +1,70 @@
+{
+  "n_tests": 16,
+  "n_pass": 16,
+  "results": {
+    "S5.1_same_world_noise_deterministic": {
+      "ok": true,
+      "detail": "max|diff|=0.000e+00"
+    },
+    "S5.1_world_noise_change_propagates": {
+      "ok": true,
+      "detail": "|a(wn)-a(wn')|=0.0139"
+    },
+    "S5.1_missing_noise_rejected": {
+      "ok": true,
+      "detail": "AssertionError raised without explicit world_noise"
+    },
+    "S5.3_hit_iou_identical": {
+      "ok": true,
+      "detail": "IoU=1"
+    },
+    "S5.3_hit_iou_disjoint": {
+      "ok": true,
+      "detail": "IoU=0"
+    },
+    "S5.3_hit_iou_both_empty": {
+      "ok": true,
+      "detail": "NaN for empty union"
+    },
+    "S5.3_donor_differs_from_own_future": {
+      "ok": true,
+      "detail": "accepted donor hit-IoU=0.000 (< 0.9)"
+    },
+    "S5.3_identical_donor_rejected": {
+      "ok": true,
+      "detail": "ok=False, IoU=1.000 (>= 0.9 -> warn counted)"
+    },
+    "S5.3_empty_donor_nan_handled": {
+      "ok": true,
+      "detail": "ok=False, IoU=NaN handled without crash (empty union)"
+    },
+    "S5.3_empty_donor_vs_nonempty_own_is_different": {
+      "ok": true,
+      "detail": "ok=True, IoU=0.000 (all-empty canvas is 'nothing will be hit anywhere' \u2014 a wrong future by construction)"
+    },
+    "S5.4_denorm_matches_serving_contract": {
+      "ok": true,
+      "detail": "clamp(0,1) applied BEFORE lo+act*scale"
+    },
+    "S5.4_out_of_range_clamped": {
+      "ok": true,
+      "detail": "121 sub-zero values map to lo"
+    },
+    "S5.4_zero_normalized_maps_to_lo": {
+      "ok": true,
+      "detail": "normalized 0 -> raw lo exactly (constant dims recover their raw constant: right arm 0, Rgrip 1.0; Lgrip 0)"
+    },
+    "S5.4_norm_and_phys_devs_distinct": {
+      "ok": true,
+      "detail": "norm=0.3742 vs phys=0.5299 (arm scale>1 amplifies physical deviation)"
+    },
+    "DF_a0_exact_zero_sanity": {
+      "ok": true,
+      "detail": "max|dv_a|=0.000e+00 (a0 has no world path)"
+    },
+    "DF_a3_content_changes_one_step_v_a": {
+      "ok": true,
+      "detail": "max|dv_a| over t-grid=0.0001"
+    }
+  }
+}

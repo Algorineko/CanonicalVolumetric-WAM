@@ -1,0 +1,172 @@
+{
+  "ckpt": "runs/stage4a/a3_s42/best.pt",
+  "variant": "a3",
+  "n_pairs": 128,
+  "device": "cuda:1",
+  "gt_chunk_norm_note": "see interventions.W0.expert_err = generation-from-noise baseline error vs GT",
+  "seed": 123,
+  "n_euler": 8,
+  "audit_fixes": {
+    "S5_1": "W0/W1 share the per-batch seeded world_noise (euler_chunk takes it explicitly, no internal randn)",
+    "S5_3": "W3 donors are cross-episode pooled future canvases (hit-IoU < 0.9 enforced; failures counted)",
+    "S5_4": "FK + physical devs use denorm per serving contract (clamp(0,1) then lo+act*scale); *_norm kept for comparison",
+    "DF": "direct_forward: single-step |dv_a| between held canvases on t-grid, no Euler"
+  },
+  "donor_diag": {
+    "n": 128,
+    "n_warn": 0,
+    "n_iou_nan": 0,
+    "iou_mean": 0.6612,
+    "iou_min": 0.4847,
+    "iou_max": 0.8311,
+    "iou_thr": 0.9,
+    "note": "donor accepted when hit-IoU vs the sample's own future < thr (genuinely different future); n_warn = accepted despite failing the check (most-different fallback)"
+  },
+  "oracle_note": "W4 leaks true future; OFFLINE diagnostic only",
+  "interventions": {
+    "W0": {
+      "act_dev_norm": 0.0,
+      "act_dev_phys": 0.0,
+      "ee_dev_m": 0.0,
+      "expert_err_norm": 0.2328,
+      "expert_err_phys": 0.3318,
+      "per_k": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      },
+      "per_k_phys": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      }
+    },
+    "W1": {
+      "act_dev_norm": 0.4122,
+      "act_dev_phys": 0.7106,
+      "ee_dev_m": 0.1258,
+      "expert_err_norm": 0.4529,
+      "expert_err_phys": 0.8288,
+      "per_k": {
+        "4": 0.3957,
+        "8": 0.4168,
+        "12": 0.4143,
+        "16": 0.422
+      },
+      "per_k_phys": {
+        "4": 0.6824,
+        "8": 0.7361,
+        "12": 0.6827,
+        "16": 0.7412
+      }
+    },
+    "W2": {
+      "act_dev_norm": 0.3251,
+      "act_dev_phys": 0.4783,
+      "ee_dev_m": 0.1025,
+      "expert_err_norm": 0.2759,
+      "expert_err_phys": 0.3657,
+      "per_k": {
+        "4": 0.2799,
+        "8": 0.3499,
+        "12": 0.3595,
+        "16": 0.3112
+      },
+      "per_k_phys": {
+        "4": 0.4278,
+        "8": 0.5151,
+        "12": 0.5217,
+        "16": 0.4485
+      }
+    },
+    "W3": {
+      "act_dev_norm": 0.327,
+      "act_dev_phys": 0.4789,
+      "ee_dev_m": 0.1026,
+      "expert_err_norm": 0.2753,
+      "expert_err_phys": 0.3637,
+      "per_k": {
+        "4": 0.283,
+        "8": 0.3505,
+        "12": 0.3608,
+        "16": 0.3137
+      },
+      "per_k_phys": {
+        "4": 0.4293,
+        "8": 0.5141,
+        "12": 0.5219,
+        "16": 0.4504
+      }
+    },
+    "W4": {
+      "act_dev_norm": 0.3254,
+      "act_dev_phys": 0.4786,
+      "ee_dev_m": 0.1025,
+      "expert_err_norm": 0.2765,
+      "expert_err_phys": 0.366,
+      "per_k": {
+        "4": 0.28,
+        "8": 0.3502,
+        "12": 0.3598,
+        "16": 0.3116
+      },
+      "per_k_phys": {
+        "4": 0.4279,
+        "8": 0.5155,
+        "12": 0.522,
+        "16": 0.4489
+      }
+    }
+  },
+  "direct_forward": {
+    "t_grid": [
+      0.1,
+      0.5,
+      0.9,
+      1.0
+    ],
+    "pairs": {
+      "W2_current_vs_W3_cross_ep": {
+        "0.1": 0.009391,
+        "0.5": 0.009548,
+        "0.9": 0.010557,
+        "1.0": 0.010086
+      },
+      "W2_current_vs_W4_oracle": {
+        "0.1": 0.002229,
+        "0.5": 0.00223,
+        "0.9": 0.002208,
+        "1.0": 0.002113
+      },
+      "W3_cross_ep_vs_W4_oracle": {
+        "0.1": 0.00819,
+        "0.5": 0.008645,
+        "0.9": 0.009778,
+        "1.0": 0.0093
+      }
+    },
+    "v_a_norm": {
+      "W2_current": {
+        "0.1": 7.4859,
+        "0.5": 6.3666,
+        "0.9": 4.9637,
+        "1.0": 4.6354
+      },
+      "W3_cross_ep": {
+        "0.1": 7.4831,
+        "0.5": 6.3633,
+        "0.9": 4.9592,
+        "1.0": 4.6309
+      },
+      "W4_oracle": {
+        "0.1": 7.4852,
+        "0.5": 6.3672,
+        "0.9": 4.9647,
+        "1.0": 4.6362
+      }
+    },
+    "note": "single model.forward per canvas, NO Euler; canvases = the same held tensors as interventions W2/W3/W4 (incl. the identical 0.05*world_noise dither, so deltas isolate canvas content); a0 ignores noisy_world by construction -> exact 0 sanity check"
+  }
+}

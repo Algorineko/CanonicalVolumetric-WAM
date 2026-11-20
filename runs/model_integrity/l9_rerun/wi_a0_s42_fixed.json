@@ -1,0 +1,172 @@
+{
+  "ckpt": "runs/stage4a/a0_s42/best.pt",
+  "variant": "a0",
+  "n_pairs": 128,
+  "device": "cuda:1",
+  "gt_chunk_norm_note": "see interventions.W0.expert_err = generation-from-noise baseline error vs GT",
+  "seed": 123,
+  "n_euler": 8,
+  "audit_fixes": {
+    "S5_1": "W0/W1 share the per-batch seeded world_noise (euler_chunk takes it explicitly, no internal randn)",
+    "S5_3": "W3 donors are cross-episode pooled future canvases (hit-IoU < 0.9 enforced; failures counted)",
+    "S5_4": "FK + physical devs use denorm per serving contract (clamp(0,1) then lo+act*scale); *_norm kept for comparison",
+    "DF": "direct_forward: single-step |dv_a| between held canvases on t-grid, no Euler"
+  },
+  "donor_diag": {
+    "n": 128,
+    "n_warn": 0,
+    "n_iou_nan": 0,
+    "iou_mean": 0.6612,
+    "iou_min": 0.4847,
+    "iou_max": 0.8311,
+    "iou_thr": 0.9,
+    "note": "donor accepted when hit-IoU vs the sample's own future < thr (genuinely different future); n_warn = accepted despite failing the check (most-different fallback)"
+  },
+  "oracle_note": "W4 leaks true future; OFFLINE diagnostic only",
+  "interventions": {
+    "W0": {
+      "act_dev_norm": 0.0,
+      "act_dev_phys": 0.0,
+      "ee_dev_m": 0.0,
+      "expert_err_norm": 0.1736,
+      "expert_err_phys": 0.2623,
+      "per_k": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      },
+      "per_k_phys": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      }
+    },
+    "W1": {
+      "act_dev_norm": 0.0,
+      "act_dev_phys": 0.0,
+      "ee_dev_m": 0.0,
+      "expert_err_norm": 0.1736,
+      "expert_err_phys": 0.2623,
+      "per_k": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      },
+      "per_k_phys": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      }
+    },
+    "W2": {
+      "act_dev_norm": 0.0,
+      "act_dev_phys": 0.0,
+      "ee_dev_m": 0.0,
+      "expert_err_norm": 0.1736,
+      "expert_err_phys": 0.2623,
+      "per_k": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      },
+      "per_k_phys": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      }
+    },
+    "W3": {
+      "act_dev_norm": 0.0,
+      "act_dev_phys": 0.0,
+      "ee_dev_m": 0.0,
+      "expert_err_norm": 0.1736,
+      "expert_err_phys": 0.2623,
+      "per_k": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      },
+      "per_k_phys": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      }
+    },
+    "W4": {
+      "act_dev_norm": 0.0,
+      "act_dev_phys": 0.0,
+      "ee_dev_m": 0.0,
+      "expert_err_norm": 0.1736,
+      "expert_err_phys": 0.2623,
+      "per_k": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      },
+      "per_k_phys": {
+        "4": 0.0,
+        "8": 0.0,
+        "12": 0.0,
+        "16": 0.0
+      }
+    }
+  },
+  "direct_forward": {
+    "t_grid": [
+      0.1,
+      0.5,
+      0.9,
+      1.0
+    ],
+    "pairs": {
+      "W2_current_vs_W3_cross_ep": {
+        "0.1": 0.0,
+        "0.5": 0.0,
+        "0.9": 0.0,
+        "1.0": 0.0
+      },
+      "W2_current_vs_W4_oracle": {
+        "0.1": 0.0,
+        "0.5": 0.0,
+        "0.9": 0.0,
+        "1.0": 0.0
+      },
+      "W3_cross_ep_vs_W4_oracle": {
+        "0.1": 0.0,
+        "0.5": 0.0,
+        "0.9": 0.0,
+        "1.0": 0.0
+      }
+    },
+    "v_a_norm": {
+      "W2_current": {
+        "0.1": 7.7533,
+        "0.5": 6.4386,
+        "0.9": 4.4485,
+        "1.0": 4.0783
+      },
+      "W3_cross_ep": {
+        "0.1": 7.7533,
+        "0.5": 6.4386,
+        "0.9": 4.4485,
+        "1.0": 4.0783
+      },
+      "W4_oracle": {
+        "0.1": 7.7533,
+        "0.5": 6.4386,
+        "0.9": 4.4485,
+        "1.0": 4.0783
+      }
+    },
+    "note": "single model.forward per canvas, NO Euler; canvases = the same held tensors as interventions W2/W3/W4 (incl. the identical 0.05*world_noise dither, so deltas isolate canvas content); a0 ignores noisy_world by construction -> exact 0 sanity check"
+  }
+}

@@ -1,0 +1,24 @@
+case                   impl      buggy-copy       live buggy-anchor fixed-anchor verdict(live)
+PREDICTED_PERFECT      soft               1          1            -            1 OK
+PREDICTED_PERFECT      masked4ch          1          1            -            1 OK
+PREDICTED_PERFECT      aux                1          1            -            1 OK
+ALL_HIT                soft               1          1            -          0.6 FAIL
+ALL_HIT                masked4ch          1          1            -          0.6 FAIL
+ALL_HIT                aux                1          1            -          0.6 FAIL
+ALL_FREE               soft               0          0            -            0 OK
+ALL_FREE               masked4ch          0          0            -            0 OK
+ALL_FREE               aux                0          0            -            0 OK
+PERSISTENCE            soft             0.4        0.4            -            0 FAIL
+PERSISTENCE            masked4ch        0.4        0.4            -            0 FAIL
+PERSISTENCE            aux              0.4        0.4            -            0 FAIL
+INVERTED               soft             0.4        0.4            -            0 FAIL
+INVERTED               masked4ch        0.4        0.4            -            0 FAIL
+INVERTED               aux              0.4        0.4            -            0 FAIL
+PERFECT_SOFT_BOUNDARY  soft        0.666667   0.666667            -     0.666667 FAIL
+PERFECT_SOFT_BOUNDARY  masked4ch   0.666667   0.666667            -     0.666667 FAIL
+PERFECT_SOFT_BOUNDARY  aux         0.666667   0.666667            -     0.666667 FAIL
+EMPTY_DYN_single       soft             NaN        NaN            -          NaN OK
+EMPTY_DYN_mixed        soft               1          1            -          NaN FAIL
+EMPTY_DYN_mixed        aux                1          1            -          NaN FAIL
+
+verdict: live implementations do NOT match fixed anchors (pre-fix buggy state expected for the first run; record values, then apply AUDIT-S7 fix)
