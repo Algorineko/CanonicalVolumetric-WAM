@@ -192,3 +192,33 @@ serving 中"单步预测比迭代采样更抗输入偏移"的经验一致。
   超出专家状态分布,迭代 ODE 在偏移状态处失准并复合;单步条件均值(回归到均值)
   对此鲁棒——与模仿学习文献中 regression-vs-sampling 的鲁棒性差异一致。P2 若需
   迭代采样,考虑 DAgger 式状态覆盖或对采样轨迹加约束。
+
+## 追加 7(20:0x,autopilot 会话)——部署计算图事实(§7 probe,只读调查)
+
+**核心事实:v_a 读取的是"输入 noisy_world 的 token 编码",不是模型生成的 clean future。**
+
+1. **a2**(models_stage4a.py:337-345):G_tok(当前体素)+ w_tok(noisy_world 编码)+ act_tok
+   三段拼成 557 token 做 **2 层 full self-attention(无 cross-attn、无门)**;v_a 与 v_w
+   是同一联合序列上的两个输出头。部署通路:当前体素+world 输入+qpos 全部经双向交互。
+2. **a3/a3mask**(:346-368):世界流 wf = w_tok(noisy_world)→world_stack(2 块,
+   self-attn + **对 act_tok 的 cross-attn;G_tok/当前体素从不进入世界流**);动作流
+   act_h →action_stack(2 块,act←wf cross-attn,门≈0.49)。**v_w 只是同一批 wf 上的
+   输出头,单次 forward 内不反馈进 v_a** ⇒ 部署单次调用时动作流只见噪声级 world tokens。
+3. **plain a3 对当前体素零依赖**:v_a/v_w 完全由 (noisy_world, noisy_act, qpos, t, offset)
+   决定(G_tok 计算后未使用);a3mask 当前体素仅经 current_cross(门 sigmoid≈0.019,
+   三种子一致 [0.505,0.512,0.486,0.490,0.019] —— 都停在初始化附近)。
+4. **W1 阻断 = 部署有效通路,但仅对 a3/a3mask**(action_stack 的 act←world 两块);
+   **a2 的 block_world_to_action 标志在代码中从未被引用 = 对 a2 是空操作**,
+   gate_note 里 a2 的 W1 偏差 0.053 实为"world 噪声重抽"伪影(W0/W1 各自
+   randn 世界起始噪声)。a2 的 W1' (modality-embedding-only) docstring 未实现。
+5. **x_current 是死参数**(签名有、体不用);a3mask act←current 读的是 x_t 的
+   G_tok。cam72 部署恒 None → observer 头从未激活且**从未训练**(run_epoch 无
+   observer 损失;--lam-obs 仅写入 meta)。
+6. **部署 x0jump 两步调用 vs 训练分布**:第二次调用 (w0≈干净画布估计, t=1.0) 是
+   训练未见组合(训练中画布干净度与 t 严格耦合);且 a3/a3mask 的 w0 不依赖当前
+   观测(world_stack 不读 x)→ w0 至多是 qpos 条件的未来画布边缘分布。两次调用间
+   act 不更新(第一次 v_a 丢弃、第二次 v_w 丢弃)。
+7. **结论(供 §7 Two-pass 判断)**:two-pass 部署(Pass2 喂 w0)在 a3/a3mask 上
+   动作流读到的仍是 world_stack 编码的 w0 token——结构上"读到了生成的未来",
+   但该未来不含当前场景信息(除 a2)。**若要内容敏感,通路必须让当前体素进入
+   world/future 表征(a2 结构)或动作流直接 cross-attn 未池化体素 patch(P2 候选 1)。**
