@@ -1,0 +1,7 @@
+runs/stage4a/run_sanity_sign_fix.sh: line 44: 1048767 Killed                  setsid nohup bash $SRV RoboTwin open_microwave runs/stage4a/${v}_s42/best.pt demo_clean_balanced joint 0 $GPU openwam $PORT localhost > runs/stage4a/policy_server_${v}_${SAMPLER}.log 2>&1
+[sanity-done] a2: Final success rate: 5/5 = 100.0%
+runs/stage4a/run_sanity_sign_fix.sh: line 44: 1051327 Killed                  setsid nohup bash $SRV RoboTwin open_microwave runs/stage4a/${v}_s42/best.pt demo_clean_balanced joint 0 $GPU openwam $PORT localhost > runs/stage4a/policy_server_${v}_${SAMPLER}.log 2>&1
+[sanity-done] a3: Final success rate: 5/5 = 100.0%
+runs/stage4a/run_sanity_sign_fix.sh: line 44: 1053360 Killed                  setsid nohup bash $SRV RoboTwin open_microwave runs/stage4a/${v}_s42/best.pt demo_clean_balanced joint 0 $GPU openwam $PORT localhost > runs/stage4a/policy_server_${v}_${SAMPLER}.log 2>&1
+[sanity-done] a3mask: Final success rate: 5/5 = 100.0%
+SANITY_ALL_DONE

@@ -17,12 +17,20 @@ cd "$REPO" || exit 1
 COND=${1:?COND}; PORT=${2:?PORT}; GPU=${3:?GPU}; TRIALS=${4:?TRIALS}
 SEED=${5:-0}
 TASK=open_microwave
+CKPT=runs/stage4a/a0_s42/best.pt
+MANIFEST_KEY=""
 CLIENT_ENV=()
 SRV_KEYS=""
 
 case "$COND" in
   baseline)  ;;
   baselinefix) ;;  # post-extrinsics-fix reference (blind-policy era kept as `baseline`)
+  openlaptop_a0)
+    # stage4b P4: new-task A0 screening (ckpt + manifest + task all switch)
+    TASK=open_laptop
+    CKPT=runs/stage4b/openlaptop_a0_s42/best.pt
+    MANIFEST_KEY=" voxel_manifest=/data/canonical-volumetric-wam/cache/voxels_ep/clean_open_laptop/episode_0000000/20mm/manifest.json"
+    ;;
   cam_t005)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.05") ;;
   cam_t015)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.15") ;;
   cam_t030)  CLIENT_ENV=("CVWAM_HEAD_CAM_SHIFT_M=0.30") ;;
@@ -49,16 +57,16 @@ host: localhost
 port: null
 bench_name: null
 task_name: $TASK
-ckpt_name: runs/stage4a/a0_s42/best.pt
+ckpt_name: $CKPT
 env_cfg_type: demo_clean_balanced
 seed: 0
 action_type: joint
 gpu_id: 0
 eval_batch: false
-ckpt_path: /home/zhangjialiang/code/CanonicalVolumetric-WAM/runs/stage4a/a0_s42/best.pt
+ckpt_path: /home/zhangjialiang/code/CanonicalVolumetric-WAM/$CKPT
 exec_horizon: 4
 n_euler: 8
-sampler: x0jump${SRV_KEYS}
+sampler: x0jump${MANIFEST_KEY}${SRV_KEYS}
 EOF
 
 LOG=$REPO/runs/stage4b/policy_server_${COND}_p${PORT}.log
@@ -71,7 +79,7 @@ setsid nohup env CUDA_VISIBLE_DEVICES=$GPU PYTHONUNBUFFERED=1 \
   python $ROBOTWIN/XPolicyLab/setup_policy_server.py \
     --config_path "$DEPLOY" \
     --overrides port=$PORT host=localhost bench_name=RoboTwin task_name=$TASK \
-      ckpt_name=runs/stage4a/a0_s42/best.pt env_cfg_type=demo_clean_balanced \
+      ckpt_name=$CKPT env_cfg_type=demo_clean_balanced \
       seed=$SEED policy_name=cvwam_fm action_type=joint${DUMP_KEY} > "$LOG" 2>&1 &
 SPID=$!
 PGID=$(ps -o pgid= -p $SPID 2>/dev/null | tr -d ' ')
@@ -108,7 +116,7 @@ for i in $(seq 1 45); do
   sleep 2
 done
 verify_ok=1
-case "$CKPT_LINE" in *a0_s42/best.pt*) ;; *) verify_ok=0 ;; esac
+case "$CKPT_LINE" in *"$CKPT"*) ;; *) verify_ok=0 ;; esac
 if [ $verify_ok -eq 1 ] && [ -n "$SRV_KEYS" ] && ! grep -q "\[cvwam-stress-server\]" "$LOG"; then
   verify_ok=0
 fi

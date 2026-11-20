@@ -2,12 +2,29 @@
 
 更新: 2026-11-20 17:1x。执行规格: `docs-local/cvwam_assessment_roadmap_2026-11-20.md` §5 P0。
 
-## 前置事故(影响基线口径,详见 `runs/stage4a/failures/fm_integration_sign_bug_note.md`)
+## 前置事故(影响基线口径,详见 `runs/stage4a/failures/fm_integration_sign_bug_note.md` 追加 1-6)
 
-serving 采样器 A/B 实证:x0jump 闭环 5/5(=筛查时代行为),euler_minus 0/3,
-euler_plus 离线垃圾。**本阶段全部闭环运行以 `sampler: x0jump` 执行**(wrapper deploy
-键锁定)。旧 a0 筛查(19/20×2)与新运行的采样器一致性由 x0jump smoke 复现背书;
-baseline 20-trial 在新 wrapper(seeded、x0jump)下重测,作为 P0 的正式 A0 参照。
+**盲策略事故(已修复)**:eval client 曾把 `extrinsic_cv`(world→cam 逆矩阵)当作
+`extrinsics_matrix`(契约=cam2world_gl)→ 在线体素全零 → 2026-11-20 17:00 前的
+全部闭环数字(含 a0 筛查 19/20×2、baseline 盲版 20/20 = git fe95f64)为**无条件
+先验回放**,非体素条件控制。修复后 dump 验证 x_nonzero=1.0、同帧 observed IoU 0.973。
+
+**采样器定论(修复输入下)**:x0jump 9/9→20/20;euler_minus 0/5(盲/真实输入均败,
+离线 MSE 却 0.0043——闭环协变量偏移假说,见笔记追加 6)。**本阶段全部闭环以
+`sampler: x0jump` 执行**。
+
+## stage4a 变体 smoke 终版(修复输入,x0jump,5-ep seed 0)
+
+| 变体 | 盲输入(作废) | 修复输入 |
+|---|---|---|
+| a0 | (5/5 盲) | 5/5(`rollout_results/a0_smoke5_rates_x0jump.txt`) |
+| a1 | (5/5 盲) | **5/5**(`a1_smoke5_rates_x0jump.txt`) |
+| a2 | 0/5 盲 | **5/5**(`a2_smoke5_rates_x0jump.txt`) |
+| a3 | 挂死(误报,盲 5/5) | **5/5**(`a3_smoke5_rates_x0jump.txt`) |
+| a3mask | 未跑(盲) | **5/5**(`a3mask_smoke5_rates_x0jump.txt`) |
+
+全部变体在真实观测条件下通过闭环 smoke;"世界变体闭环失败"的旧叙事由伪影解释,
+L9 的 world→action 内容不敏感仍仅由离线干预支撑。
 
 ## 目的
 
@@ -38,7 +55,23 @@ baseline 20-trial 在新 wrapper(seeded、x0jump)下重测,作为 P0 的正式 A
 
 ## 结果
 
-见 metrics/;汇总表待实验落盘后填写,数字一律回指 metrics/ 下文件。
+### A0 参照(修复输入,2026-11-20 18:20 完成)
+
+- open_microwave Clean 20-trial:**20/20 = 100.0%**(`metrics/stress/baseline_rates.txt`,
+  实际种子集见 `baseline_seeds.txt`;盲版同分 20/20,留档 git fe95f64 —— 盲先验回放
+  与条件控制在单任务 clean 上不可区分,正说明该任务对世界信息无需求,需扰动暴露差异)。
+
+### 压力条件(每条件 20 trials,配对 seed 0)
+
+| 条件 | 状态 | 成功率 | 出处 |
+|---|---|---|---|
+| cam_t030(头相机平移 0.30m,真 E 视角 OOD) | RUNNING | | `metrics/stress/cam_t030_rates.txt` |
+| drop1of3(随机丢一台相机,trial 内固定) | RUNNING | | `metrics/stress/drop1of3_rates.txt` |
+| cam_t015 / cam_t005 / cam_r20 / cam_r7.5 | NOT_RUN | | |
+| drop_head | NOT_RUN | | |
+| occ(观测侧遮挡盒) | NOT_RUN | | |
+| lo(布局 OOD,xlim -0.38..-0.28) | NOT_RUN | | |
+| openlaptop_a0 Clean-20 | NOT_RUN(训练完成,待筛查) | | |
 
 ## 失败存档
 

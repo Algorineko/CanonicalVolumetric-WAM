@@ -1,0 +1,5 @@
+# a1 closed-loop smoke REDO (2026-11-20 16:18), server ckpt a1_s42/best.pt (verified smoke_ckpt_a1.txt)
+# previous a1_smoke5_result.txt was INVALID (stale a0 server on port 8849; see failures/)
+# seeds 100000,100001,100003,100004,100005 (100002 skipped: expert planner fail, same skip rule as a0)
+Success rate: 5/5 = 100.0%
+Final success rate: 5/5 = 100.0%
