@@ -137,18 +137,24 @@ def diagnostics(model, batch, stats, ae_dec, device):
     qpos = batch["qpos"].to(device)
     act = batch["action"].to(device)
     B = x.shape[0]
+    x_fut = batch["voxel_future"].to(device)
     for t_val in (0.5, 0.9):
         t = torch.full((B,), t_val, device=device)
         eps_a = torch.randn_like(act)
         x_t_a = (1 - t)[:, None, None] * act + t[:, None, None] * eps_a
+        noisy_w = None
+        if model.variant in ("a2", "a3", "a3mask"):
+            tgt_w = pooled_occupancy(x_fut)
+            eps_w = torch.randn_like(tgt_w)
+            noisy_w = (1 - t)[:, None, None, None, None] * tgt_w \
+                + t[:, None, None, None, None] * eps_w
         o = model(x, x_t_a, t, qpos,
                   torch.zeros(B, dtype=torch.long, device=device),
-                  noisy_world=None)
+                  noisy_world=noisy_w)
         x0 = x_t_a - t[:, None, None] * o["v_a"]
         out[f"act_x0_mse_t{t_val}"] = float(nn.functional.mse_loss(
             x0, act, reduction="mean"))
     if model.variant in ("a2", "a3", "a3mask"):
-        x_fut = batch["voxel_future"].to(device)
         tgt_w = pooled_occupancy(x_fut)
         t = torch.full((B,), 0.5, device=device)
         eps_w = torch.randn_like(tgt_w)
