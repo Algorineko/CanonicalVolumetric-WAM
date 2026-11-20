@@ -21,3 +21,16 @@
 - A2/A3 动作专家读学习的 world tokens(不经解码);world FM 目标 = E_frozen(x_{t+k}) 潜码,训练不受解码质量门控
 - 评估:以 A1 aux dynIoU 为世界预测的判别参照;decoded-w0 dynIoU 如实标注"解码器受限"仅作诊断
 - 预注册 STOP(occ<0.5 停)触发,但根因分析表明失败在门指标与压缩原理,不在变体可训性——按指令 §4 调整后继续;此项决策记录于本文件,供规划 Agent 复核
+
+## Observer 强干预迁移(2026-11-20,zero-shot,配置 A 训练)
+
+| 档 | visIoU | persistence | changeIoU | reveal_acc | occlude_acc |
+|---|---|---|---|---|---|
+| 同配置 holdout | 0.9875 | 0.9893 | 0.191 | 0.293 | 0.261 |
+| mid (7.5cm/7.5°) | 0.9565 | 0.9731 | 0.184 | 0.274 | 0.506 |
+| strong (15cm/20°) | 0.9743 | 0.9825 | 0.154 | 0.260 | 0.298 |
+
+结论(按指令 §6 的告诫逐条执行):
+- 全局 visIoU 高但 **persistence 主导**(同配置 persistence 甚至 > 模型)——stage3b 的"迁移损失 0.0015"须重述为"全局 visIoU 无判别力;模型价值仅在变化细胞"
+- 变化级:reveal_acc 0.26–0.29(persistence=0)、mid 档 occlude 0.51——**高于 persistence 但弱**
+- **A3 定性 = architecture prototype**;物理解耦未充分验证(指令 §6 原文条款触发)

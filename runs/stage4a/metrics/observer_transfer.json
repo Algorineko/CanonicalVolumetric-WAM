@@ -1,0 +1,26 @@
+{
+  "inconf_holdout": {
+    "visIoU": 0.9875,
+    "persistence_visIoU": 0.9893,
+    "changeIoU": 0.1911,
+    "reveal_acc": 0.2931,
+    "occlude_acc": 0.2613,
+    "n_pairs": 140
+  },
+  "probe_mid": {
+    "visIoU": 0.9565,
+    "persistence_visIoU": 0.9731,
+    "changeIoU": 0.184,
+    "reveal_acc": 0.274,
+    "occlude_acc": 0.5055,
+    "n_pairs": 820
+  },
+  "probe_strong": {
+    "visIoU": 0.9743,
+    "persistence_visIoU": 0.9825,
+    "changeIoU": 0.1537,
+    "reveal_acc": 0.26,
+    "occlude_acc": 0.2976,
+    "n_pairs": 820
+  }
+}

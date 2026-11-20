@@ -35,8 +35,8 @@ SETS = {
 
 
 @torch.no_grad()
-def eval_set(model, edir, rows, cfg, ts, device, offsets=(4, 8, 12, 16)):
-    ds = ObsDataset(edir, rows, cfg, ts, offsets=offsets)
+def eval_set(model, rep_dir, rows, cfg, ts, device, offsets=(4, 8, 12, 16)):
+    ds = ObsDataset(rep_dir, rows, cfg, ts, offsets=offsets)
     dl = DataLoader(ds, batch_size=16, shuffle=False, num_workers=4)
     vis_iou, chg_iou, reveal_acc, occl_acc, persist_iou = [], [], [], [], []
     for batch in dl:
@@ -49,9 +49,9 @@ def eval_set(model, edir, rows, cfg, ts, device, offsets=(4, 8, 12, 16)):
         for j in range(vox.shape[0]):
             ki = offsets.index(batch["offset"][j])
             vis_logit = out[j, ki]
-            tgt = batch["vis_tgt"][j].bool()
+            tgt = batch["vis_tgt"][j].bool().cpu()
             pred = (vis_logit > 0).cpu()
-            cur_obs = vox[j, 2] > 0.5
+            cur_obs = (vox[j, 2] > 0.5).cpu()
             vis_iou.append(_iou(pred, tgt))
             persist_iou.append(_iou(cur_obs, tgt))
             flip = cur_obs ^ tgt                     # visibility change cells
@@ -102,7 +102,7 @@ def main():
         rows = rows[:n]
         T = len(rows)
         ts = list(range(ts_start, T - max((4, 8, 12, 16)) - 1, 2))
-        res[name] = eval_set(model, edir, rows, cfg, ts, device)
+        res[name] = eval_set(model, REP_ROOT / rep_name, rows, cfg, ts, device)
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(res, indent=2))
