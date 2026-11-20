@@ -1,0 +1,4 @@
+/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/replay_episode_gt.py:149: DeprecationWarning: component.get_pose can be ambiguous thus deprecated. It is equivalent to component.get_entity_pose, which should be used instead
+  "p": np.asarray(ln.get_pose().p, dtype=np.float64).tolist(),
+/home/zhangjialiang/code/CanonicalVolumetric-WAM/scripts/replay_episode_gt.py:150: DeprecationWarning: component.get_pose can be ambiguous thus deprecated. It is equivalent to component.get_entity_pose, which should be used instead
+  "q_wxyz": np.asarray(ln.get_pose().q, dtype=np.float64).tolist(),
