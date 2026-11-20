@@ -18,6 +18,7 @@ Run inside the `robottwin` conda env (sapien + rendering stack).
 """
 
 import argparse
+import copy
 import importlib
 import json
 import os
@@ -42,6 +43,12 @@ def main():
                     help="observer probe: override domain_randomization."
                          "random_head_camera_dis (camera jitter; RNG draw count "
                          "is dis-independent so physics stays identical)")
+    ap.add_argument("--head-cam-rot-deg", type=float, default=0.0,
+                    help="observer probe: rotate head camera around its left "
+                         "axis by this many degrees (deterministic)")
+    ap.add_argument("--head-cam-shift-cm", type=float, default=0.0,
+                    help="observer probe: shift head camera position by this "
+                         "many cm along a seeded random direction (deterministic)")
     args_cli = ap.parse_args()
 
     os.chdir(ROBOTWIN)
@@ -52,6 +59,31 @@ def main():
             args_cli.head_cam_dis
     robot = ROBOTWIN / "assets/embodiments/aloha-agilex"
     embodiment = yaml.safe_load((robot / "config.yml").read_text())
+    if args_cli.head_cam_rot_deg != 0.0 or args_cli.head_cam_shift_cm != 0.0:
+        # deterministic head-camera intervention (physics untouched: camera
+        # creation consumes the same RNG draws regardless of these values)
+        embodiment = copy.deepcopy(embodiment)
+        hc = embodiment["static_camera_list"][0]
+        fwd = np.asarray(hc["forward"], dtype=np.float64)
+        left = np.asarray(hc["left"], dtype=np.float64)
+        if args_cli.head_cam_rot_deg != 0.0:
+            ax = left / np.linalg.norm(left)
+            th = np.radians(args_cli.head_cam_rot_deg)
+            fwd = (fwd * np.cos(th) + np.cross(ax, fwd) * np.sin(th)
+                   + ax * np.dot(ax, fwd) * (1 - np.cos(th)))
+            hc["forward"] = fwd.tolist()
+        if args_cli.head_cam_shift_cm != 0.0:
+            rng = np.random.default_rng(args_cli.episode * 1000
+                                        + int(args_cli.head_cam_shift_cm * 10)
+                                        + int(args_cli.head_cam_rot_deg * 10))
+            d = rng.normal(size=3)
+            d /= np.linalg.norm(d)
+            pos = np.asarray(hc["position"], dtype=np.float64) \
+                + d * (args_cli.head_cam_shift_cm / 100.0)
+            hc["position"] = pos.tolist()
+        print(f"[probe] head camera rot={args_cli.head_cam_rot_deg}deg "
+              f"shift={args_cli.head_cam_shift_cm}cm -> fwd={hc['forward']} "
+              f"pos={hc['position']}")
     out = Path(args_cli.out)
     out.mkdir(parents=True, exist_ok=True)
 
