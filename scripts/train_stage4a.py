@@ -70,9 +70,13 @@ def soft_masked_dyn_iou(vox_soft, batch, thr=0.5):
 
 
 
-def act_normalization(root, train_eps):
-    """Per-dim affine stats over ALL train frame chunks -> runs/stage4a/act_stats.json."""
-    stats_path = Path("runs/stage4a/act_stats.json")
+def act_normalization(root, train_eps, stats_path="runs/stage4a/act_stats.json"):
+    """Per-dim affine stats over ALL train frame chunks -> <stats_path>.
+
+    NOTE: the path must be task-specific (stage4b: pass --act-stats); reusing
+    another task's stats silently is a correctness bug (caught in stage4b prep).
+    """
+    stats_path = Path(stats_path)
     if stats_path.exists():
         return json.loads(stats_path.read_text())
     lo = np.full(14, np.inf)
@@ -246,6 +250,12 @@ def main():
                          "co-training effect on the aux world prediction")
     ap.add_argument("--out", required=True)
     ap.add_argument("--split-manifest", default="runs/stage3b/split_manifest.json")
+    ap.add_argument("--act-stats", default="runs/stage4a/act_stats.json",
+                    help="task-specific action normalization stats json "
+                         "(MUST be per-task; reusing another task's file "
+                         "silently is a correctness bug)")
+    ap.add_argument("--ae", default="runs/stage4a/tokenizer_ae/best.pt",
+                    help="tokenizer AE checkpoint for encoder init")
     args = ap.parse_args()
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -257,7 +267,7 @@ def main():
     sm = json.loads(Path(args.split_manifest).read_text())
     train_eps = sm["splits"]["clean_train"]
     val_eps = sm["splits"]["clean_val"] + sm["splits"]["rand_val"]
-    stats = act_normalization(root, train_eps)
+    stats = act_normalization(root, train_eps, stats_path=args.act_stats)
 
     from cvwam.dynamics_dataset import DynamicsDataset
     train_ds = DynamicsDataset(root, train_eps)
@@ -267,7 +277,7 @@ def main():
     va_dl = DataLoader(val_ds, batch_size=args.batch, shuffle=False,
                        num_workers=3, pin_memory=True)
 
-    ae = torch.load("runs/stage4a/tokenizer_ae/best.pt", map_location="cpu",
+    ae = torch.load(args.ae, map_location="cpu",
                     weights_only=False)
     bottleneck = ae.get("bottleneck_ch", 128)
     model = Stage4AModel(variant=args.variant, bottleneck_ch=bottleneck).to(device)

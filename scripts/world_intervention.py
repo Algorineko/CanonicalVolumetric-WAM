@@ -65,9 +65,11 @@ def euler_chunk(model, x, qpos, oi, act0_noise, w0_init, variant,
         t = torch.tensor([1.0 - i / n_euler] * B, device=x.device)
         o = model(x, act, t, qpos, oi, noisy_world=world, cam72=None,
                   block_world_to_action=block_world_to_action)
-        act = act + (1.0 / n_euler) * o["v_a"]
+        # FM sampling: v=e-a => integrate t:1->0 as x -= dt*v
+        # (sign fix 2026-11-20; see runs/stage4a/failures/fm_integration_sign_bug_note.md)
+        act = act - (1.0 / n_euler) * o["v_a"]
         if not hold:
-            world = world + (1.0 / n_euler) * o["v_w"]   # W0: world ODE
+            world = world - (1.0 / n_euler) * o["v_w"]   # W0: world ODE
     return act
 
 

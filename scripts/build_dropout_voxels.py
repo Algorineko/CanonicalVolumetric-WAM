@@ -28,7 +28,8 @@ SUBSETS = {
 
 
 def build_subset(cfg, variant, ep, t, subset_name, pitch, b_min, b_max, T_bw):
-    paths = rta.locate_episode(cfg["data_root"], variant, ep)
+    paths = rta.locate_episode(cfg["data_root"], variant, ep,
+                               task=cfg.get("task", "open_microwave"))
     cams = SUBSETS[subset_name]
     with h5py.File(paths.hdf5, "r") as f:
         K = np.asarray(f["vision/cam_head/intrinsic_matrix"][t], dtype=np.float64)

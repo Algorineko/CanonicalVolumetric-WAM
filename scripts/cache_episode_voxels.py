@@ -27,7 +27,8 @@ from cvwam.geometry import T_base_world, depth_to_base  # noqa: E402
 
 def cache_episode(cfg, variant: str, ep_no: int, pitch: float, b_min, b_max,
                   action_horizon: int = 16):
-    paths = rta.locate_episode(cfg["data_root"], variant, ep_no)
+    paths = rta.locate_episode(cfg["data_root"], variant, ep_no,
+                               task=cfg.get("task", "open_microwave"))
     T_bw = T_base_world(rta.T_world_base_from_config(cfg))
     out_dir = Path(cfg["cache_dir"]) / "voxels_ep" / variant / \
         f"episode_{ep_no:07d}" / f"{int(pitch * 1000):02d}mm"

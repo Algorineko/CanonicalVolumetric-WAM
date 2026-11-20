@@ -24,7 +24,8 @@ def main():
     ap.add_argument("--max-t", type=int, default=0, help="0 = all")
     args = ap.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
-    paths = rta.locate_episode(cfg["data_root"], args.variant, args.episode)
+    paths = rta.locate_episode(cfg["data_root"], args.variant, args.episode,
+                               task=cfg.get("task", "open_microwave"))
 
     with __import__("h5py").File(paths.hdf5, "r") as f:
         T = int(f["state/left_arm_joint_states"].shape[0])

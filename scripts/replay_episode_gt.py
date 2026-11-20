@@ -49,6 +49,8 @@ def main():
     ap.add_argument("--head-cam-shift-cm", type=float, default=0.0,
                     help="observer probe: shift head camera position by this "
                          "many cm along a seeded random direction (deterministic)")
+    ap.add_argument("--task", default="open_microwave",
+                    help="RoboTwin task name (data path + env module)")
     args_cli = ap.parse_args()
 
     os.chdir(ROBOTWIN)
@@ -88,7 +90,7 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
 
     data_root = Path("/data/openmw_balanced_work") / args_cli.variant / \
-        "open_microwave" / "aloha_agilex"
+        args_cli.task / "aloha_agilex"
     seed = int((data_root / "seed.txt").read_text().split()[args_cli.episode])
     # cross-check against instruction json
     instr = json.loads((data_root / "instruction" / f"episode_{args_cli.episode:07d}.json").read_text())
@@ -110,7 +112,7 @@ def main():
     config["data_type"].update(rgb=True, depth=True, endpose=True, qpos=True,
                                pointcloud=False, actor_segmentation=True)
 
-    task = "open_microwave"
+    task = args_cli.task
     env = getattr(importlib.import_module("envs." + task), task)()
 
     rows = []

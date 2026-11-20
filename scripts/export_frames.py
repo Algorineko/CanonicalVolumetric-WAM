@@ -34,7 +34,8 @@ def main():
 
     for variant, eps in cfg["episodes"].items():
         for ep_no in eps:
-            paths = rta.locate_episode(cfg["data_root"], variant, ep_no)
+            paths = rta.locate_episode(cfg["data_root"], variant, ep_no,
+                                       task=cfg.get("task", "open_microwave"))
             t0 = time.perf_counter()
             idx = rta.load_episode_index(paths)
             T = idx["T"]

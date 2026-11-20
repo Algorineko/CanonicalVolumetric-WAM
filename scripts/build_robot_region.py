@@ -155,7 +155,8 @@ def main():
         pitch = float(mf["pitch_m"])
         f0 = np.load(edir / "frame_0000000.npz")
         shape = tuple(int(v) for v in f0["shape"])
-        with h5py.File(rta.locate_episode(cfg["data_root"], variant, ep).hdf5, "r") as f:
+        with h5py.File(rta.locate_episode(cfg["data_root"], variant, ep,
+                                          task=cfg.get("task", "open_microwave")).hdf5, "r") as f:
             arm = {s: np.asarray(f[f"state/{s}_arm_joint_states"]) for s in ("left", "right")}
             grip = {s: np.asarray(f[f"state/{s}_ee_joint_states"])[:, 0] for s in ("left", "right")}
             ee = {s: np.asarray(f[f"state/{s}_ee_poses"]) for s in ("left", "right")}

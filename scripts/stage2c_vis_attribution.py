@@ -68,7 +68,8 @@ def main():
     for spec in args.episodes:
         variant, ep = spec.split(":")
         ep = int(ep)
-        paths = rta.locate_episode(cfg["data_root"], variant, ep)
+        paths = rta.locate_episode(cfg["data_root"], variant, ep,
+                                   task=cfg.get("task", "open_microwave"))
         with h5py.File(paths.hdf5, "r") as f:
             T = int(f["state/left_arm_joint_states"].shape[0])
             ts = np.linspace(0, T - 1 - max(args.offsets), args.n_pairs).astype(int)

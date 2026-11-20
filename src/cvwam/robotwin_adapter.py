@@ -40,8 +40,9 @@ class EpisodePaths:
     depth_x264rgb: dict
 
 
-def locate_episode(data_root: str, variant: str, episode_no: int) -> EpisodePaths:
-    root = Path(data_root) / variant / "open_microwave" / "aloha_agilex"
+def locate_episode(data_root: str, variant: str, episode_no: int,
+                   task: str = "open_microwave") -> EpisodePaths:
+    root = Path(data_root) / variant / task / "aloha_agilex"
     hdf5 = root / "data" / f"episode_{episode_no:07d}.hdf5"
     if not hdf5.exists():
         raise FileNotFoundError(f"episode hdf5 not found: {hdf5}")
@@ -217,7 +218,8 @@ def build_index(cfg: dict):
     """Iterate over (variant, episode_no) pairs declared in the smoke config."""
     for variant, eps in cfg["episodes"].items():
         for ep in eps:
-            yield variant, ep, locate_episode(cfg["data_root"], variant, ep)
+            yield variant, ep, locate_episode(cfg["data_root"], variant, ep,
+                                              task=cfg.get("task", "open_microwave"))
 
 
 def load_episode_index(paths: EpisodePaths) -> dict:

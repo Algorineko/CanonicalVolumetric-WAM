@@ -88,7 +88,8 @@ def main():
     cfg = yaml.safe_load(Path(args.config).read_text())
     os.chdir(ROBOTWIN)
     sys.path.insert(0, str(ROBOTWIN))
-    paths = rta.locate_episode(cfg["data_root"], args.variant, args.episode)
+    paths = rta.locate_episode(cfg["data_root"], args.variant, args.episode,
+                               task=cfg.get("task", "open_microwave"))
     builder = OnlineVoxelBuilder(cfg)
 
     data_root = Path("/data/openmw_balanced_work") / args.variant / "open_microwave" / "aloha_agilex"

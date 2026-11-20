@@ -1,0 +1,9 @@
+{
+  "result": {
+    "plus": 8.933335304260254,
+    "minus": 0.0042831214183631046
+  },
+  "n_batches": 6,
+  "n_euler": 8,
+  "ckpt": "runs/stage4a/a0_s42/best.pt"
+}

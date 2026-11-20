@@ -59,7 +59,8 @@ def main():
             print(f"[skip] {spec}", flush=True)
             continue
         out_dir.mkdir(parents=True, exist_ok=True)
-        paths = rta.locate_episode(cfg["data_root"], variant, ep)
+        paths = rta.locate_episode(cfg["data_root"], variant, ep,
+                                   task=cfg.get("task", "open_microwave"))
         t0 = time.perf_counter()
         with h5py.File(paths.hdf5, "r") as f:
             T_total = int(f["state/left_arm_joint_states"].shape[0])

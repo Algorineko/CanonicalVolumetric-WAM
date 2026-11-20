@@ -30,7 +30,8 @@ def main():
     root = Path(cfg["cache_dir"]) / "voxels_ep_replay"
     rep_dir = root / f"{args.variant}_{args.episode}_{args.tag}" / "20mm"
     mf = json.loads((rep_dir / "manifest.json").read_text())
-    src = rta.locate_episode(cfg["data_root"], args.variant, args.episode)
+    src = rta.locate_episode(cfg["data_root"], args.variant, args.episode,
+                             task=cfg.get("task", "open_microwave"))
     with __import__("h5py").File(src.hdf5, "r") as f:
         act_l = np.asarray(f["action/left_arm_joint_states"], dtype=np.float32)
         act_r = np.asarray(f["action/right_arm_joint_states"], dtype=np.float32)
